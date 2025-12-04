@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     private Rigidbody2D RigidBody;
+    public  SpriteRenderer RobotF;
+    public Transform RobotT;
     public Transform GroundCheck;
     public LayerMask GroundLayer;
 
@@ -13,16 +14,24 @@ public class PlayerMovement : MonoBehaviour
     public float Speed = 5f;
     public float JumpForce = 10f;
 
-    // Start is called before the first frame update
     void Start()
     {
         RigidBody = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         HorizontalInput = Input.GetAxisRaw("Horizontal");
+        if(HorizontalInput == 1 )
+        {
+            RobotF.flipX = false;
+            RobotT.localPosition = new Vector2(-0.03f, 0f);
+        }
+        else if(HorizontalInput == -1)
+        {
+            RobotF.flipX = true;
+            RobotT.localPosition = new Vector2(0.03f, 0f);
+        }
         RigidBody.velocity = new Vector2(HorizontalInput * Speed, RigidBody.velocity.y);
 
         if(Input.GetButtonDown("Jump") && isGrounded)
@@ -30,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
             RigidBody.velocity = new Vector2(RigidBody.velocity.x, JumpForce);
         }
 
-        isGrounded = Physics2D.OverlapCircle(GroundCheck.position, 0.2f, GroundLayer);
+        isGrounded = Physics2D.OverlapCircle(GroundCheck.position, 0.25f, GroundLayer);
 
     }
 }
