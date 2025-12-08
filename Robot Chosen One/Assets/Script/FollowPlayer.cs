@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FallowPlayer : MonoBehaviour
+public class FollowPlayer : MonoBehaviour
 {
 
     private Transform CameraT;
