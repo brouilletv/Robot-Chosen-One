@@ -1,46 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 public class PauseManager : MonoBehaviour
 {
     public static bool isPaused = false;
     public GameObject PauseMenu;
+    public InputActionReference pause;
 
-    PauseMenu action;
-
-    private void Awake()
+    private void Start()
     {
-        action = new PauseMenu();
+        PauseMenu.SetActive(false);
     }
 
     private void OnEnable()
     {
-        action.Enable();
+        pause.action.started += PauseToggle;
     }
 
     private void OnDisable()
     {
-        action.Disable();
+        pause.action.started -= PauseToggle;
     }
 
-    private void Start()
+    private void PauseToggle(InputAction.CallbackContext obj)
     {
-        action.Pause.OpenPauseMenu.performed += _ => PauseToggle();
-    }
-
-    private void PauseToggle()
-    {
-        if (isPaused)
-            ResumeGame();
-        else
+        if (!isPaused)
+        {
             PauseGame();
+        }
+        else 
+        {
+            ResumeGame();
+        }
     }
 
     public void PauseGame()
     {
-        Time.timeScale = 0;
+        Time.timeScale = 0f;
         AudioListener.pause = true;
         isPaused = true;
         PauseMenu.SetActive(true);
@@ -48,7 +45,7 @@ public class PauseManager : MonoBehaviour
 
     public void ResumeGame()
     {
-        Time.timeScale = 1;
+        Time.timeScale = 1f;
         AudioListener.pause = false;
         isPaused = false;
         PauseMenu.SetActive(false);

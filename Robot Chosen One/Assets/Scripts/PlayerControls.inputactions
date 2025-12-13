@@ -2,11 +2,11 @@
     "name": "PauseMenu",
     "maps": [
         {
-            "name": "Pause",
+            "name": "Player",
             "id": "7d719d8a-c383-4c6c-94b1-49dc2b08d240",
             "actions": [
                 {
-                    "name": "OpenPauseMenu",
+                    "name": "Pause",
                     "type": "Button",
                     "id": "9e34ba33-209a-4276-9570-5df57c49f61b",
                     "expectedControlType": "Button",
@@ -23,12 +23,24 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "OpenPauseMenu",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "Keyboard",
+            "bindingGroup": "Keyboard",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
 }
