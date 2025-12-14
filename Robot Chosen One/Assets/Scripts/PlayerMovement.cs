@@ -1,45 +1,39 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D RigidBody;
-    public  SpriteRenderer RobotF;
-    public Transform RobotT;
-    public Transform GroundCheck;
-    public LayerMask GroundLayer;
+    [SerializeField] Rigidbody2D rb;
+    [SerializeField] LayerMask GroundLayer;
+    [SerializeField] Transform groundCheck;
 
-    private float HorizontalInput;
-    private bool isGrounded;
+    [SerializeField] float groundSpeed;
+    [SerializeField] float jumpForce;
 
-    public float Speed = 5f;
-    public float JumpForce = 10f;
+    private float xDirection;
 
-    void Start()
+    private void FixedUpdate()
+        {
+        rb.velocity = new Vector2(xDirection * groundSpeed, rb.velocity.y);
+        }
+
+    public void Move(InputAction.CallbackContext context)
     {
-        RigidBody = GetComponent<Rigidbody2D>();
+        xDirection = context.ReadValue<Vector2>().x;
     }
 
-    void Update()
+    public void Jump(InputAction.CallbackContext context)
     {
-        HorizontalInput = Input.GetAxisRaw("Horizontal");
-        if(HorizontalInput == 1 )
+        if(context.performed && IsGrounded())
         {
-            RobotF.flipX = false;
-            RobotT.localPosition = new Vector2(-0.03f, 0f);
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
-        else if(HorizontalInput == -1)
-        {
-            RobotF.flipX = true;
-            RobotT.localPosition = new Vector2(0.03f, 0f);
-        }
-        RigidBody.velocity = new Vector2(HorizontalInput * Speed, RigidBody.velocity.y);
+    }
 
-        if(Input.GetButtonDown("Jump") && isGrounded)
-        {
-            RigidBody.velocity = new Vector2(RigidBody.velocity.x, JumpForce);
-        }
-
-        isGrounded = Physics2D.OverlapCircle(GroundCheck.position, 0.25f, GroundLayer);
-
+    private bool IsGrounded()
+    {
+        return Physics2D.OverlapCapsule(groundCheck.position, new Vector2(1f, 0.1f), CapsuleDirection2D.Horizontal, 0, GroundLayer);
     }
 }

@@ -5,31 +5,20 @@ using UnityEngine.InputSystem;
 public class PauseManager : MonoBehaviour
 {
     public static bool isPaused = false;
-    public GameObject PauseMenu;
-    public InputActionReference pause;
+    [SerializeField] GameObject PauseMenu;
 
     private void Start()
     {
         PauseMenu.SetActive(false);
     }
 
-    private void OnEnable()
-    {
-        pause.action.started += PauseToggle;
-    }
-
-    private void OnDisable()
-    {
-        pause.action.started -= PauseToggle;
-    }
-
-    private void PauseToggle(InputAction.CallbackContext obj)
+    public void Pause(InputAction.CallbackContext context)
     {
         if (!isPaused)
         {
             PauseGame();
         }
-        else 
+        else
         {
             ResumeGame();
         }
