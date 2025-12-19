@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     {
         xDirection = context.ReadValue<Vector2>().x;
     }
-
+    
     public void Jump(InputAction.CallbackContext context)
     {
         if(context.performed && IsGrounded())
