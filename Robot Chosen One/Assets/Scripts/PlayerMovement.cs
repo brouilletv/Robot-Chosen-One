@@ -8,16 +8,34 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] LayerMask GroundLayer;
     [SerializeField] Transform groundCheck;
+    [SerializeField] SpriteRenderer robotSprite;
 
     [SerializeField] float groundSpeed;
     [SerializeField] float jumpForce;
 
     private float xDirection;
+    private float xFlipDirection;
 
     private void FixedUpdate()
         {
-        rb.velocity = new Vector2(xDirection * groundSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(xDirection * groundSpeed, rb.velocity.y);
+            Flip();
         }
+
+    private void Flip()
+    {
+        xFlipDirection = Input.GetAxisRaw("Horizontal");
+
+        if(xFlipDirection == 1)
+        {
+            robotSprite.flipX = false;
+        }
+
+        else if(xFlipDirection == -1)
+        {
+            robotSprite.flipX = true;
+        }
+    }
 
     public void Move(InputAction.CallbackContext context)
     {
