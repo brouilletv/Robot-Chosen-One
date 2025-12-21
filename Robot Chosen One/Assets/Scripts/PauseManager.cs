@@ -12,7 +12,7 @@ public class PauseManager : MonoBehaviour
         PauseMenu.SetActive(false);
     }
 
-    public void Pause(InputAction.CallbackContext context)
+    public void OnPause(InputValue value)
     {
         if (!isPaused)
         {

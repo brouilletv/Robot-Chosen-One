@@ -1,4 +1,6 @@
 using System;
+using System.Runtime.CompilerServices;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -6,52 +8,140 @@ using UnityEngine.UIElements;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] LayerMask GroundLayer;
-    [SerializeField] Transform groundCheck;
     [SerializeField] SpriteRenderer robotSprite;
+    private float facingDirection;
 
-    [SerializeField] float groundSpeed;
-    [SerializeField] float jumpForce;
+    // Input Variables
+    private float moveDirection;
+    private bool jumpPressed;
+    private bool jumpReleased;
 
-    private float xDirection;
-    private float xFlipDirection;
+
+
+    [Header("Mouvement Variables")]
+    [SerializeField] float groundSpeed = 10f;
+    [SerializeField] float jumpForce = 20f;
+    [SerializeField] float jumpCutMultiplier = 0.5f;
+    [SerializeField] float normalGravity = 6f;
+    [SerializeField] float fallGravity = 12f;
+    [SerializeField] float jumpGravity = 5f;
+
+    [Header("GroundCheck")]
+    [SerializeField] Transform groundCheck;
+    [SerializeField] float groundCheckRadius = 0.3f;
+    [SerializeField] LayerMask groundLayer;
+    private bool isGrounded;
+
+
+    private void Start()
+    {
+        rb.gravityScale = normalGravity;
+    }
+
+
+    private void Update()
+    {
+        Flip();
+    }
+
 
     private void FixedUpdate()
+    {
+        ApplyVariableGravity();
+        CheckGrounded();
+        HandleMouvement();
+        HandleJump();
+    }
+
+    
+    private void HandleMouvement()
+    {
+        float speed = moveDirection * groundSpeed;
+        rb.velocity = new Vector2(speed, rb.velocity.y);
+    }
+
+
+    private void HandleJump()
+    {
+        if (jumpPressed && isGrounded)
         {
-            rb.velocity = new Vector2(xDirection * groundSpeed, rb.velocity.y);
-            Flip();
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            jumpPressed = false;
+            jumpReleased = false;
         }
+        if (jumpReleased && isGrounded)
+        {
+            if (rb.velocity.y > 0)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpCutMultiplier);
+            }
+            jumpReleased = false;
+        }
+    }
+
+
+    void ApplyVariableGravity()
+    {
+        if (rb.velocity.y < -0.05f)
+        {
+            rb.gravityScale = fallGravity;
+        }
+        else if (rb.velocity.y > 0.05f)
+        {
+            rb.gravityScale = jumpGravity;
+        }
+        else
+        {
+            rb.gravityScale = normalGravity;
+        }
+    }
+
+
+    private void CheckGrounded()
+    {
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+    }
+
 
     private void Flip()
     {
-        xFlipDirection = Input.GetAxisRaw("Horizontal");
+        facingDirection = Input.GetAxisRaw("Horizontal");
 
-        if(xFlipDirection == 1)
+        if (facingDirection == 1)
         {
             robotSprite.flipX = false;
         }
 
-        else if(xFlipDirection == -1)
+        else if (facingDirection == -1)
         {
             robotSprite.flipX = true;
         }
     }
 
-    public void Move(InputAction.CallbackContext context)
+
+    public void OnMove(InputValue value)
     {
-        xDirection = context.ReadValue<Vector2>().x;
+        moveDirection = value.Get<Vector2>().x;
     }
-    
-    public void Jump(InputAction.CallbackContext context)
+
+
+    public void OnJump(InputValue value)
     {
-        if(context.performed && IsGrounded())
+        if (value.isPressed)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            jumpPressed = true;
+            jumpReleased = false;
+        }
+        else
+        {
+            jumpReleased = true;
         }
     }
 
-    private bool IsGrounded()
+
+    private void OnDrawGizmosSelected()
     {
-        return Physics2D.OverlapCapsule(groundCheck.position, new Vector2(1f, 0.1f), CapsuleDirection2D.Horizontal, 0, GroundLayer);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
 }
