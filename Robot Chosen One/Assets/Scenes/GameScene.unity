@@ -362,12 +362,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 723903195}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 120b52ad19576a3479bbb00d0761985d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0471e3b4af318e246b518509b00bc19d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   heartPrefab: {fileID: 5589377472550238589, guid: 7c77a71b5f8434f4cb5e5aca7d66972c, type: 3}
-  health: 5
   maxHealth: 12
+  health: 6
 --- !u!1001 &1545148154
 PrefabInstance:
   m_ObjectHideFlags: 0
