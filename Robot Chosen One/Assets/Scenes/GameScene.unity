@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 120b52ad19576a3479bbb00d0761985d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heartPrefab: {fileID: 4285147612712228671, guid: 7c77a71b5f8434f4cb5e5aca7d66972c, type: 3}
+  heartPrefab: {fileID: 5589377472550238589, guid: 7c77a71b5f8434f4cb5e5aca7d66972c, type: 3}
   health: 5
   maxHealth: 12
 --- !u!1001 &1545148154

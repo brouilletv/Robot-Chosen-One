@@ -4,8 +4,8 @@ using UnityEngine;
 public class HealthHeartBar : MonoBehaviour
 {
     public GameObject heartPrefab;
-    public int health;
-    public int maxHealth;
+    public float health;
+    public float maxHealth;
 
     private List<HealthHeart> hearts = new List<HealthHeart>();
 
@@ -18,7 +18,8 @@ public class HealthHeartBar : MonoBehaviour
     {
         ClearHearts();
 
-        int heartsToMake = Mathf.CeilToInt(maxHealth / 2f);
+        float maxHealthRemainder = maxHealth % 2;
+        int heartsToMake = (int)(maxHealth / 2 + maxHealthRemainder);
 
         for (int i = 0; i < heartsToMake; i++)
         {
@@ -27,10 +28,10 @@ public class HealthHeartBar : MonoBehaviour
 
         for (int i = 0; i < hearts.Count; i++)
         {
-            int heartHealth = Mathf.Clamp(health - (i * 2), 0, 2);
-            hearts[i].SetHeartImage((HeartStatus)heartHealth);
+            int heartStatusRemainder = Mathf.Clamp((int)health - (i * 2), 0, 2);
+            hearts[i].SetHeartImage((HeartStatus)heartStatusRemainder);
         }
-    } 
+    }
 
     void CreateEmptyHeart()
     {

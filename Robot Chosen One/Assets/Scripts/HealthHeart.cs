@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class HealthHeart : MonoBehaviour
 {
-    public Sprite fullHeart, halfHeart, emptyHeart; 
-    Image heartImage;
+    public Sprite fullHeart;
+    public Sprite halfHeart;
+    public Sprite emptyHeart;
+
+    private Image heartImage;
 
     private void Awake()
     {
@@ -20,9 +23,11 @@ public class HealthHeart : MonoBehaviour
             case HeartStatus.Empty:
                 heartImage.sprite = emptyHeart;
                 break;
+
             case HeartStatus.Half:
                 heartImage.sprite = halfHeart;
                 break;
+
             case HeartStatus.Full:
                 heartImage.sprite = fullHeart;
                 break;
