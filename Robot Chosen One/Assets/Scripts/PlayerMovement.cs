@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpPressed;
     private bool jumpReleased;
 
+    private Vector2 knockback;
 
 
     [Header("Mouvement Variables")]
@@ -51,13 +52,14 @@ public class PlayerMovement : MonoBehaviour
         CheckGrounded();
         HandleMouvement();
         HandleJump();
+        knockback = new Vector2(0, 0);
     }
 
     
     private void HandleMouvement()
     {
         float speed = moveDirection * groundSpeed;
-        rb.velocity = new Vector2(speed, rb.velocity.y);
+        rb.velocity = new Vector2(speed, rb.velocity.y)+ knockback;
     }
 
 
@@ -143,5 +145,28 @@ public class PlayerMovement : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+    }
+
+    void OnEnable()
+    {
+        TouchDmg.HitBouce += HandleBouceDirection;
+    }
+
+    void OnDisable()
+    {
+        TouchDmg.HitBouce -= HandleBouceDirection;
+    }
+
+    void HandleBouceDirection(int direction)
+    {
+        if (direction == 0)
+        {
+            knockback = new Vector2(-50, 15);
+
+        }
+        else if (direction == 1)
+        {
+            knockback = new Vector2(50, 15);
+        }
     }
 }

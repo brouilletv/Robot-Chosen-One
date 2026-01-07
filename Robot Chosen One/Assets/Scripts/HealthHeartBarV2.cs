@@ -81,4 +81,19 @@ public class HealthHeartBarV2 : MonoBehaviour
         }
         hearts.Clear();
     }
+
+    void OnEnable()
+    {
+        TouchDmg.Hit += HandleHealthChanged;
+    }
+
+    void OnDisable()
+    {
+        TouchDmg.Hit -= HandleHealthChanged;
+    }
+
+    void HandleHealthChanged(int newHealth)
+    {
+        TakeDamage(newHealth);
+    }
 }
