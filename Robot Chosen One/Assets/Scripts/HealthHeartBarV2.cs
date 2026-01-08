@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Collections;
+using System;
 using UnityEngine;
 
 public class HealthHeartBarV2 : MonoBehaviour
@@ -9,6 +11,7 @@ public class HealthHeartBarV2 : MonoBehaviour
 
     private List<HealthHeart> hearts = new List<HealthHeart>();
 
+    public static event Action<int> respawn;
     private void Start()
     {
         health = Mathf.Clamp(health, 0, maxHealth);
@@ -38,6 +41,17 @@ public class HealthHeartBarV2 : MonoBehaviour
     public void TakeDamage(float amount)
     {
         SetHealth(health - amount);
+        if (health <= 0)
+        {
+            Dead(2);
+            StartCoroutine(Cooldown());
+        }
+
+        IEnumerator Cooldown()
+        {
+            yield return new WaitForSeconds(2f);
+            Heal(maxHealth);
+        }
     }
 
     public void Heal(float amount)
@@ -95,5 +109,9 @@ public class HealthHeartBarV2 : MonoBehaviour
     void HandleHealthChanged(int newHealth)
     {
         TakeDamage(newHealth);
+    }
+    public void Dead(int respawnTime)
+    {
+        respawn?.Invoke(respawnTime);
     }
 }
