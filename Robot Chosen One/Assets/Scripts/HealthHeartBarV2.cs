@@ -43,13 +43,13 @@ public class HealthHeartBarV2 : MonoBehaviour
         SetHealth(health - amount);
         if (health <= 0)
         {
-            Dead(2);
+            Dead(0);
             StartCoroutine(Cooldown());
         }
 
         IEnumerator Cooldown()
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(0f);
             Heal(maxHealth);
         }
     }

@@ -21,13 +21,7 @@ public class Respawn : MonoBehaviour
 
     void HandleRespawn(int respawnTime)
     {
-        StartCoroutine(Cooldown(respawnTime));
-
-        IEnumerator Cooldown(int respawnTime)
-        {
-            yield return new WaitForSeconds(respawnTime);
-            rb.velocity = new Vector2(0, 0);
-            player.transform.position = CurrentRespawnPoint.position;
-        }
+        rb.velocity = new Vector2(0, 0);
+        player.transform.position = CurrentRespawnPoint.position;
     }
 }
