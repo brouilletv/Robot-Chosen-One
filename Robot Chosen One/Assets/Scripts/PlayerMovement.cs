@@ -4,6 +4,7 @@ using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using Cysharp.Threading.Tasks;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -33,6 +34,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     private bool isGrounded;
 
+    [Header("Dash Settings")]
+    [SerializeField] private float _dashSpeed;
+    [SerializeField] private float _dashDuration;
+
+    private bool _isDashing;
 
     private void Start()
     {
@@ -61,7 +67,6 @@ public class PlayerMovement : MonoBehaviour
         float speed = moveDirection * groundSpeed;
         rb.velocity = new Vector2(speed, rb.velocity.y)+ knockback;
     }
-
 
     private void HandleJump()
     {
