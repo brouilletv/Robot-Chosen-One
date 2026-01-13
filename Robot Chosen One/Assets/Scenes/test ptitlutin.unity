@@ -354,6 +354,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1043109362}
+  - component: {fileID: 1043109364}
+  - component: {fileID: 1043109363}
   m_Layer: 0
   m_Name: TestRespawnLocation
   m_TagString: Untagged
@@ -376,6 +378,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1313999815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1043109363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043109361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e14716f28772974d948d8b29a2f116b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1757402282}
+  respawnCollider: {fileID: 1043109364}
+  spawnLocation: {fileID: 1043109362}
+--- !u!58 &1043109364
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043109361}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &1313999814
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,10 +480,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1757402278}
   player: {fileID: 106443567}
-  CurrentRespawnPoint: {fileID: 1043109362}
+  defaultSpawn: {fileID: 1043109362}
 --- !u!50 &1757402278 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 186077379371596834, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
+  m_PrefabInstance: {fileID: 1989983858}
+  m_PrefabAsset: {fileID: 0}
+--- !u!70 &1757402282 stripped
+CapsuleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 4394658483900559627, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
   m_PrefabInstance: {fileID: 1989983858}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1948111496
@@ -443,6 +500,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1948111497}
+  - component: {fileID: 1948111498}
+  - component: {fileID: 1948111499}
   m_Layer: 0
   m_Name: SecondRespawnLocation
   m_TagString: Untagged
@@ -465,6 +524,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1313999815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1948111498
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948111496}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!114 &1948111499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948111496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e14716f28772974d948d8b29a2f116b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1757402282}
+  respawnCollider: {fileID: 1948111498}
+  spawnLocation: {fileID: 1948111497}
 --- !u!1001 &1989983858
 PrefabInstance:
   m_ObjectHideFlags: 0

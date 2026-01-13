@@ -1,17 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using System;
 
 public class SpawnLocation : MonoBehaviour
 {
 
-    [SerializeField] Transform player;
-    [SerializeField] Transform respawnPosition;
+    [SerializeField] CapsuleCollider2D player;
+    [SerializeField] CircleCollider2D respawnCollider;
+    [SerializeField] Transform spawnLocation;
+    public static event Action<Transform> newLocation;
 
     private bool inRange;
 
     void Update()
     {
-        //inRange = Physics2D.OverlapCircle(respawnPosition.position, 0.25f, player.position);
+        if (respawnCollider.IsTouching(player) && Keyboard.current[Key.W].wasPressedThisFrame)
+        {
+            ChangeLocation(spawnLocation);
+        }
+    }
+
+    public void ChangeLocation(Transform spawnLocation)
+    {
+        newLocation?.Invoke(spawnLocation);
     }
 }
