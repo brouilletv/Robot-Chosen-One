@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using Cysharp.Threading.Tasks;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 knockback;
 
+    private bool isWallSliding;
+    private float wallSlidingSpeed = 2f;
 
     [Header("Mouvement Variables")]
     [SerializeField] float groundSpeed = 10f;
@@ -34,11 +37,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     private bool isGrounded;
 
-    [Header("Dash Settings")]
-    [SerializeField] private float _dashSpeed;
-    [SerializeField] private float _dashDuration;
+    private bool canDash = true;
+    private bool isDashing;
+    private float dashingPower = 24f;
+    private float dashingTime = 0.2f;
+    private float dashingCooldown = 1f;
 
-    private bool _isDashing;
+    [SerializeField] private TrailRenderer tr;
+    [SerializeField] private SpriteRenderer sr;
+    [SerializeField] private Transform wallCheck;
+    [SerializeField] private LayerMask wallLayer;
+
+
+    private bool _isDashing = false;
+    private float viewDirection;
+    private bool _isDashOn = true;
 
     private void Start()
     {
@@ -48,12 +61,33 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        
+        if (isDashing)
+        {
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            _isDashOn = !_isDashOn;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && _isDashOn)
+        {
+            StartCoroutine(Dash());
+        }
         Flip();
+        WallSlide();
     }
 
 
     private void FixedUpdate()
     {
+        if (isDashing)
+        {
+            return;
+        }
+
         ApplyVariableGravity();
         CheckGrounded();
         HandleMouvement();
@@ -173,5 +207,45 @@ public class PlayerMovement : MonoBehaviour
         {
             knockback = new Vector2(50, 15);
         }
+    }
+
+    private bool IsWalled()
+    {
+        return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
+    }
+
+    private void WallSlide()
+    {
+        if (IsWalled() && !isGrounded && rb.velocity.y < 0)
+        {
+            isWallSliding = true;
+            rb.velocity = new Vector2(rb.velocity.x, -wallSlidingSpeed);
+        }
+        else
+        {
+            isWallSliding = false;
+        }
+    }
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        if (sr.flipX == false)
+        {
+            viewDirection = 1f;
+        }
+        else
+        {
+            viewDirection = -1f;
+        }
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower * viewDirection, 0f);
+        yield return new WaitForSeconds(dashingTime);
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
+
     }
 }

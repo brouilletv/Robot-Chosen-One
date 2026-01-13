@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 using UnityEngine;
+using System.Runtime.CompilerServices;
 
 public class HealthHeartBarV2 : MonoBehaviour
 {
     public GameObject heartPrefab;
     public float maxHealth = 12;
     public float health = 12;
+
 
     private List<HealthHeart> hearts = new List<HealthHeart>();
 
@@ -114,4 +116,5 @@ public class HealthHeartBarV2 : MonoBehaviour
     {
         respawn?.Invoke(respawnTime);
     }
+
 }
