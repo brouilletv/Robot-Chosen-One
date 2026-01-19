@@ -247,13 +247,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-<<<<<<< HEAD
+        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Resume = m_UI.FindAction("Resume", throwIfNotFound: true);
-=======
-        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
->>>>>>> 1ad2b9fdd56bddb752298361ce693ccd948a2ae9
     }
 
     public void Dispose()
