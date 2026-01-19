@@ -13,7 +13,7 @@ public class TouchDmg : MonoBehaviour
     [SerializeField] private Transform Body;
     [SerializeField] private Transform PlayerT;
 
-    public static event Action<int> HitBouce;
+    public static event Action<int> HitBounce;
     private int TouchedOnRight;
     void OnCollisionStay2D(Collision2D col)
     {
@@ -57,6 +57,6 @@ public class TouchDmg : MonoBehaviour
     }
     public void Bouce(int side)
     {
-        HitBouce?.Invoke(side);
+        HitBounce?.Invoke(side);
     }
 }
