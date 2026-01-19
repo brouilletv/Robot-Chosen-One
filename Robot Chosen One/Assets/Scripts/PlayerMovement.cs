@@ -14,9 +14,11 @@ public class PlayerMovement : MonoBehaviour
     private float facingDirection;
 
     // Input Variables
+    private PlayerInput playerInput;
     private float moveDirection;
     private bool jumpPressed;
     private bool jumpReleased;
+    private bool actionMapToggle;
 
     private Vector2 knockback;
 
@@ -52,6 +54,12 @@ public class PlayerMovement : MonoBehaviour
     private bool _isDashing = false;
     private float viewDirection;
     private bool _isDashOn = true;
+
+    private void Awake()
+    {
+        playerInput = GetComponent<PlayerInput>();
+    }
+
 
     private void Start()
     {
@@ -95,6 +103,26 @@ public class PlayerMovement : MonoBehaviour
         knockback = new Vector2(0, 0);
     }
 
+/*
+    public void SwitchToActionMapPlayer()
+    {
+        playerInput.actions.FindActionMap("UI").Disable();
+        playerInput.actions.FindActionMap("Player").Enable();
+    }
+
+
+    private ToggleActionMapPlayer()
+    {
+
+    }
+
+
+    public void SwitchToActionMapUI()
+    {
+        playerInput.actions.FindActionMap("Player").Disable();
+        playerInput.actions.FindActionMap("UI").Enable();
+    }
+*/
     
     private void HandleMouvement()
     {
