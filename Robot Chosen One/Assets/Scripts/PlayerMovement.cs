@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rb;
     [SerializeField] SpriteRenderer robotSprite;
+    [SerializeField] GameObject Player;
     private float facingDirection;
 
     // Input Variables
@@ -18,22 +19,24 @@ public class PlayerMovement : MonoBehaviour
     private float moveDirection;
     private bool jumpPressed;
     private bool jumpReleased;
-    private bool actionMapToggle;
 
     private Vector2 knockback;
 
     private bool isWallSliding;
     private float wallSlidingSpeed = 2f;
 
-    [Header("Mouvement Variables")]
+    [Header("Movement Variables")]
     [SerializeField] float groundSpeed = 10f;
     [SerializeField] float jumpForce = 20f;
     [SerializeField] float jumpCutMultiplier = 0.5f;
     [SerializeField] float normalGravity = 6f;
     [SerializeField] float fallGravity = 12f;
     [SerializeField] float jumpGravity = 5f;
+    [SerializeField] float dashingPower = 24f;
+    [SerializeField] float dashingTime = 0.2f;
+    [SerializeField] float dashingCooldown = 1f;
 
-    [Header("GroundCheck")]
+    [Header("Checks")]
     [SerializeField] Transform groundCheck;
     [SerializeField] float groundCheckRadius = 0.3f;
     [SerializeField] LayerMask groundLayer;
@@ -41,29 +44,21 @@ public class PlayerMovement : MonoBehaviour
 
     private bool canDash = true;
     private bool isDashing;
-    private float dashingPower = 24f;
-    private float dashingTime = 0.2f;
-    private float dashingCooldown = 1f;
 
     [SerializeField] private TrailRenderer tr;
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
 
-
     private bool _isDashing = false;
     private float viewDirection;
     private bool _isDashOn = true;
-
-    private void Awake()
-    {
-        playerInput = GetComponent<PlayerInput>();
-    }
 
 
     private void Start()
     {
         rb.gravityScale = normalGravity;
+        playerInput = GetComponent<PlayerInput>();
     }
 
 
@@ -98,22 +93,16 @@ public class PlayerMovement : MonoBehaviour
 
         ApplyVariableGravity();
         CheckGrounded();
-        HandleMouvement();
+        HandleMovement();
         HandleJump();
         knockback = new Vector2(0, 0);
     }
 
-/*
+
     public void SwitchToActionMapPlayer()
     {
         playerInput.actions.FindActionMap("UI").Disable();
         playerInput.actions.FindActionMap("Player").Enable();
-    }
-
-
-    private ToggleActionMapPlayer()
-    {
-
     }
 
 
@@ -122,12 +111,25 @@ public class PlayerMovement : MonoBehaviour
         playerInput.actions.FindActionMap("Player").Disable();
         playerInput.actions.FindActionMap("UI").Enable();
     }
-*/
+
+
+    public static void SwitchActionMap(int index)
+    {
+        if (index == 0)
+        {
+            SwitchToActionMapPlayer();
+        }
+        else if (index == 1)
+        {
+            SwitchToActionMapUI();
+        }
+    }
+
     
-    private void HandleMouvement()
+    private void HandleMovement()
     {
         float speed = moveDirection * groundSpeed;
-        rb.velocity = new Vector2(speed, rb.velocity.y)+ knockback;
+        rb.velocity = new Vector2(speed, rb.velocity.y) + knockback;
     }
 
     private void HandleJump()
@@ -207,6 +209,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+/*
+    public void OnDash(InputValue value)
+    {
+        canDash = false;
+        isDashing = true;
+    }
+*/
 
     private void OnDrawGizmosSelected()
     {
@@ -214,15 +223,18 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
 
+
     void OnEnable()
     {
         TouchDmg.HitBounce += HandleBouceDirection;
     }
 
+
     void OnDisable()
     {
         TouchDmg.HitBounce -= HandleBouceDirection;
     }
+
 
     void HandleBouceDirection(int direction)
     {
@@ -237,10 +249,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
     private bool IsWalled()
     {
         return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
     }
+
 
     private void WallSlide()
     {
@@ -254,6 +268,8 @@ public class PlayerMovement : MonoBehaviour
             isWallSliding = false;
         }
     }
+
+    // Move code to OnDash
     private IEnumerator Dash()
     {
         canDash = false;
