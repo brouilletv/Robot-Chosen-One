@@ -30,7 +30,7 @@ public class PauseManager : MonoBehaviour
     {
         if (isPaused)
         {
-            ResumeGame();
+            //ResumeGame();
         }
     }
 

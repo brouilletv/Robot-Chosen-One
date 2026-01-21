@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] SpriteRenderer robotSprite;
     private float facingDirection;
-    
+
 
     // Input Variables
     private float moveDirection;
@@ -20,10 +20,10 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpReleased;
 
     private Vector2 knockback;
-
+/*
     private bool isWallSliding;
     private float wallSlidingSpeed = 2f;
-
+*/
     [Header("Movement Variables")]
     [SerializeField] float groundSpeed = 10f;
     [SerializeField] float jumpForce = 20f;
@@ -31,16 +31,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float normalGravity = 6f;
     [SerializeField] float fallGravity = 12f;
     [SerializeField] float jumpGravity = 5f;
+/*
     [SerializeField] float dashingPower = 24f;
     [SerializeField] float dashingTime = 0.2f;
     [SerializeField] float dashingCooldown = 1f;
+*/
 
     [Header("Checks")]
     [SerializeField] Transform groundCheck;
     [SerializeField] float groundCheckRadius = 0.3f;
     [SerializeField] LayerMask groundLayer;
     private bool isGrounded;
-
+/*
     private bool canDash = true;
     private bool isDashing;
 
@@ -52,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _isDashing = false;
     private float viewDirection;
     private bool _isDashOn = true;
-
+*/
 
     private void Awake()
     {
@@ -62,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        
+        /*
         if (isDashing)
         {
             return;
@@ -77,18 +79,20 @@ public class PlayerMovement : MonoBehaviour
         {
             StartCoroutine(Dash());
         }
+        */
         Flip();
-        WallSlide();
+        // WallSlide();
     }
 
 
     private void FixedUpdate()
     {
+        /*
         if (isDashing)
         {
             return;
         }
-
+        */
         ApplyVariableGravity();
         CheckGrounded();
         HandleMovement();
@@ -219,7 +223,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
+/*
     private bool IsWalled()
     {
         return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
@@ -260,6 +264,6 @@ public class PlayerMovement : MonoBehaviour
         isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
-
     }
+*/
 }
