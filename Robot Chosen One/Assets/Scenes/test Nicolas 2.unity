@@ -142,6 +142,10 @@ PrefabInstance:
       propertyPath: orthographic
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5376234245421246695, guid: 2caef158d98224147b1e6ccc815d7666, type: 3}
+      propertyPath: orthographic size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8027201607330368432, guid: 2caef158d98224147b1e6ccc815d7666, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -247,6 +251,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4981758355808284812, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707219925037560523, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1778611740}
+    - target: {fileID: 6707219925037560523, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6967699431903482714, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
       propertyPath: jumpCutMultiplier
       value: 0.5
@@ -322,6 +338,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cdad6daacc5ff8458eb0c4f047e7e79, type: 3}
+--- !u!20 &1778611740 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5376234245421246695, guid: 2caef158d98224147b1e6ccc815d7666, type: 3}
+  m_PrefabInstance: {fileID: 453551981}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1999984991
 GameObject:
   m_ObjectHideFlags: 0
