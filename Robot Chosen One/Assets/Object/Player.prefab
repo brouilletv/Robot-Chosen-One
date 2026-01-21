@@ -655,9 +655,10 @@ GameObject:
   - component: {fileID: 542451865603372785}
   - component: {fileID: 186077379371596834}
   - component: {fileID: 4394658483900559627}
-  - component: {fileID: 7436954447814116868}
-  - component: {fileID: 6967699431903482714}
   - component: {fileID: 7898322808769232092}
+  - component: {fileID: 1283816574630442061}
+  - component: {fileID: 1168437065262223502}
+  - component: {fileID: 6940236188466267409}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -745,44 +746,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.05}
   m_Size: {x: 0.5, y: 0.8}
   m_Direction: 0
---- !u!114 &7436954447814116868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3104547831339970628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47e0f15742a13d74f80fd8d2a8b94810, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PauseMenu: {fileID: 2717365955330198746}
---- !u!114 &6967699431903482714
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3104547831339970628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f37f45beb90a238459d6252bb1b4d3fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 186077379371596834}
-  robotSprite: {fileID: 717245941002535390}
-  groundSpeed: 10
-  jumpForce: 20
-  jumpCutMultiplier: 0.5
-  normalGravity: 6
-  fallGravity: 12
-  jumpGravity: 5
-  groundCheck: {fileID: 7183691669760005473}
-  groundCheckRadius: 0.3
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!114 &7898322808769232092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -810,7 +773,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7436954447814116868}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
         m_MethodName: Pause
         m_Mode: 0
@@ -826,7 +789,7 @@ MonoBehaviour:
     m_ActionName: Player/Pause[/Keyboard/escape]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6967699431903482714}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: Move
         m_Mode: 0
@@ -842,7 +805,7 @@ MonoBehaviour:
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6967699431903482714}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: Jump
         m_Mode: 0
@@ -861,6 +824,59 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1283816574630442061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3104547831339970628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ba95eef3eb660440ab0f2bac7959ec7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 186077379371596834}
+  robotSprite: {fileID: 717245941002535390}
+  groundSpeed: 10
+  jumpForce: 20
+  jumpCutMultiplier: 0.5
+  normalGravity: 6
+  fallGravity: 12
+  jumpGravity: 5
+  groundCheck: {fileID: 7183691669760005473}
+  groundCheckRadius: 0.3
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &1168437065262223502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3104547831339970628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c41066a53a658745a8db390c127a2b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PauseMenu: {fileID: 2717365955330198746}
+--- !u!114 &6940236188466267409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3104547831339970628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fb6dd72ef585d440a2a8c67e77b6692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 186077379371596834}
+  player: {fileID: 542451865603372785}
+  defaultSpawn: {fileID: 0}
 --- !u!1 &3967289328480922979
 GameObject:
   m_ObjectHideFlags: 0
@@ -1166,7 +1182,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7436954447814116868}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
         m_MethodName: ResumeGame
         m_Mode: 1
