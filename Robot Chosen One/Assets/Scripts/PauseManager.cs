@@ -30,7 +30,7 @@ public class PauseManager : MonoBehaviour
     {
         if (isPaused)
         {
-            //ResumeGame();
+            ResumeGame();
         }
     }
 
@@ -41,7 +41,9 @@ public class PauseManager : MonoBehaviour
         AudioListener.pause = true;
         isPaused = true;
         PauseMenu.SetActive(true);
-        playerInput.SwitchCurrentActionMap("UI");
+        playerInput.actions.FindActionMap("UI").Enable();
+        playerInput.actions.FindActionMap("Player").Disable();
+        print("Pause");
     }
 
 
@@ -51,6 +53,8 @@ public class PauseManager : MonoBehaviour
         AudioListener.pause = false;
         isPaused = false;
         PauseMenu.SetActive(false);
-        playerInput.SwitchCurrentActionMap("Player");
+        playerInput.actions.FindActionMap("Player").Enable();
+        playerInput.actions.FindActionMap("UI").Disable();
+        print("Resume");
     }
 }
