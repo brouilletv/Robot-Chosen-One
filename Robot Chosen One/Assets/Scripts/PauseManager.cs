@@ -3,15 +3,17 @@ using UnityEngine.InputSystem;
 
 
 public class PauseManager : MonoBehaviour
-{
+{   
+
     public static bool isPaused = false;
     [SerializeField] GameObject PauseMenu;
-    private PlayerMovement player;
+    private static PlayerInput playerInput;
 
 
-    private void Start()
+    private void Awake()
     {
         PauseMenu.SetActive(false);
+        playerInput = GetComponent<PlayerInput>();
     }
 
 
@@ -39,7 +41,7 @@ public class PauseManager : MonoBehaviour
         AudioListener.pause = true;
         isPaused = true;
         PauseMenu.SetActive(true);
-        player.SwitchActionMap(1);
+        playerInput.SwitchCurrentActionMap("UI");
     }
 
 
@@ -49,6 +51,6 @@ public class PauseManager : MonoBehaviour
         AudioListener.pause = false;
         isPaused = false;
         PauseMenu.SetActive(false);
-        player.SwitchActionMap(0);
+        playerInput.SwitchCurrentActionMap("Player");
     }
 }

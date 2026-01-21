@@ -11,11 +11,10 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rb;
     [SerializeField] SpriteRenderer robotSprite;
-    [SerializeField] GameObject Player;
     private float facingDirection;
+    
 
     // Input Variables
-    private PlayerInput playerInput;
     private float moveDirection;
     private bool jumpPressed;
     private bool jumpReleased;
@@ -55,10 +54,9 @@ public class PlayerMovement : MonoBehaviour
     private bool _isDashOn = true;
 
 
-    private void Start()
+    private void Awake()
     {
         rb.gravityScale = normalGravity;
-        playerInput = GetComponent<PlayerInput>();
     }
 
 
@@ -99,33 +97,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    public void SwitchToActionMapPlayer()
-    {
-        playerInput.actions.FindActionMap("UI").Disable();
-        playerInput.actions.FindActionMap("Player").Enable();
-    }
-
-
-    public void SwitchToActionMapUI()
-    {
-        playerInput.actions.FindActionMap("Player").Disable();
-        playerInput.actions.FindActionMap("UI").Enable();
-    }
-
-
-    public static void SwitchActionMap(int index)
-    {
-        if (index == 0)
-        {
-            SwitchToActionMapPlayer();
-        }
-        else if (index == 1)
-        {
-            SwitchToActionMapUI();
-        }
-    }
-
-    
     private void HandleMovement()
     {
         float speed = moveDirection * groundSpeed;
@@ -195,7 +166,6 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = value.Get<Vector2>().x;
     }
 
-
     public void OnJump(InputValue value)
     {
         if (value.isPressed)
@@ -235,7 +205,7 @@ public class PlayerMovement : MonoBehaviour
         TouchDmg.HitBounce -= HandleBouceDirection;
     }
 
-
+    
     void HandleBouceDirection(int direction)
     {
         if (direction == 0)
