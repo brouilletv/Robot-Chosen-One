@@ -6,12 +6,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using Cysharp.Threading.Tasks;
 using System.Collections;
+using System.Security.Cryptography;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rb;
     [SerializeField] SpriteRenderer robotSprite;
     private float facingDirection;
+    private static PlayerInput playerInput;
 
 
     // Input Variables
@@ -30,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpCutMultiplier = 0.5f;
     [SerializeField] float normalGravity = 6f;
     [SerializeField] float fallGravity = 12f;
-    [SerializeField] float jumpGravity = 5f;
+    [SerializeField] float jumpGravity = 4f;
 /*
     [SerializeField] float dashingPower = 24f;
     [SerializeField] float dashingTime = 0.2f;
@@ -59,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         rb.gravityScale = normalGravity;
+        playerInput = GetComponent<PlayerInput>();
     }
 
 
@@ -99,6 +102,24 @@ public class PlayerMovement : MonoBehaviour
         HandleJump();
         knockback = new Vector2(0, 0);
     }
+    
+
+    // Switching action maps doesn't work for some reason and I gave up on trying to fix it. I'm leaving the code here just in case
+    public void SwitchActionMapToUI()
+    {
+        playerInput.actions.FindActionMap("Player").Disable();
+        playerInput.actions.FindActionMap("UI").Enable();
+        print("switched to UI");
+    }
+
+
+    // Switching action maps doesn't work for some reason and I gave up on trying to fix it. I'm leaving the code here just in case
+    public void SwitchActionMapToPlayer()
+    {
+        playerInput.actions.FindActionMap("UI").Disable();
+        playerInput.actions.FindActionMap("Player").Enable();
+        print("switched to Player");
+    }
 
 
     private void HandleMovement()
@@ -106,6 +127,7 @@ public class PlayerMovement : MonoBehaviour
         float speed = moveDirection * groundSpeed;
         rb.velocity = new Vector2(speed, rb.velocity.y) + knockback;
     }
+
 
     private void HandleJump()
     {
@@ -115,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
             jumpPressed = false;
             jumpReleased = false;
         }
-        if (jumpReleased && isGrounded)
+        if (jumpReleased && !isGrounded)
         {
             if (rb.velocity.y > 0)
             {
@@ -174,8 +196,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (value.isPressed)
         {
-            jumpPressed = true;
-            jumpReleased = false;
+            if (isGrounded)
+            {
+                jumpPressed = true;
+                jumpReleased = false;
+            }
         }
         else
         {

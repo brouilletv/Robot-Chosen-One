@@ -1,3 +1,5 @@
+using System;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,13 +9,13 @@ public class PauseManager : MonoBehaviour
 
     public static bool isPaused = false;
     [SerializeField] GameObject PauseMenu;
-    private static PlayerInput playerInput;
+    public PlayerMovement playerMovement;
 
 
     private void Awake()
     {
         PauseMenu.SetActive(false);
-        playerInput = GetComponent<PlayerInput>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
 
@@ -41,9 +43,7 @@ public class PauseManager : MonoBehaviour
         AudioListener.pause = true;
         isPaused = true;
         PauseMenu.SetActive(true);
-        playerInput.actions.FindActionMap("UI").Enable();
-        playerInput.actions.FindActionMap("Player").Disable();
-        print("Pause");
+        playerMovement.SwitchActionMapToUI(); // Doesn't work
     }
 
 
@@ -53,8 +53,6 @@ public class PauseManager : MonoBehaviour
         AudioListener.pause = false;
         isPaused = false;
         PauseMenu.SetActive(false);
-        playerInput.actions.FindActionMap("Player").Enable();
-        playerInput.actions.FindActionMap("UI").Disable();
-        print("Resume");
+        playerMovement.SwitchActionMapToPlayer(); // Doesn't work
     }
 }
