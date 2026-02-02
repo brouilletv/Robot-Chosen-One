@@ -535,7 +535,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -765,6 +765,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6940236188466267409, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
+      propertyPath: defaultSpawn
+      value: 
+      objectReference: {fileID: 1043109362}
     - target: {fileID: 7898322808769232092, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
       propertyPath: m_Camera
       value: 
@@ -1110,11 +1114,14 @@ MonoBehaviour:
   enemy: {fileID: 1622381110}
   edgeRight: {fileID: 379981995}
   edgeLeft: {fileID: 1580568636}
+  melee: 0
   meleeRight: {fileID: 1114291360}
   meleeLeft: {fileID: 185896132}
   meleeHitbox: {fileID: 579177909}
   meleeDmg: 1
   meleeCooldownTime: 2
+  range: 1
+  projectile: {fileID: 5248569081223522632, guid: 9ff723b78d6ede34a9b6c1870f6a6fa5, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

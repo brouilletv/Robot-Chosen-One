@@ -862,6 +862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PauseMenu: {fileID: 2717365955330198746}
+  playerMovement: {fileID: 0}
 --- !u!114 &6940236188466267409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1182,7 +1183,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1168437065262223502}
         m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
         m_MethodName: ResumeGame
         m_Mode: 1

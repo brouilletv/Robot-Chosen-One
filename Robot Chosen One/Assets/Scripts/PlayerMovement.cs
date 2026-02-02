@@ -226,12 +226,14 @@ public class PlayerMovement : MonoBehaviour
     void OnEnable()
     {
         TouchDmg.HitBounce += HandleBouceDirection;
+        BasicAttackPatern.HitBounce += HandleBouceDirection;
     }
 
 
     void OnDisable()
     {
         TouchDmg.HitBounce -= HandleBouceDirection;
+        BasicAttackPatern.HitBounce -= HandleBouceDirection;
     }
 
     

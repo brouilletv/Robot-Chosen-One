@@ -18,6 +18,8 @@ public class BasicAttackPatern : MonoBehaviour
     [SerializeField] Transform edgeLeft;
 
     [Header("Melee settings")]
+    [SerializeField] bool melee;
+
     [SerializeField] Transform meleeRight;
     [SerializeField] Transform meleeLeft;
 
@@ -30,9 +32,16 @@ public class BasicAttackPatern : MonoBehaviour
     [SerializeField] float meleeCooldownTime;
 
     public static event Action<int> Hit;
+    public static event Action<int> HitBounce;
+
+    [Header("Range settings")]
+    [SerializeField] bool range;
+
+    [SerializeField] GameObject projectile;
 
     [Header("other settings")]
     private string playerDirection = null;
+    private int playerDirectionInt = 2;
 
     void Start()
     {
@@ -47,8 +56,16 @@ public class BasicAttackPatern : MonoBehaviour
 
     void Update()
     {
-        InRangeMelee();
-        CheckHitboxMelee();
+        if(melee is true)
+        {
+            InRangeMelee();
+            CheckHitboxMelee();
+        }
+        if (range is true)
+        {
+            InRangeRange();
+            CheckHitboxRange();
+        }
     }
 
     void InRangeMelee()
@@ -74,15 +91,40 @@ public class BasicAttackPatern : MonoBehaviour
         }
     }
 
+    void InRangeRange()
+    {
+        if (playerT.position.x >= edgeLeft.position.x && playerT.position.x <= edgeRight.position.x && playerT.position.y >= edgeLeft.position.y && playerT.position.y <= edgeRight.position.y)
+        {
+            if (playerT.position.x >= enemyT.position.x)
+            {
+                playerDirection = "Right";
+            }
+            else if (playerT.position.x <= enemyT.position.x)
+            {
+                playerDirection = "Left";
+            }
+            else
+            {
+                playerDirection = null;
+            }
+        }
+        else
+        {
+            playerDirection = null;
+        }
+    }
+
     void CheckHitboxMelee()
     {
         if (playerDirection == "Right")
         {
             meleeHitboxT.localPosition = new Vector2(1f, 0f);
+            playerDirectionInt = 1;
         }
         else if (playerDirection == "Left")
         {
             meleeHitboxT.localPosition = new Vector2(-1f, 0f);
+            playerDirectionInt = 0;
         }
         else
         {
@@ -93,13 +135,27 @@ public class BasicAttackPatern : MonoBehaviour
         {
             StartCoroutine(MeleeCooldown());
             ApplyDmg(meleeDmg);
-            Debug.Log("works");
+            Bouce(playerDirectionInt);
+        }
+    }
+
+    void CheckHitboxRange()
+    {
+        if (playerDirection == "Right" || playerDirection == "Left")
+        {
+            Instantiate(projectile, enemyT.position, enemyT.rotation);
+            Debug.Log("work");
         }
     }
 
     void ApplyDmg(int dmg)
     {
         Hit?.Invoke(dmg);
+    }
+
+    public void Bouce(int side)
+    {
+        HitBounce?.Invoke(side);
     }
 
     IEnumerator MeleeCooldown()
