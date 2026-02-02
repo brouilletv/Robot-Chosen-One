@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
     [SerializeField] SpriteRenderer robotSprite;
     private float facingDirection;
+    private float previousFacingDirection;
     private static PlayerInput playerInput;
 
 
@@ -20,43 +21,44 @@ public class PlayerMovement : MonoBehaviour
     private float moveDirection;
     private bool jumpPressed;
     private bool jumpReleased;
-
     private Vector2 knockback;
-/*
-    private bool isWallSliding;
-    private float wallSlidingSpeed = 2f;
-*/
+
     [Header("Movement Variables")]
     [SerializeField] float groundSpeed = 10f;
-    [SerializeField] float jumpForce = 20f;
+    [SerializeField] float jumpForce = 16f;
     [SerializeField] float jumpCutMultiplier = 0.5f;
     [SerializeField] float normalGravity = 6f;
-    [SerializeField] float fallGravity = 12f;
+    [SerializeField] float fallGravity = 10f;
     [SerializeField] float jumpGravity = 4f;
-/*
+
     [SerializeField] float dashingPower = 24f;
     [SerializeField] float dashingTime = 0.2f;
     [SerializeField] float dashingCooldown = 1f;
-*/
 
-    [Header("Checks")]
+
+    [Header("GroundCheck")]
     [SerializeField] Transform groundCheck;
     [SerializeField] float groundCheckRadius = 0.3f;
     [SerializeField] LayerMask groundLayer;
+
+
+    [Header("Flags")]
+    public bool unlockedDoubleJump;
+
+
+    // Bools
     private bool isGrounded;
-/*
-    private bool canDash = true;
-    private bool isDashing;
+
+    [SerializeField] private bool isDashing = false;
+    [SerializeField] private bool canDash = true;
+    private bool canDoubleJump = true;
 
     [SerializeField] private TrailRenderer tr;
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
 
-    private bool _isDashing = false;
-    private float viewDirection;
-    private bool _isDashOn = true;
-*/
+
 
     private void Awake()
     {
@@ -67,42 +69,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        /*
-        if (isDashing)
-        {
-            return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            _isDashOn = !_isDashOn;
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && _isDashOn)
-        {
-            StartCoroutine(Dash());
-        }
-        */
         Flip();
-        // WallSlide();
     }
 
 
     private void FixedUpdate()
     {
-        /*
-        if (isDashing)
-        {
-            return;
-        }
-        */
+        setFacingDirection();
         ApplyVariableGravity();
         CheckGrounded();
         HandleMovement();
         HandleJump();
         knockback = new Vector2(0, 0);
     }
-    
+
 
     // Switching action maps doesn't work for some reason and I gave up on trying to fix it. I'm leaving the code here just in case
     public void SwitchActionMapToUI()
@@ -122,20 +102,60 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
+    private IEnumerator Dash()
+    {
+        isDashing = true;
+        canDash = false;
+        rb.velocity = new Vector2(previousFacingDirection * dashingPower, 0f);
+        rb.gravityScale = 0f;
+
+        //tr.emitting = true;
+
+        yield return new WaitForSeconds(dashingTime);
+        isDashing = false;
+
+        //tr.emitting = false;
+
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
+    }
+
+
+    public void OnDash(InputValue value)
+    {
+        if (canDash)
+        {
+            StartCoroutine(Dash());
+        }
+    }
+
     private void HandleMovement()
     {
-        float speed = moveDirection * groundSpeed;
-        rb.velocity = new Vector2(speed, rb.velocity.y) + knockback;
+        if (!isDashing)
+        { 
+            float speed = facingDirection * groundSpeed;
+            rb.velocity = new Vector2(speed, rb.velocity.y) + knockback;
+        }
     }
 
 
     private void HandleJump()
     {
-        if (jumpPressed && isGrounded)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            jumpPressed = false;
-            jumpReleased = false;
+        if (jumpPressed)
+        {   
+            if (isGrounded)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                jumpPressed = false;
+                jumpReleased = false;
+            }
+            else if (!isGrounded && canDoubleJump && unlockedDoubleJump)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                jumpPressed = false;
+                jumpReleased = false;
+                canDoubleJump = false;
+            }
         }
         if (jumpReleased && !isGrounded)
         {
@@ -150,17 +170,20 @@ public class PlayerMovement : MonoBehaviour
 
     void ApplyVariableGravity()
     {
-        if (rb.velocity.y < -0.05f)
+        if (!isDashing)
         {
-            rb.gravityScale = fallGravity;
-        }
-        else if (rb.velocity.y > 0.05f)
-        {
-            rb.gravityScale = jumpGravity;
-        }
-        else
-        {
-            rb.gravityScale = normalGravity;
+            if (rb.velocity.y < -0.05f)
+            {
+                rb.gravityScale = fallGravity;
+            }
+            else if (rb.velocity.y > 0.05f)
+            {
+                rb.gravityScale = jumpGravity;
+            }
+            else
+            {
+                rb.gravityScale = normalGravity;
+            }
         }
     }
 
@@ -171,10 +194,33 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
+    private void setFacingDirection()
+    {
+        float value = moveDirection;
+
+        if (value > 0)
+        {
+            facingDirection = 1;
+
+        }
+        else if (value < 0)
+        {
+            facingDirection = -1;
+        }
+        else if (value == 0)
+        {
+            facingDirection = 0;
+        }
+
+        if (facingDirection != 0)
+        {
+            previousFacingDirection = facingDirection;
+        }
+    }
+
+
     private void Flip()
     {
-        facingDirection = Input.GetAxisRaw("Horizontal");
-
         if (facingDirection == 1)
         {
             robotSprite.flipX = false;
@@ -192,11 +238,23 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = value.Get<Vector2>().x;
     }
 
+
     public void OnJump(InputValue value)
     {
         if (value.isPressed)
         {
             if (isGrounded)
+            {
+                jumpPressed = true;
+                jumpReleased = false;
+                canDoubleJump = true;
+                
+                if (unlockedDoubleJump)
+                {
+                    canDoubleJump = true;
+                }
+            }
+            else if (!isGrounded && unlockedDoubleJump)
             {
                 jumpPressed = true;
                 jumpReleased = false;
@@ -208,13 +266,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-/*
-    public void OnDash(InputValue value)
-    {
-        canDash = false;
-        isDashing = true;
-    }
-*/
 
     private void OnDrawGizmosSelected()
     {
@@ -236,7 +287,7 @@ public class PlayerMovement : MonoBehaviour
         BasicAttackPatern.HitBounce -= HandleBouceDirection;
     }
 
-    
+
     void HandleBouceDirection(int direction)
     {
         if (direction == 0)
@@ -249,48 +300,4 @@ public class PlayerMovement : MonoBehaviour
             knockback = new Vector2(50, 15);
         }
     }
-
-/*
-    private bool IsWalled()
-    {
-        return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
-    }
-
-
-    private void WallSlide()
-    {
-        if (IsWalled() && !isGrounded && rb.velocity.y < 0)
-        {
-            isWallSliding = true;
-            rb.velocity = new Vector2(rb.velocity.x, -wallSlidingSpeed);
-        }
-        else
-        {
-            isWallSliding = false;
-        }
-    }
-
-    // Move code to OnDash
-    private IEnumerator Dash()
-    {
-        canDash = false;
-        isDashing = true;
-        if (sr.flipX == false)
-        {
-            viewDirection = 1f;
-        }
-        else
-        {
-            viewDirection = -1f;
-        }
-        float originalGravity = rb.gravityScale;
-        rb.gravityScale = 0f;
-        rb.velocity = new Vector2(transform.localScale.x * dashingPower * viewDirection, 0f);
-        yield return new WaitForSeconds(dashingTime);
-        rb.gravityScale = originalGravity;
-        isDashing = false;
-        yield return new WaitForSeconds(dashingCooldown);
-        canDash = true;
-    }
-*/
 }
