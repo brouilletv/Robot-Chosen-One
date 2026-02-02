@@ -839,16 +839,17 @@ MonoBehaviour:
   rb: {fileID: 186077379371596834}
   robotSprite: {fileID: 717245941002535390}
   groundSpeed: 10
-  jumpForce: 20
+  jumpForce: 16
   jumpCutMultiplier: 0.5
   normalGravity: 6
-  fallGravity: 12
-  jumpGravity: 5
+  fallGravity: 10
+  jumpGravity: 4
   groundCheck: {fileID: 7183691669760005473}
   groundCheckRadius: 0.3
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  unlockedDoubleJump: 0
 --- !u!114 &1168437065262223502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -862,6 +863,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PauseMenu: {fileID: 2717365955330198746}
+  playerMovement: {fileID: 0}
 --- !u!114 &6940236188466267409
 MonoBehaviour:
   m_ObjectHideFlags: 0

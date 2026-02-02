@@ -294,7 +294,11 @@ PrefabInstance:
       objectReference: {fileID: 2062606898}
     - target: {fileID: 1283816574630442061, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
       propertyPath: jumpForce
-      value: 20
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283816574630442061, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
+      propertyPath: fallGravity
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1283816574630442061, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
       propertyPath: jumpGravity
@@ -303,6 +307,10 @@ PrefabInstance:
     - target: {fileID: 1283816574630442061, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
       propertyPath: jumpCutMultiplier
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1283816574630442061, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
+      propertyPath: unlockedDoubleJump
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3104547831339970628, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
       propertyPath: m_Name

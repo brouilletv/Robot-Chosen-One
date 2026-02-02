@@ -21,15 +21,14 @@ public class PlayerMovement : MonoBehaviour
     private float moveDirection;
     private bool jumpPressed;
     private bool jumpReleased;
-
     private Vector2 knockback;
 
     [Header("Movement Variables")]
     [SerializeField] float groundSpeed = 10f;
-    [SerializeField] float jumpForce = 20f;
+    [SerializeField] float jumpForce = 16f;
     [SerializeField] float jumpCutMultiplier = 0.5f;
     [SerializeField] float normalGravity = 6f;
-    [SerializeField] float fallGravity = 12f;
+    [SerializeField] float fallGravity = 10f;
     [SerializeField] float jumpGravity = 4f;
 
     [SerializeField] float dashingPower = 24f;
@@ -37,19 +36,30 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dashingCooldown = 1f;
 
 
-    [Header("Checks")]
+    [Header("GroundCheck")]
     [SerializeField] Transform groundCheck;
     [SerializeField] float groundCheckRadius = 0.3f;
     [SerializeField] LayerMask groundLayer;
+
+
+    [Header("Flags")]
+    public bool unlockedDoubleJump;
+
+
+    // Bools
     private bool isGrounded;
 
     [SerializeField] private bool isDashing = false;
     [SerializeField] private bool canDash = true;
+    private bool canDoubleJump = true;
+    private bool canDash = true;
+    private bool isDashing;
 
     [SerializeField] private TrailRenderer tr;
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
+
 
 
     private void Awake()
@@ -133,11 +143,21 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleJump()
     {
-        if (jumpPressed && isGrounded)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            jumpPressed = false;
-            jumpReleased = false;
+        if (jumpPressed)
+        {   
+            if (isGrounded)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                jumpPressed = false;
+                jumpReleased = false;
+            }
+            else if (!isGrounded && canDoubleJump && unlockedDoubleJump)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                jumpPressed = false;
+                jumpReleased = false;
+                canDoubleJump = false;
+            }
         }
         if (jumpReleased && !isGrounded)
         {
@@ -226,6 +246,17 @@ public class PlayerMovement : MonoBehaviour
         if (value.isPressed)
         {
             if (isGrounded)
+            {
+                jumpPressed = true;
+                jumpReleased = false;
+                canDoubleJump = true;
+                
+                if (unlockedDoubleJump)
+                {
+                    canDoubleJump = true;
+                }
+            }
+            else if (!isGrounded && unlockedDoubleJump)
             {
                 jumpPressed = true;
                 jumpReleased = false;
