@@ -52,8 +52,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool isDashing = false;
     [SerializeField] private bool canDash = true;
     private bool canDoubleJump = true;
-    private bool canDash = true;
-    private bool isDashing;
 
     [SerializeField] private TrailRenderer tr;
     [SerializeField] private SpriteRenderer sr;
