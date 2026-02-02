@@ -43,7 +43,7 @@ public class PauseManager : MonoBehaviour
         AudioListener.pause = true;
         isPaused = true;
         PauseMenu.SetActive(true);
-        playerMovement.SwitchActionMapToUI(); // Doesn't work
+        playerMovement.SwitchActionMapToUI();
     }
 
 
@@ -53,6 +53,6 @@ public class PauseManager : MonoBehaviour
         AudioListener.pause = false;
         isPaused = false;
         PauseMenu.SetActive(false);
-        playerMovement.SwitchActionMapToPlayer(); // Doesn't work
+        playerMovement.SwitchActionMapToPlayer();
     }
 }

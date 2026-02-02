@@ -10,19 +10,17 @@ using System.Security.Cryptography;
 
 public class PlayerMovement : MonoBehaviour
 {
+    #region Variables & Awake
+    // References
     [SerializeField] Rigidbody2D rb;
     [SerializeField] SpriteRenderer robotSprite;
-    private float facingDirection;
-    private float previousFacingDirection;
-    private static PlayerInput playerInput;
+    [SerializeField] private TrailRenderer tr;
+    [SerializeField] private SpriteRenderer sr;
+    [SerializeField] private Transform wallCheck;
+    [SerializeField] private LayerMask wallLayer;
+    private PlayerInput playerInput;
 
-
-    // Input Variables
-    private float moveDirection;
-    private bool jumpPressed;
-    private bool jumpReleased;
-    private Vector2 knockback;
-
+    // Movement Variables
     [Header("Movement Variables")]
     [SerializeField] float groundSpeed = 10f;
     [SerializeField] float jumpForce = 16f;
@@ -35,29 +33,31 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dashingTime = 0.2f;
     [SerializeField] float dashingCooldown = 1f;
 
-
-    [Header("GroundCheck")]
+    // Ground Check
+    [Header("Ground Check")]
     [SerializeField] Transform groundCheck;
     [SerializeField] float groundCheckRadius = 0.3f;
     [SerializeField] LayerMask groundLayer;
 
-
+    // Flags
     [Header("Flags")]
     public bool unlockedDoubleJump;
 
+    // Input Variables
+    private float moveDirection;
+    private float facingDirection;
+    private float previousFacingDirection;
+    private Vector2 knockback;
 
-    // Bools
+    // Input Booleans
+    private bool jumpPressed;
+    private bool jumpReleased;
+
+    // Movement Booleans
     private bool isGrounded;
-
-    [SerializeField] private bool isDashing = false;
-    [SerializeField] private bool canDash = true;
+    private bool isDashing = false;
+    private bool canDash = true;
     private bool canDoubleJump = true;
-
-    [SerializeField] private TrailRenderer tr;
-    [SerializeField] private SpriteRenderer sr;
-    [SerializeField] private Transform wallCheck;
-    [SerializeField] private LayerMask wallLayer;
-
 
 
     private void Awake()
@@ -65,59 +65,60 @@ public class PlayerMovement : MonoBehaviour
         rb.gravityScale = normalGravity;
         playerInput = GetComponent<PlayerInput>();
     }
+    #endregion
 
 
+    #region Update & FixedUpdate
     private void Update()
     {
-        Flip();
+        HandleFlip();
     }
 
 
     private void FixedUpdate()
     {
         setFacingDirection();
-        ApplyVariableGravity();
-        CheckGrounded();
+        HandleGravity();
+        GroundedCheck();
         HandleMovement();
         HandleJump();
         knockback = new Vector2(0, 0);
     }
+    #endregion
 
 
-    // Switching action maps doesn't work for some reason and I gave up on trying to fix it. I'm leaving the code here just in case
-    public void SwitchActionMapToUI()
+    #region Input Methods
+    public void OnMove(InputValue value)
     {
-        playerInput.actions.FindActionMap("Player").Disable();
-        playerInput.actions.FindActionMap("UI").Enable();
-        print("switched to UI");
+        moveDirection = value.Get<Vector2>().x;
     }
 
 
-    // Switching action maps doesn't work for some reason and I gave up on trying to fix it. I'm leaving the code here just in case
-    public void SwitchActionMapToPlayer()
+    public void OnJump(InputValue value)
     {
-        playerInput.actions.FindActionMap("UI").Disable();
-        playerInput.actions.FindActionMap("Player").Enable();
-        print("switched to Player");
-    }
+        if (value.isPressed)
+        {
+            if (isGrounded)
+            {
+                jumpPressed = true;
+                jumpReleased = false;
+                canDoubleJump = true;
 
-
-    private IEnumerator Dash()
-    {
-        isDashing = true;
-        canDash = false;
-        rb.velocity = new Vector2(previousFacingDirection * dashingPower, 0f);
-        rb.gravityScale = 0f;
-
-        //tr.emitting = true;
-
-        yield return new WaitForSeconds(dashingTime);
-        isDashing = false;
-
-        //tr.emitting = false;
-
-        yield return new WaitForSeconds(dashingCooldown);
-        canDash = true;
+                if (unlockedDoubleJump)
+                {
+                    canDoubleJump = true;
+                }
+            }
+            else if (!isGrounded && unlockedDoubleJump)
+            {
+                jumpPressed = true;
+                jumpReleased = false;
+            }
+        }
+        else
+        {
+            jumpReleased = true;
+        }
     }
 
 
@@ -125,14 +126,51 @@ public class PlayerMovement : MonoBehaviour
     {
         if (canDash)
         {
-            StartCoroutine(Dash());
+            StartCoroutine(HandleDash());
         }
     }
+    #endregion
+
+
+    #region "Handle" Methods
+    private void HandleFlip()
+    {
+        if (facingDirection == 1)
+        {
+            robotSprite.flipX = false;
+        }
+
+        else if (facingDirection == -1)
+        {
+            robotSprite.flipX = true;
+        }
+    }
+
+
+    void HandleGravity()
+    {
+        if (!isDashing)
+        {
+            if (rb.velocity.y < -0.05f)
+            {
+                rb.gravityScale = fallGravity;
+            }
+            else if (rb.velocity.y > 0.05f)
+            {
+                rb.gravityScale = jumpGravity;
+            }
+            else
+            {
+                rb.gravityScale = normalGravity;
+            }
+        }
+    }
+
 
     private void HandleMovement()
     {
         if (!isDashing)
-        { 
+        {
             float speed = facingDirection * groundSpeed;
             rb.velocity = new Vector2(speed, rb.velocity.y) + knockback;
         }
@@ -142,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
     private void HandleJump()
     {
         if (jumpPressed)
-        {   
+        {
             if (isGrounded)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -168,27 +206,42 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    void ApplyVariableGravity()
+    private IEnumerator HandleDash()
     {
-        if (!isDashing)
-        {
-            if (rb.velocity.y < -0.05f)
-            {
-                rb.gravityScale = fallGravity;
-            }
-            else if (rb.velocity.y > 0.05f)
-            {
-                rb.gravityScale = jumpGravity;
-            }
-            else
-            {
-                rb.gravityScale = normalGravity;
-            }
-        }
+        isDashing = true;
+        canDash = false;
+        rb.velocity = new Vector2(previousFacingDirection * dashingPower, 0f);
+        rb.gravityScale = 0f;
+
+        //tr.emitting = true;
+
+        yield return new WaitForSeconds(dashingTime);
+        isDashing = false;
+
+        //tr.emitting = false;
+
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
     }
 
 
-    private void CheckGrounded()
+    void HandleBouceDirection(int direction)
+    {
+        if (direction == 0)
+        {
+            knockback = new Vector2(-50, 15);
+
+        }
+        else if (direction == 1)
+        {
+            knockback = new Vector2(50, 15);
+        }
+    }
+    #endregion
+
+
+    #region Checks & SetVariables
+    private void GroundedCheck()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
@@ -217,53 +270,23 @@ public class PlayerMovement : MonoBehaviour
             previousFacingDirection = facingDirection;
         }
     }
+    #endregion
 
 
-    private void Flip()
+    #region Other
+    public void SwitchActionMapToUI()
     {
-        if (facingDirection == 1)
-        {
-            robotSprite.flipX = false;
-        }
-
-        else if (facingDirection == -1)
-        {
-            robotSprite.flipX = true;
-        }
+        playerInput.actions.FindActionMap("Player").Disable();
+        playerInput.actions.FindActionMap("UI").Enable();
+        print("switched to UI");
     }
 
 
-    public void OnMove(InputValue value)
+    public void SwitchActionMapToPlayer()
     {
-        moveDirection = value.Get<Vector2>().x;
-    }
-
-
-    public void OnJump(InputValue value)
-    {
-        if (value.isPressed)
-        {
-            if (isGrounded)
-            {
-                jumpPressed = true;
-                jumpReleased = false;
-                canDoubleJump = true;
-                
-                if (unlockedDoubleJump)
-                {
-                    canDoubleJump = true;
-                }
-            }
-            else if (!isGrounded && unlockedDoubleJump)
-            {
-                jumpPressed = true;
-                jumpReleased = false;
-            }
-        }
-        else
-        {
-            jumpReleased = true;
-        }
+        playerInput.actions.FindActionMap("UI").Disable();
+        playerInput.actions.FindActionMap("Player").Enable();
+        print("switched to Player");
     }
 
 
@@ -286,18 +309,5 @@ public class PlayerMovement : MonoBehaviour
         TouchDmg.HitBounce -= HandleBouceDirection;
         BasicAttackPatern.HitBounce -= HandleBouceDirection;
     }
-
-
-    void HandleBouceDirection(int direction)
-    {
-        if (direction == 0)
-        {
-            knockback = new Vector2(-50, 15);
-
-        }
-        else if (direction == 1)
-        {
-            knockback = new Vector2(50, 15);
-        }
-    }
+    #endregion
 }

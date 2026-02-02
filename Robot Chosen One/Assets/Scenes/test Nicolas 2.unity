@@ -310,7 +310,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1283816574630442061, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
       propertyPath: unlockedDoubleJump
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3104547831339970628, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
       propertyPath: m_Name
