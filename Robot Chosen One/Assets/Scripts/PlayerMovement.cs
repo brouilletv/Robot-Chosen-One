@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Input Variables
     private float moveDirection;
-    private float facingDirection;
+    private int facingDirection;
     private float previousFacingDirection;
     private Vector2 knockback;
 
@@ -254,7 +254,6 @@ public class PlayerMovement : MonoBehaviour
         if (value > 0)
         {
             facingDirection = 1;
-
         }
         else if (value < 0)
         {
