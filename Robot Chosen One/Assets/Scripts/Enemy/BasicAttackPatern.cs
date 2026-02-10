@@ -39,6 +39,10 @@ public class BasicAttackPatern : MonoBehaviour
 
     [SerializeField] GameObject projectile;
 
+    [SerializeField] int rangeDmg;
+    private bool rangeOnCooldown = false;
+    [SerializeField] float rangeCooldownTime;
+
     [Header("other settings")]
     private string playerDirection = null;
     private int playerDirectionInt = 2;
@@ -56,12 +60,12 @@ public class BasicAttackPatern : MonoBehaviour
 
     void Update()
     {
-        if(melee is true)
+        if(melee is true && meleeOnCooldown is false)
         {
             InRangeMelee();
             CheckHitboxMelee();
         }
-        if (range is true)
+        if (range is true && rangeOnCooldown is false)
         {
             InRangeRange();
             CheckHitboxRange();
@@ -143,8 +147,8 @@ public class BasicAttackPatern : MonoBehaviour
     {
         if (playerDirection == "Right" || playerDirection == "Left")
         {
+            StartCoroutine(RangeCooldown());
             Instantiate(projectile, enemyT.position, enemyT.rotation);
-            Debug.Log("work");
         }
     }
 
@@ -163,5 +167,12 @@ public class BasicAttackPatern : MonoBehaviour
         meleeOnCooldown = true;
         yield return new WaitForSeconds(meleeCooldownTime);
         meleeOnCooldown = false;
+    }
+
+    IEnumerator RangeCooldown()
+    {
+        rangeOnCooldown = true;
+        yield return new WaitForSeconds(rangeCooldownTime);
+        rangeOnCooldown = false;
     }
 }
