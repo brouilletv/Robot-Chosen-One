@@ -1122,6 +1122,8 @@ MonoBehaviour:
   meleeCooldownTime: 2
   range: 1
   projectile: {fileID: 5248569081223522632, guid: 9ff723b78d6ede34a9b6c1870f6a6fa5, type: 3}
+  rangeDmg: 1
+  rangeCooldownTime: 100
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
