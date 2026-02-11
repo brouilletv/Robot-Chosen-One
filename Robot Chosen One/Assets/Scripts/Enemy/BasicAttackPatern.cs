@@ -11,6 +11,7 @@ public class BasicAttackPatern : MonoBehaviour
     private Transform playerT;
 
     [Header("Enemy settings")]
+    [SerializeField] GameObject enemyObject;
     [SerializeField] GameObject enemy;
     private Transform enemyT;
 
@@ -39,7 +40,6 @@ public class BasicAttackPatern : MonoBehaviour
 
     [SerializeField] GameObject projectile;
 
-    [SerializeField] int rangeDmg;
     private bool rangeOnCooldown = false;
     [SerializeField] float rangeCooldownTime;
 

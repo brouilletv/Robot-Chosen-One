@@ -1111,6 +1111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1757402272}
+  enemyObject: {fileID: 0}
   enemy: {fileID: 1622381110}
   edgeRight: {fileID: 379981995}
   edgeLeft: {fileID: 1580568636}
@@ -1122,8 +1123,7 @@ MonoBehaviour:
   meleeCooldownTime: 2
   range: 1
   projectile: {fileID: 5248569081223522632, guid: 9ff723b78d6ede34a9b6c1870f6a6fa5, type: 3}
-  rangeDmg: 1
-  rangeCooldownTime: 100
+  rangeCooldownTime: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
