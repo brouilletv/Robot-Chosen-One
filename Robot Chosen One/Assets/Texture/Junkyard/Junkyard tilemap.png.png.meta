@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 8
+  spritePixelsToUnits: 7
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -71,7 +71,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 4
+    textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
@@ -111,8 +111,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 63f7e60566592d148ae786b7c3ed66bd
-      internalID: -860854996
+      spriteID: 9ceb056fd15fc734cbb79459aa598575
+      internalID: 1829457422
       vertices: []
       indices: 
       edges: []
@@ -132,8 +132,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2cdf00425609bf646ba63a8896c3b0dd
-      internalID: -1896138456
+      spriteID: dda79e3e01be15646955293ced8021ab
+      internalID: -747648007
       vertices: []
       indices: 
       edges: []
@@ -153,8 +153,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a25abcf86f06af042bf8deed97458f6a
-      internalID: 89074567
+      spriteID: dce44799e3cc658458c637b8b88e2d2c
+      internalID: -1649031779
       vertices: []
       indices: 
       edges: []
@@ -174,8 +174,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6040e3a68f222f4e92720aaf01ff2a1
-      internalID: 1058093107
+      spriteID: 4598ae7b36f0765479271e55cee1b1cf
+      internalID: -1974090480
       vertices: []
       indices: 
       edges: []
@@ -195,8 +195,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 01e2716fb231bf946acd48daf5cd9c85
-      internalID: 1142905626
+      spriteID: 073240b24f1a579479a7e267e07f4ac9
+      internalID: -1108519159
       vertices: []
       indices: 
       edges: []
@@ -216,8 +216,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d7ac8c3f4d819f438e4858b2b8f1a48
-      internalID: 672958068
+      spriteID: 60d4ebc7ac4b3d040b97d9ae1c4587fb
+      internalID: -707225099
       vertices: []
       indices: 
       edges: []
@@ -237,8 +237,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 36443d9dc6d9ed4428233a055c6d87ec
-      internalID: -906661044
+      spriteID: 586956bd998c3ec449fdfb862c4d1949
+      internalID: -1323281218
       vertices: []
       indices: 
       edges: []
@@ -258,8 +258,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3d5c8f6c46e1a6349945f783d00adf73
-      internalID: 293300571
+      spriteID: df74f640454471547ab0a2fedf1d1cf4
+      internalID: 1641185739
       vertices: []
       indices: 
       edges: []
@@ -279,8 +279,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c2f3ec4af7c97ea42bc3fe3654ceab4e
-      internalID: -42792556
+      spriteID: f78c472cb3a56f844a6aeebfeb83ae95
+      internalID: 427932578
       vertices: []
       indices: 
       edges: []
@@ -300,8 +300,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44401332c7a7f784fadc75aa83e9ffca
-      internalID: 151496867
+      spriteID: e9c66551d87b5b94bafa66a2754ad2bd
+      internalID: 1375952259
       vertices: []
       indices: 
       edges: []
@@ -321,8 +321,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 95d50a7cbb203224bbc891cd3ad71ca1
-      internalID: -1145249190
+      spriteID: 9f532d98a1bc70448bab097ff96a08e1
+      internalID: 511368848
       vertices: []
       indices: 
       edges: []
@@ -342,8 +342,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fead5902d0783974ba8b0c34f2387a63
-      internalID: -1190863114
+      spriteID: b5f8633b11f92364f8bbb7a9d3d9a628
+      internalID: 1278552
       vertices: []
       indices: 
       edges: []
@@ -363,8 +363,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e284c5523a8590b48ad8438042ca011d
-      internalID: -2059209439
+      spriteID: ee70e2fa39462814e86615e3177d7465
+      internalID: -263002510
       vertices: []
       indices: 
       edges: []
@@ -384,8 +384,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 073961e10f7dcf9498710db525e8a283
-      internalID: -710996249
+      spriteID: db5b78c51b912b442b1deaf2e442fd9a
+      internalID: 703402940
       vertices: []
       indices: 
       edges: []
@@ -405,8 +405,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b1220ff1b546f1c448f5e3aa314a98b1
-      internalID: -7027101
+      spriteID: 9025ceb4cefc7154cb1c2fd540db0924
+      internalID: 1307251617
       vertices: []
       indices: 
       edges: []
@@ -426,8 +426,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7bf6a92cefbafae47a3dac69df42ab8a
-      internalID: 647036003
+      spriteID: 8456f32fcdcf4fd44abeaec4d5363db9
+      internalID: -979192803
       vertices: []
       indices: 
       edges: []
@@ -443,22 +443,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Junkyard tilemap.png_0: -860854996
-      Junkyard tilemap.png_1: -1896138456
-      Junkyard tilemap.png_10: -1145249190
-      Junkyard tilemap.png_11: -1190863114
-      Junkyard tilemap.png_12: -2059209439
-      Junkyard tilemap.png_13: -710996249
-      Junkyard tilemap.png_14: -7027101
-      Junkyard tilemap.png_15: 647036003
-      Junkyard tilemap.png_2: 89074567
-      Junkyard tilemap.png_3: 1058093107
-      Junkyard tilemap.png_4: 1142905626
-      Junkyard tilemap.png_5: 672958068
-      Junkyard tilemap.png_6: -906661044
-      Junkyard tilemap.png_7: 293300571
-      Junkyard tilemap.png_8: -42792556
-      Junkyard tilemap.png_9: 151496867
+      Junkyard tilemap.png_0: 1829457422
+      Junkyard tilemap.png_1: -747648007
+      Junkyard tilemap.png_10: 511368848
+      Junkyard tilemap.png_11: 1278552
+      Junkyard tilemap.png_12: -263002510
+      Junkyard tilemap.png_13: 703402940
+      Junkyard tilemap.png_14: 1307251617
+      Junkyard tilemap.png_15: -979192803
+      Junkyard tilemap.png_2: -1649031779
+      Junkyard tilemap.png_3: -1974090480
+      Junkyard tilemap.png_4: -1108519159
+      Junkyard tilemap.png_5: -707225099
+      Junkyard tilemap.png_6: -1323281218
+      Junkyard tilemap.png_7: 1641185739
+      Junkyard tilemap.png_8: 427932578
+      Junkyard tilemap.png_9: 1375952259
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
