@@ -38,10 +38,13 @@ public class BasicAttackPatern : MonoBehaviour
     [Header("Range settings")]
     [SerializeField] bool range;
 
-    [SerializeField] GameObject projectile;
+    private GameObject projectile;
 
     private bool rangeOnCooldown = false;
     [SerializeField] float rangeCooldownTime;
+
+    [SerializeField] Transform startPos;
+    [SerializeField] Transform targetPos;
 
     [Header("other settings")]
     private string playerDirection = null;
@@ -148,7 +151,7 @@ public class BasicAttackPatern : MonoBehaviour
         if (playerDirection == "Right" || playerDirection == "Left")
         {
             StartCoroutine(RangeCooldown());
-            Instantiate(projectile, enemyT.position, enemyT.rotation);
+            projectile = Instantiate(projectile, enemyT.position, enemyT.rotation);
         }
     }
 

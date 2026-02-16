@@ -29,9 +29,12 @@ public class projectileStraight : MonoBehaviour
 
     void Start()
     {
+
         startPos = projectileT.position;
         targetPos = playerT.position;
         distance = targetPos.x - startPos.x;
+
+        Debug.Log(playerT.position);
 
         if ((targetPos.x - startPos.x) / Mathf.Abs(targetPos.x - startPos.x) == 1)
         {
