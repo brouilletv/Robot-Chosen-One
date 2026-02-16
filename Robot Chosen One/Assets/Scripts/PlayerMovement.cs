@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     // Flags
     [Header("Flags")]
     public bool unlockedDoubleJump;
+    public bool unlockedDash;
 
     // Input Variables
     private float moveDirection;
@@ -124,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnDash(InputValue value)
     {
-        if (canDash)
+        if (canDash && unlockedDash)
         {
             StartCoroutine(HandleDash());
         }
