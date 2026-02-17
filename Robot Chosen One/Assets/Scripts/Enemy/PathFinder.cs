@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class script : MonoBehaviour
+public class PathFinder : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D RB;
     [SerializeField] private Transform Body;
