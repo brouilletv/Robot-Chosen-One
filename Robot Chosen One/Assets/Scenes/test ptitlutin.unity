@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &18369801 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4769635451202505393, guid: 91ed00bb77ff3b049b7d318e1ac3a742, type: 3}
+  m_PrefabInstance: {fileID: 8785791900124296505}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &106443567 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 542451865603372785, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
@@ -1111,7 +1116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1757402272}
-  enemyObject: {fileID: 0}
+  enemyObject: {fileID: 18369801}
   enemy: {fileID: 1622381110}
   edgeRight: {fileID: 379981995}
   edgeLeft: {fileID: 1580568636}
@@ -1122,9 +1127,9 @@ MonoBehaviour:
   meleeDmg: 1
   meleeCooldownTime: 2
   range: 1
+  projectilePrefab: {fileID: 8676361468588614440, guid: df66ea6ab442a3748b8bc7b072e7e5b8, type: 3}
+  projectileSpeed: 1
   rangeCooldownTime: 2
-  startPos: {fileID: 0}
-  targetPos: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

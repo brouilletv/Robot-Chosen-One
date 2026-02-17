@@ -301,7 +301,6 @@ public class PlayerMovement : MonoBehaviour
     {
         TouchDmg.HitBounce += HandleBouceDirection;
         BasicAttackPatern.HitBounce += HandleBouceDirection;
-        projectileStraight.HitBounce += HandleBouceDirection;
     }
 
 
@@ -309,7 +308,6 @@ public class PlayerMovement : MonoBehaviour
     {
         TouchDmg.HitBounce -= HandleBouceDirection;
         BasicAttackPatern.HitBounce -= HandleBouceDirection;
-        projectileStraight.HitBounce -= HandleBouceDirection;
     }
     #endregion
 }
