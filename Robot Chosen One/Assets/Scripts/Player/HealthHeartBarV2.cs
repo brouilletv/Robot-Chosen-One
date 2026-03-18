@@ -102,12 +102,16 @@ public class HealthHeartBarV2 : MonoBehaviour
     {
         TouchDmg.Hit += HandleHealthChanged;
         BasicAttackPatern.Hit += HandleHealthChanged;
+        projectileStraight.Hit += HandleHealthChanged;
+        projectileArch.Hit += HandleHealthChanged;
     }
 
     void OnDisable()
     {
         TouchDmg.Hit -= HandleHealthChanged;
         BasicAttackPatern.Hit -= HandleHealthChanged;
+        projectileStraight.Hit -= HandleHealthChanged;
+        projectileArch.Hit -= HandleHealthChanged;
     }
 
     void HandleHealthChanged(int newHealth)

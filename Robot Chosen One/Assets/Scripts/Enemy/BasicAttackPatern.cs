@@ -37,12 +37,15 @@ public class BasicAttackPatern : MonoBehaviour
 
     [Header("Range settings")]
     [SerializeField] bool range;
+    [SerializeField] bool rangeArch;
 
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] float projectileSpeed;
 
     private bool rangeOnCooldown = false;
     [SerializeField] float rangeCooldownTime;
+
+    [SerializeField] int rangeDmg;
 
     private Vector2 startPos;
     private Vector2 targetPos;
@@ -156,8 +159,16 @@ public class BasicAttackPatern : MonoBehaviour
             targetPos = playerT.position;
             startPos = enemyT.position;
 
-            projectileStraight projectile = Instantiate(projectilePrefab, enemyT.position, enemyT.rotation).GetComponent<projectileStraight>();
-            projectile.Initializeprojectile(targetPos, startPos, projectileSpeed);
+            if (rangeArch is true)
+            {
+                projectileArch projectile = Instantiate(projectilePrefab, enemyT.position, enemyT.rotation).GetComponent<projectileArch>();
+                projectile.Initializeprojectile(targetPos, startPos, projectileSpeed, playerDirection, rangeDmg);
+            }
+            else
+            {
+                projectileStraight projectile = Instantiate(projectilePrefab, enemyT.position, enemyT.rotation).GetComponent<projectileStraight>();
+                projectile.Initializeprojectile(targetPos, startPos, projectileSpeed, playerDirection, rangeDmg);
+            }
         }
     }
 

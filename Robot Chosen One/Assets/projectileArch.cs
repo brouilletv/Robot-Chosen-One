@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class projectileStraight : MonoBehaviour
+public class projectileArch : MonoBehaviour
 {
     private Vector3 target;
     private Vector3 startPos;
@@ -24,7 +24,7 @@ public class projectileStraight : MonoBehaviour
 
     void Update()
     {
-        nextPos.x = (target.x - startPos.x)/Mathf.Abs(target.x - startPos.x);
+        nextPos.x = (target.x - startPos.x) / Mathf.Abs(target.x - startPos.x);
         transform.position += nextPos * speed * Time.deltaTime;
     }
 
