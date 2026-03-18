@@ -45,7 +45,8 @@ public class PlayerMovement : MonoBehaviour
     public bool unlockedDash;
 
     // Input Variables
-    private float moveDirection;
+    public float moveDirectionX;
+    public float moveDirectionY;
     private int facingDirection;
     private float previousFacingDirection;
     private Vector2 knockback;
@@ -91,7 +92,8 @@ public class PlayerMovement : MonoBehaviour
     #region Input Methods
     public void OnMove(InputValue value)
     {
-        moveDirection = value.Get<Vector2>().x;
+        moveDirectionX = value.Get<Vector2>().x;
+        moveDirectionY = value.Get<Vector2>().y;
     }
 
 
@@ -250,7 +252,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void setFacingDirection()
     {
-        float value = moveDirection;
+        float value = moveDirectionX;
 
         if (value > 0)
         {
