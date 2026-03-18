@@ -25,6 +25,8 @@ public class projectileArch : MonoBehaviour
     void Update()
     {
         nextPos.x = (target.x - startPos.x) / Mathf.Abs(target.x - startPos.x);
+        //base next y on transform pos x (before half up after half down)
+        nextPos.y = Mathf.Abs(target.x - startPos.x) / 2;
         transform.position += nextPos * speed * Time.deltaTime;
     }
 
