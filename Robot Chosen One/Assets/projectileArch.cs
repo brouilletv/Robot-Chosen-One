@@ -25,9 +25,11 @@ public class projectileArch : MonoBehaviour
     void Update()
     {
         nextPos.x = (target.x - startPos.x) / Mathf.Abs(target.x - startPos.x);
-        //base next y on transform pos x (before half up after half down)
-        nextPos.y = Mathf.Abs(target.x - startPos.x) / 2;
+        Debug.Log(Mathf.Abs(target.x - transform.position.x));
+        Debug.Log(Mathf.Abs(target.x - startPos.x) / 2);
+        nextPos.y = 1 - Mathf.Abs(target.x - transform.position.x) / Mathf.Abs(target.x - startPos.x) / 2;
         transform.position += nextPos * speed * Time.deltaTime;
+        
     }
 
     public void Initializeprojectile(Vector2 target, Vector2 startPos, float speed, string playerDirection, int rangeDmg)
