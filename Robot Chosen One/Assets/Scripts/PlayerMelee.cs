@@ -7,15 +7,15 @@ using UnityEngine.InputSystem;
 public class PlayerMelee : MonoBehaviour
 {
     private PlayerMovement playerMovement;
-    [SerializeField] Transform attackOrigin;
+    [SerializeField] Transform playerOrigin;
+    [SerializeField] Transform attackZone;
     public LayerMask enemyLayer;
 
-    private Vector2 attackPosition;
     private bool attackPressed;
 
     [SerializeField] float attackRadius = 1f;
-    [SerializeField] int attackDamage = 25;
-    [SerializeField] float attackPoint = 0.4f;
+    [SerializeField] int attackDamage = 1;
+    [SerializeField] float attackZoneOrigin = 0.4f;
     [SerializeField] float cooldownTime = 0.5f;
     [SerializeField] float cooldownTimer = 0f;
 
@@ -39,7 +39,8 @@ public class PlayerMelee : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(attackPosition, attackRadius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackZone.position, attackRadius);
     }
 
     public void OnAttack(InputValue value)
@@ -85,36 +86,41 @@ public class PlayerMelee : MonoBehaviour
         }
     }
 
-    private void SetAttackPosition()
+    private void SetAttackZone()
     {
         if (previousAttackDirection == AttackDirection.attackUp)
         {
-            attackPosition = new Vector2(0f, attackPoint);
+            Vector3 modifier = new Vector3(0f, attackZoneOrigin, playerOrigin.position.z);
+            attackZone.position = playerOrigin.position + modifier;
         }
         else if (previousAttackDirection == AttackDirection.attackDown)
         {
-            attackPosition = new Vector2(0f, -attackPoint);
+            Vector3 modifier = new Vector3(0f, -attackZoneOrigin, playerOrigin.position.z);
+            attackZone.position = playerOrigin.position + modifier;
         }
         else if (previousAttackDirection == AttackDirection.attackLeft)
         {
-            attackPosition = new Vector2(-attackPoint, 0f);
+            Vector3 modifier = new Vector3(-attackZoneOrigin, 0f, playerOrigin.position.z);
+            attackZone.position = playerOrigin.position + modifier;
         }
         else if (previousAttackDirection == AttackDirection.attackRight)
         {
-            attackPosition = new Vector2(attackPoint, 0f);
+            Vector3 modifier = new Vector3(attackZoneOrigin, 0f, playerOrigin.position.z);
+            attackZone.position = playerOrigin.position + modifier;
         }
     }
 
     public void HandleAttack()
     {
         if (cooldownTimer <= 0f)
-        {   
+        {
+            attackZone.position = playerOrigin.position;
             Debug.Log("Ready to Attack");
             if (attackPressed)
             {
                 Debug.Log("Attacking");
-                SetAttackPosition();
-                Collider2D[] enemiesinRange = Physics2D.OverlapCircleAll(attackPosition, attackRadius, enemyLayer);
+                SetAttackZone();
+                Collider2D[] enemiesinRange = Physics2D.OverlapCircleAll(attackZone.position, attackRadius, enemyLayer);
                 foreach (var enemy in enemiesinRange)
                 {
                     Debug.Log("Hit ");
