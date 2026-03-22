@@ -18,6 +18,7 @@ public class projectileStraight : MonoBehaviour
     private float decayTime = 10;
 
     private LayerMask playerMask;
+    private LayerMask groundMask;
 
     public static event Action<int> Hit;
     public static event Action<int> HitBounce;
@@ -39,6 +40,7 @@ public class projectileStraight : MonoBehaviour
         StartCoroutine(DestroyCo());
 
         playerMask = LayerMask.GetMask("PlayerMask");
+        groundMask = LayerMask.GetMask("Ground", "Wall");
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -58,6 +60,10 @@ public class projectileStraight : MonoBehaviour
 
             ApplyDmg(rangeDmg);
             Bouce(playerDirectionInt);
+        }
+        else if ((groundMask.value & (1 << other.gameObject.layer)) > 0)
+        {
+            Destroy(gameObject);
         }
     }
 

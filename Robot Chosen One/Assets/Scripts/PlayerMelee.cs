@@ -115,7 +115,7 @@ public class PlayerMelee : MonoBehaviour
         if (cooldownTimer <= 0f)
         {
             attackZone.position = playerOrigin.position;
-            Debug.Log("Ready to Attack");
+            //Debug.Log("Ready to Attack");
             if (attackPressed)
             {
                 Debug.Log("Attacking");

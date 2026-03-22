@@ -1,48 +1,57 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
 
 public class projectileArch : MonoBehaviour
 {
-    private Vector3 target;
-    private Vector3 startPos;
-    private float speed;
     private string playerDirection;
     private int rangeDmg;
-
     private int playerDirectionInt;
 
-    private Vector3 nextPos;
+    private Vector2 target;
+    private float T;
+    private float gravity = -9.81f;
+
+    private Vector2 startPos;
+    private Vector2 velocity;
 
     private float decayTime = 10;
 
     private LayerMask playerMask;
+    private LayerMask groundMask;
 
     public static event Action<int> Hit;
     public static event Action<int> HitBounce;
 
     void Update()
     {
-        nextPos.x = (target.x - startPos.x) / Mathf.Abs(target.x - startPos.x);
-        Debug.Log(Mathf.Abs(target.x - transform.position.x));
-        Debug.Log(Mathf.Abs(target.x - startPos.x) / 2);
-        nextPos.y = 1 - Mathf.Abs(target.x - transform.position.x) / Mathf.Abs(target.x - startPos.x) / 2;
-        transform.position += nextPos * speed * Time.deltaTime;
-        
+        // Apply gravity
+        velocity.y += gravity * Time.deltaTime;
+
+        // Move
+        transform.position += (Vector3)(velocity * Time.deltaTime);
     }
 
-    public void Initializeprojectile(Vector2 target, Vector2 startPos, float speed, string playerDirection, int rangeDmg)
+    public void Initializeprojectile(Vector2 target, Vector2 startPos, float time, string playerDirection, int rangeDmg)
     {
         this.target = target;
         this.startPos = startPos;
-        this.speed = speed;
+        this.T = time;
         this.playerDirection = playerDirection;
         this.rangeDmg = rangeDmg;
+
+        Vector2 toTarget = target - startPos;
+
+        float vx = toTarget.x / T;
+        float vy = (toTarget.y - 0.5f * gravity * T * T) / T;
+
+        velocity = new Vector2(vx, vy);
 
         StartCoroutine(DestroyCo());
 
         playerMask = LayerMask.GetMask("PlayerMask");
+        groundMask = LayerMask.GetMask("Ground", "Wall");
     }
 
     void OnTriggerStay2D(Collider2D other)
@@ -63,14 +72,17 @@ public class projectileArch : MonoBehaviour
             ApplyDmg(rangeDmg);
             Bouce(playerDirectionInt);
         }
+        else if ((groundMask.value & (1 << other.gameObject.layer)) > 0)
+        {
+            Destroy(gameObject);
+        }
     }
-
     void ApplyDmg(int dmg)
     {
         Hit?.Invoke(dmg);
     }
 
-    public void Bouce(int side)
+    void Bouce(int side)
     {
         HitBounce?.Invoke(side);
     }

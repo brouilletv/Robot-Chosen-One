@@ -40,6 +40,7 @@ public class BasicAttackPatern : MonoBehaviour
     [SerializeField] bool rangeArch;
 
     [SerializeField] GameObject projectilePrefab;
+    [SerializeField] float projectileTime;
     [SerializeField] float projectileSpeed;
 
     private bool rangeOnCooldown = false;
@@ -162,12 +163,12 @@ public class BasicAttackPatern : MonoBehaviour
             if (rangeArch is true)
             {
                 projectileArch projectile = Instantiate(projectilePrefab, enemyT.position, enemyT.rotation).GetComponent<projectileArch>();
-                projectile.Initializeprojectile(targetPos, startPos, projectileSpeed, playerDirection, rangeDmg);
+                projectile.Initializeprojectile(targetPos, startPos, projectileTime, playerDirection, rangeDmg);
             }
             else
             {
                 projectileStraight projectile = Instantiate(projectilePrefab, enemyT.position, enemyT.rotation).GetComponent<projectileStraight>();
-                projectile.Initializeprojectile(targetPos, startPos, projectileSpeed, playerDirection, rangeDmg);
+                projectile.Initializeprojectile(targetPos, startPos, projectileTime, playerDirection, rangeDmg);
             }
         }
     }
