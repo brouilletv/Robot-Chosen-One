@@ -5,15 +5,15 @@ public class PathFinder : MonoBehaviour
     [SerializeField] private Rigidbody2D RB;
     [SerializeField] private Transform Body;
     [SerializeField] private Transform Player;
-    [SerializeField] private Transform RightEdge;
-    [SerializeField] private Transform LeftEdge;
+    private Transform MaxPos;
+    private Transform MinPos;
 
     private bool Fallow = false;
-
-    void Start()
+    public void InitializePathFinder()
     {
+        MaxPos = transform.parent?.Find("MaxPos");
+        MinPos = transform.parent?.Find("MinPos");
     }
-
     void FixedUpdate()
     {
         float PlayerX = Player.position.x;
@@ -22,7 +22,7 @@ public class PathFinder : MonoBehaviour
         float BodyX = Body.position.x;
         float BodyY = Body.position.y;
 
-        if (PlayerX >= LeftEdge.position.x && PlayerX <= RightEdge.position.x && PlayerY >= LeftEdge.position.y && PlayerY <= RightEdge.position.y)
+        if (PlayerX >= MinPos.position.x && PlayerX <= MaxPos.position.x && PlayerY >= MinPos.position.y && PlayerY <= MaxPos.position.y)
         {
             Fallow = true;  
         }
@@ -42,5 +42,5 @@ public class PathFinder : MonoBehaviour
         {
             RB.velocity = new Vector2(0f, RB.velocity.y);
         }
-    }
+    } 
 }

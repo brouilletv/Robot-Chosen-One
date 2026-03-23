@@ -11,6 +11,7 @@ public class SpawnLocation : MonoBehaviour
     [SerializeField] CircleCollider2D respawnCollider;
     [SerializeField] Transform spawnLocation;
     public static event Action<Transform> newLocation;
+    public static event Action<bool> enemyRespawn;
 
     private bool inRange;
 
@@ -19,6 +20,7 @@ public class SpawnLocation : MonoBehaviour
         if (respawnCollider.IsTouching(player) && Keyboard.current[Key.W].wasPressedThisFrame)
         {
             ChangeLocation(spawnLocation);
+            enemyRespawn?.Invoke(true);
         }
     }
 

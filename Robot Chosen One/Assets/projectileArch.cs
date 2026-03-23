@@ -12,6 +12,7 @@ public class projectileArch : MonoBehaviour
     private Vector2 target;
     private float T;
     private float gravity = -9.81f;
+    private float distance;
 
     private Vector2 startPos;
     private Vector2 velocity;
@@ -26,22 +27,22 @@ public class projectileArch : MonoBehaviour
 
     void Update()
     {
-        // Apply gravity
         velocity.y += gravity * Time.deltaTime;
-
-        // Move
         transform.position += (Vector3)(velocity * Time.deltaTime);
     }
 
-    public void Initializeprojectile(Vector2 target, Vector2 startPos, float time, string playerDirection, int rangeDmg)
+    public void Initializeprojectile(Vector2 target, Vector2 startPos, float speed, string playerDirection, int rangeDmg)
     {
         this.target = target;
         this.startPos = startPos;
-        this.T = time;
+        this.T = speed;
         this.playerDirection = playerDirection;
         this.rangeDmg = rangeDmg;
 
         Vector2 toTarget = target - startPos;
+
+        distance = Mathf.Abs(target.x - startPos.x) + Mathf.Abs(target.y - startPos.y);
+        T = T * distance / 10;
 
         float vx = toTarget.x / T;
         float vy = (toTarget.y - 0.5f * gravity * T * T) / T;

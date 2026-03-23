@@ -11,20 +11,16 @@ public class BasicAttackPatern : MonoBehaviour
     private Transform playerT;
 
     [Header("Enemy settings")]
-    [SerializeField] GameObject enemyObject;
     [SerializeField] GameObject enemy;
     private Transform enemyT;
-
-    [SerializeField] Transform edgeRight;
-    [SerializeField] Transform edgeLeft;
 
     [Header("Melee settings")]
     [SerializeField] bool melee;
 
-    [SerializeField] Transform meleeRight;
-    [SerializeField] Transform meleeLeft;
+    private Transform MMax;
+    private Transform MMin;
 
-    [SerializeField] GameObject meleeHitbox;
+    private GameObject MBox;
     private BoxCollider2D meleeHitboxC;
     private Transform meleeHitboxT;
 
@@ -39,8 +35,10 @@ public class BasicAttackPatern : MonoBehaviour
     [SerializeField] bool range;
     [SerializeField] bool rangeArch;
 
+    private Transform RMax;
+    private Transform RMin;
+
     [SerializeField] GameObject projectilePrefab;
-    [SerializeField] float projectileTime;
     [SerializeField] float projectileSpeed;
 
     private bool rangeOnCooldown = false;
@@ -57,13 +55,21 @@ public class BasicAttackPatern : MonoBehaviour
 
     void Start()
     {
+        MMax = transform?.Find("MMax");
+        MMin = transform?.Find("MMin");
+
+        RMax = transform?.Find("RMax");
+        RMin = transform?.Find("RMin");
+
+        MBox = transform?.Find("MBox").gameObject;
+
         playerT = player.GetComponent<Transform>();
         playerC = player.GetComponent<CapsuleCollider2D>();
 
         enemyT = enemy.GetComponent<Transform>();
 
-        meleeHitboxC = meleeHitbox.GetComponent<BoxCollider2D>();
-        meleeHitboxT = meleeHitbox.GetComponent<Transform>();
+        meleeHitboxC = MBox.GetComponent<BoxCollider2D>();
+        meleeHitboxT = MBox.GetComponent<Transform>();
     }
 
     void Update()
@@ -82,20 +88,13 @@ public class BasicAttackPatern : MonoBehaviour
 
     void InRangeMelee()
     {
-        if (playerT.position.y >= edgeLeft.position.y && playerT.position.y <= edgeRight.position.y)
+        if (playerT.position.x <= MMax.position.x && playerT.position.x >= enemyT.position.x)
         {
-            if (playerT.position.x <= meleeRight.position.x && playerT.position.x >= enemyT.position.x)
-            {
-                playerDirection = "Right";
-            }
-            else if (playerT.position.x >= meleeLeft.position.x && playerT.position.x <= enemyT.position.x)
-            {
-                playerDirection = "Left";
-            }
-            else
-            {
-                playerDirection = null;
-            }
+            playerDirection = "Right";
+        }
+        else if (playerT.position.x >= MMin.position.x && playerT.position.x <= enemyT.position.x)
+        {
+            playerDirection = "Left";
         }
         else
         {
@@ -105,7 +104,7 @@ public class BasicAttackPatern : MonoBehaviour
 
     void InRangeRange()
     {
-        if (playerT.position.x >= edgeLeft.position.x && playerT.position.x <= edgeRight.position.x && playerT.position.y >= edgeLeft.position.y && playerT.position.y <= edgeRight.position.y)
+        if (playerT.position.x >= RMin.position.x && playerT.position.x <= RMax.position.x && playerT.position.y >= RMin.position.y && playerT.position.y <= RMax.position.y)
         {
             if (playerT.position.x >= enemyT.position.x)
             {
@@ -163,12 +162,12 @@ public class BasicAttackPatern : MonoBehaviour
             if (rangeArch is true)
             {
                 projectileArch projectile = Instantiate(projectilePrefab, enemyT.position, enemyT.rotation).GetComponent<projectileArch>();
-                projectile.Initializeprojectile(targetPos, startPos, projectileTime, playerDirection, rangeDmg);
+                projectile.Initializeprojectile(targetPos, startPos, projectileSpeed, playerDirection, rangeDmg);
             }
             else
             {
                 projectileStraight projectile = Instantiate(projectilePrefab, enemyT.position, enemyT.rotation).GetComponent<projectileStraight>();
-                projectile.Initializeprojectile(targetPos, startPos, projectileTime, playerDirection, rangeDmg);
+                projectile.Initializeprojectile(targetPos, startPos, projectileSpeed, playerDirection, rangeDmg);
             }
         }
     }

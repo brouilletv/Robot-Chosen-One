@@ -47,7 +47,6 @@ public class PlayerMelee : MonoBehaviour
     {
         if (value.isPressed)
         {
-            Debug.Log("Attack Pressed");
             attackPressed = true;
         }
     }
@@ -115,18 +114,13 @@ public class PlayerMelee : MonoBehaviour
         if (cooldownTimer <= 0f)
         {
             attackZone.position = playerOrigin.position;
-            //Debug.Log("Ready to Attack");
             if (attackPressed)
             {
-                Debug.Log("Attacking");
                 SetAttackZone();
                 Collider2D[] enemiesinRange = Physics2D.OverlapCircleAll(attackZone.position, attackRadius, enemyLayer);
                 foreach (var enemy in enemiesinRange)
                 {
-                    Debug.Log("Hit ");
-                    //Change the EnemyHealth for it to work 
-                    //enemy.GetComponent<EnemyHealth>().TakeDamage(attackDamage);
-
+                    enemy.GetComponent<EHealth>().TakeDamage(attackDamage);
                 }
                 cooldownTimer = cooldownTime;
                 attackPressed = false;
@@ -134,7 +128,6 @@ public class PlayerMelee : MonoBehaviour
         }
         else
         {
-            Debug.Log("On Cooldown");
             cooldownTimer -= Time.deltaTime;
         }
     }
