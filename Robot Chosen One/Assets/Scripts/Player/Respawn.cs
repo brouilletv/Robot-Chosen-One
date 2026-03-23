@@ -9,7 +9,8 @@ public class Respawn : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] Transform defaultSpawn;
 
-    private Transform currentspawn;
+    public Transform checkpoint;
+    public Transform currentspawn;
 
     void Start()
     {
@@ -31,7 +32,7 @@ public class Respawn : MonoBehaviour
     void HandleRespawn(int respawnTime)
     {
         rb.velocity = new Vector2(0, 0);
-        player.transform.position = currentspawn.position;
+        player.transform.position = checkpoint.position;
     }
 
     private void UpdateLocation(Transform newLocation)
