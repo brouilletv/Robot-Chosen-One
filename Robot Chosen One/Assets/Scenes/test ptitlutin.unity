@@ -749,6 +749,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6940236188466267409, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
+      propertyPath: checkpoint
+      value: 
+      objectReference: {fileID: 1313999815}
+    - target: {fileID: 6940236188466267409, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
+      propertyPath: currentspawn
+      value: 
+      objectReference: {fileID: 1043109362}
+    - target: {fileID: 6940236188466267409, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
       propertyPath: defaultSpawn
       value: 
       objectReference: {fileID: 1043109362}
