@@ -52,7 +52,7 @@ public class HealthHeartBarV2 : MonoBehaviour
         IEnumerator Cooldown()
         {
             yield return new WaitForSeconds(0f);
-            Heal(maxHealth);
+            SetHealth(maxHealth);
         }
     }
 
