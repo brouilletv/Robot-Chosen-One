@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 4014516491284205876}
   - component: {fileID: 5450181316851181935}
   - component: {fileID: 881518761353826534}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Rusty Miner
   m_TagString: Untagged
   m_Icon: {fileID: 0}

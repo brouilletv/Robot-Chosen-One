@@ -5,8 +5,7 @@ using System;
 
 public class BasicAttackPatern : MonoBehaviour
 {
-    [Header("Player settings")]
-    [SerializeField] GameObject player;
+    private GameObject player;
     private CapsuleCollider2D playerC;
     private Transform playerT;
 
@@ -53,7 +52,7 @@ public class BasicAttackPatern : MonoBehaviour
     private string playerDirection = null;
     private int playerDirectionInt = 2;
 
-    void Start()
+    public void InitializeBAP(GameObject player)
     {
         MMax = transform?.Find("MMax");
         MMin = transform?.Find("MMin");
@@ -62,6 +61,8 @@ public class BasicAttackPatern : MonoBehaviour
         RMin = transform?.Find("RMin");
 
         MBox = transform?.Find("MBox").gameObject;
+
+        this.player = player;
 
         playerT = player.GetComponent<Transform>();
         playerC = player.GetComponent<CapsuleCollider2D>();

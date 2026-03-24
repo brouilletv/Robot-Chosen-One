@@ -6,6 +6,7 @@ using System;
 public class ERespawn : MonoBehaviour
 {
     [SerializeField] GameObject enemy;
+    [SerializeField] GameObject player;
 
     void Start()
     {
@@ -32,7 +33,12 @@ public class ERespawn : MonoBehaviour
 
     void Create()
     {
-        PathFinder EPathFinder = Instantiate(enemy, transform.position, transform.rotation, transform).GetComponent<PathFinder>();
-        EPathFinder.InitializePathFinder();
+        GameObject Clone = Instantiate(enemy, transform.position, transform.rotation, transform);
+
+        PathFinder EPathFinder = Clone.GetComponent<PathFinder>();
+        EPathFinder.InitializePathFinder(player.transform);
+
+        BasicAttackPatern BAP = Clone.GetComponent<BasicAttackPatern>();
+        BAP.InitializeBAP(player);
     }
 }

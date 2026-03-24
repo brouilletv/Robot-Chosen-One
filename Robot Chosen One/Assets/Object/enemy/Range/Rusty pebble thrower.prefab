@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 7970094905383483147}
   - component: {fileID: 7543770047907417972}
   - component: {fileID: 7013847611763860019}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Rusty pebble thrower
   m_TagString: Untagged
   m_Icon: {fileID: 0}

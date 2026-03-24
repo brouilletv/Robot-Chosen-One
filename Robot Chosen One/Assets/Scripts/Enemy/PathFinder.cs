@@ -4,18 +4,23 @@ public class PathFinder : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D RB;
     [SerializeField] private Transform Body;
-    [SerializeField] private Transform Player;
+    private Transform Player;
     private Transform MaxPos;
     private Transform MinPos;
 
     private bool Fallow = false;
-    public void InitializePathFinder()
+    public void InitializePathFinder(Transform Player)
     {
+        this.Player = Player;
+
         MaxPos = transform.parent?.Find("MaxPos");
         MinPos = transform.parent?.Find("MinPos");
+
     }
     void FixedUpdate()
     {
+        Debug.Log(Player);
+
         float PlayerX = Player.position.x;
         float PlayerY = Player.position.y;
 

@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &7336361385532355060
 GameObject:
   m_ObjectHideFlags: 0
