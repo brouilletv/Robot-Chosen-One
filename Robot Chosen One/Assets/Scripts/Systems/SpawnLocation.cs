@@ -10,7 +10,7 @@ public class SpawnLocation : MonoBehaviour
     [SerializeField] CapsuleCollider2D player;
     [SerializeField] CircleCollider2D respawnCollider;
     [SerializeField] Transform spawnLocation;
-    public static event Action<Transform> newLocation;
+    public static event Action<Transform> NewLocation;
     public static event Action<bool> enemyRespawn;
 
     private bool inRange;
@@ -26,6 +26,6 @@ public class SpawnLocation : MonoBehaviour
 
     public void ChangeLocation(Transform spawnLocation)
     {
-        newLocation?.Invoke(spawnLocation);
+        NewLocation?.Invoke(spawnLocation);
     }
 }

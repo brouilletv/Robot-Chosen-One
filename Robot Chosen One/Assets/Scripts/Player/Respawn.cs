@@ -5,38 +5,53 @@ using System;
 
 public class Respawn : MonoBehaviour
 {
-    [SerializeField] Rigidbody2D rb;
-    [SerializeField] Transform player;
-    [SerializeField] Transform defaultSpawn;
+    [SerializeField] GameObject player;
 
-    public Transform checkpoint;
-    public Transform currentspawn;
+    [SerializeField] Transform defaultSpawnpoint;
+    public Transform currentSpawnpoint;
+    public Transform platformingSpawnpoint;
 
-    void Start()
+    private HealthHeartBarV2 healthScript;
+    private float playerHealth;
+
+    void Awake()
     {
-        currentspawn = defaultSpawn;
+        currentSpawnpoint = defaultSpawnpoint;
+        platformingSpawnpoint = currentSpawnpoint;
+        healthScript = player.transform.GetChild(1).GetChild(0).GetComponent<HealthHeartBarV2>();
     }
 
     void OnEnable()
     {
-        HealthHeartBarV2.respawn += HandleRespawn;
-        SpawnLocation.newLocation += UpdateLocation;
+        HealthHeartBarV2.Respawn += HandleRespawn;
+        SpikeLogic.Respawn += HandleRespawn;
+        SpawnLocation.NewLocation += UpdateLocation;
     }
 
     void OnDisable()
     {
-        HealthHeartBarV2.respawn -= HandleRespawn;
-        SpawnLocation.newLocation -= UpdateLocation;
+        HealthHeartBarV2.Respawn -= HandleRespawn;
+        SpikeLogic.Respawn -= HandleRespawn;
+        SpawnLocation.NewLocation -= UpdateLocation;
     }
 
     void HandleRespawn(int respawnTime)
     {
-        rb.velocity = new Vector2(0, 0);
-        player.transform.position = checkpoint.position;
+        player.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        playerHealth = healthScript.health;
+
+        if (playerHealth <= 0)
+        {
+            player.transform.position = currentSpawnpoint.position;
+        }
+        else if (playerHealth > 0)
+        {
+            player.transform.position = platformingSpawnpoint.position;
+        }
     }
 
     private void UpdateLocation(Transform newLocation)
     {
-        currentspawn = newLocation;
+        currentSpawnpoint = newLocation;
     }
 }

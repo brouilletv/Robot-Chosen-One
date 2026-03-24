@@ -13,7 +13,8 @@ public class HealthHeartBarV2 : MonoBehaviour
 
     private List<HealthHeart> hearts = new List<HealthHeart>();
 
-    public static event Action<int> respawn;
+    public static event Action<int> Respawn;
+
     private void Start()
     {
         health = Mathf.Clamp(health, 0, maxHealth);
@@ -52,7 +53,7 @@ public class HealthHeartBarV2 : MonoBehaviour
         IEnumerator Cooldown()
         {
             yield return new WaitForSeconds(0f);
-            SetHealth(maxHealth);
+            Heal(maxHealth);
         }
     }
 
@@ -118,9 +119,10 @@ public class HealthHeartBarV2 : MonoBehaviour
     {
         TakeDamage(newHealth);
     }
+
     public void Dead(int respawnTime)
     {
-        respawn?.Invoke(respawnTime);
+        Respawn?.Invoke(respawnTime);
     }
 
 }
