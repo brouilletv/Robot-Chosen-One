@@ -61,6 +61,18 @@ public class PlayerMovement : MonoBehaviour
     private bool canDash = true;
     private bool canDoubleJump = true;
 
+    // Wall Slide Variables
+    private bool isWallSliding;
+    private float wallSlidingSpeed = 2f;
+
+    //Wall Jump Variables
+    private bool isWallJumping;
+    private float wallJumpingDirection;
+    private float wallJumpingTime = 0.2f;
+    private float wallJumpingCounter;
+    private float wallJumpingDuration = 0.4f;
+    private Vector2 wallJumpingPower = new Vector2(8f, 16f);
+
 
     private void Awake()
     {
@@ -74,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         HandleFlip();
+        WallSlide();
     }
 
 
@@ -141,11 +154,13 @@ public class PlayerMovement : MonoBehaviour
         if (facingDirection == 1)
         {
             robotSprite.flipX = false;
+            wallCheck.localPosition = new Vector2(0.5f, wallCheck.localPosition.y);
         }
 
         else if (facingDirection == -1)
         {
             robotSprite.flipX = true;
+            wallCheck.localPosition = new Vector2(-0.5f, wallCheck.localPosition.y);
         }
     }
 
@@ -249,6 +264,25 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
+
+    private bool IsWalled()
+    {
+        return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
+    }
+
+
+    private void WallSlide()
+    {
+        if (IsWalled() && !isGrounded && moveDirectionX != 0)
+        {
+            isWallSliding = true;
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
+        }
+        else
+        {
+            isWallSliding = false;
+        }
+    }
 
     private void setFacingDirection()
     {
