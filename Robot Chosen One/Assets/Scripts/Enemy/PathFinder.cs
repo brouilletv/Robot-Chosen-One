@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class PathFinder : MonoBehaviour
 {
+    [SerializeField] bool Roming;
+    [SerializeField] bool FullRoming;
+
     [SerializeField] private Rigidbody2D RB;
     [SerializeField] private Transform Body;
     private Transform Player;
@@ -19,8 +22,6 @@ public class PathFinder : MonoBehaviour
     }
     void FixedUpdate()
     {
-        Debug.Log(Player);
-
         float PlayerX = Player.position.x;
         float PlayerY = Player.position.y;
 
@@ -35,11 +36,20 @@ public class PathFinder : MonoBehaviour
         {
             Fallow = false;
         }
-        if (Fallow is true && BodyX > PlayerX)
+
+        if (Fallow is true && BodyX > PlayerX && FullRoming is false)
         {
             RB.velocity = new Vector2(-1f, RB.velocity.y);
         }
-        else if (Fallow is true && BodyX < PlayerX)
+        else if (Fallow is true && BodyX < PlayerX && FullRoming is false)
+        {
+            RB.velocity = new Vector2(1f, RB.velocity.y);
+        }
+        else if (Roming is true && PlayerX >= MinPos.position.x)
+        {
+            RB.velocity = new Vector2(-1f, RB.velocity.y);
+        }
+        else if (Roming is true && PlayerX <= MaxPos.position.x)
         {
             RB.velocity = new Vector2(1f, RB.velocity.y);
         }
