@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Wall Slide Variables
     private bool isWallSliding;
-    private float wallSlidingSpeed = 2f;
+    [SerializeField] float wallSlidingSpeed = 2f;
 
     //Wall Jump Variables
     private bool isWallJumping;
@@ -281,6 +281,28 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             isWallSliding = false;
+        }
+    }
+
+    private void WallJump()
+    
+    {
+        if (isWallSliding)
+        {
+            isWallJumping = false;
+            wallJumpingDirection = -transform.localScale.x;
+            wallJumpingCounter = wallJumpingCounter;
+        }
+        else
+        { 
+            wallJumpingCounter -= Time.deltaTime;
+        }
+
+        if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
+        { 
+            isWallJumping = true;
+            rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
+            wallJumpingCounter = 0f;
         }
     }
 
