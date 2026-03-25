@@ -907,7 +907,7 @@ MonoBehaviour:
   robotSprite: {fileID: 717245941002535390}
   tr: {fileID: 0}
   sr: {fileID: 0}
-  wallCheck: {fileID: 0}
+  wallCheck: {fileID: 8006552032483216397}
   wallLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -955,9 +955,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb6dd72ef585d440a2a8c67e77b6692, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 186077379371596834}
   player: {fileID: 542451865603372785}
-  defaultSpawn: {fileID: 0}
+  defaultSpawnpoint: {fileID: 0}
+  currentSpawnpoint: {fileID: 0}
+  platformingSpawnpoint: {fileID: 0}
 --- !u!114 &2642156841284502340
 MonoBehaviour:
   m_ObjectHideFlags: 0
