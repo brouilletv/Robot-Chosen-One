@@ -12,6 +12,7 @@ public class PathFinder : MonoBehaviour
     private Transform MinPos;
 
     private bool Fallow = false;
+    private bool GoRight = false;
     public void InitializePathFinder(Transform Player)
     {
         this.Player = Player;
@@ -28,7 +29,7 @@ public class PathFinder : MonoBehaviour
         float BodyX = Body.position.x;
         float BodyY = Body.position.y;
 
-        if (PlayerX >= MinPos.position.x && PlayerX <= MaxPos.position.x && PlayerY >= MinPos.position.y && PlayerY <= MaxPos.position.y)
+        if (PlayerX >= MinPos.position.x && PlayerX <= MaxPos.position.x && PlayerY >= MinPos.position.y && PlayerY <= MaxPos.position.y && FullRoming is false)
         {
             Fallow = true;  
         }
@@ -37,21 +38,32 @@ public class PathFinder : MonoBehaviour
             Fallow = false;
         }
 
-        if (Fallow is true && BodyX > PlayerX && FullRoming is false)
+        if (Fallow is true && BodyX > PlayerX)
         {
             RB.velocity = new Vector2(-1f, RB.velocity.y);
         }
-        else if (Fallow is true && BodyX < PlayerX && FullRoming is false)
+        else if (Fallow is true && BodyX < PlayerX)
         {
             RB.velocity = new Vector2(1f, RB.velocity.y);
         }
-        else if (Roming is true && PlayerX >= MinPos.position.x)
+        else if (Roming is true)
         {
-            RB.velocity = new Vector2(-1f, RB.velocity.y);
-        }
-        else if (Roming is true && PlayerX <= MaxPos.position.x)
-        {
-            RB.velocity = new Vector2(1f, RB.velocity.y);
+            if (GoRight is false && BodyX >= MinPos.transform.position.x)
+            {
+                RB.velocity = new Vector2(-1f, RB.velocity.y);
+            }
+            else if (GoRight is false)
+            {
+                GoRight = true;
+            }
+            else if (GoRight is true && BodyX <= MaxPos.transform.position.x)
+            {
+                RB.velocity = new Vector2(1f, RB.velocity.y);
+            }
+            else if (GoRight is true)
+            {
+                GoRight = false;
+            }
         }
         else
         {
