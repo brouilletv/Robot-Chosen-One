@@ -25,6 +25,7 @@ public class Respawn : MonoBehaviour
     {
         HealthHeartBarV2.Respawn += HandleRespawn;
         SpikeLogic.Respawn += HandleRespawn;
+        DeathZone.Respawn += HandleRespawn;
         SpawnLocation.NewLocation += UpdateLocation;
     }
 
@@ -32,6 +33,7 @@ public class Respawn : MonoBehaviour
     {
         HealthHeartBarV2.Respawn -= HandleRespawn;
         SpikeLogic.Respawn -= HandleRespawn;
+        DeathZone.Respawn -= HandleRespawn;
         SpawnLocation.NewLocation -= UpdateLocation;
     }
 
