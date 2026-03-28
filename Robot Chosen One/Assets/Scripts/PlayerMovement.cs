@@ -86,7 +86,6 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         HandleFlip();
-        WallSlide();
     }
 
 
@@ -97,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
         GroundedCheck();
         HandleMovement();
         HandleJump();
+        HandleWallslide();
         knockback = new Vector2(0, 0);
     }
     #endregion
@@ -224,6 +224,20 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
+    private void HandleWallslide()
+    {
+        if (IsWalled() && !isGrounded && moveDirectionX != 0)
+        {
+            isWallSliding = true;
+            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
+        }
+        else
+        {
+            isWallSliding = false;
+        }
+    }
+
+
     private IEnumerator HandleDash()
     {
         isDashing = true;
@@ -270,19 +284,6 @@ public class PlayerMovement : MonoBehaviour
         return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
     }
 
-
-    private void WallSlide()
-    {
-        if (IsWalled() && !isGrounded && moveDirectionX != 0)
-        {
-            isWallSliding = true;
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
-        }
-        else
-        {
-            isWallSliding = false;
-        }
-    }
 
     private void WallJump()
     

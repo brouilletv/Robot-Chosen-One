@@ -10,6 +10,7 @@ public class DeathZone : MonoBehaviour
 
     public static event Action<int> Respawn;
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
