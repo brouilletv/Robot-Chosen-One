@@ -14,16 +14,16 @@ public class ERespawn : MonoBehaviour
     }
     void OnEnable()
     {
-        SpawnLocation.enemyRespawn += Respawn;
+        Respawn.enemyRespawn += RespawnE;
     }
 
 
     void OnDisable()
     {
-        SpawnLocation.enemyRespawn -= Respawn;
+        Respawn.enemyRespawn -= RespawnE;
     }
 
-    void Respawn(bool r)
+    void RespawnE(bool r)
     {
         if (r is true && transform.childCount == 2)
         {

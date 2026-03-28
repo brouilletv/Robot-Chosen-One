@@ -14,6 +14,8 @@ public class Respawn : MonoBehaviour
     private HealthHeartBarV2 healthScript;
     private float playerHealth;
 
+    public static event Action<bool> enemyRespawn;
+
     void Awake()
     {
         currentSpawnpoint = defaultSpawnpoint;
@@ -45,6 +47,7 @@ public class Respawn : MonoBehaviour
         if (playerHealth <= 0)
         {
             player.transform.position = currentSpawnpoint.position;
+            enemyRespawn?.Invoke(true);
         }
         else if (playerHealth > 0)
         {
@@ -54,6 +57,8 @@ public class Respawn : MonoBehaviour
 
     private void UpdateLocation(Transform newLocation)
     {
+        healthScript.Heal(healthScript.maxHealth - healthScript.health);
+        enemyRespawn?.Invoke(true);
         currentSpawnpoint = newLocation;
     }
 }

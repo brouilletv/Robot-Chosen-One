@@ -4,6 +4,7 @@ public class PathFinder : MonoBehaviour
 {
     [SerializeField] bool Roming;
     [SerializeField] bool FullRoming;
+    [SerializeField] bool Flying;
 
     [SerializeField] private Rigidbody2D RB;
     [SerializeField] private Transform Body;
@@ -19,7 +20,6 @@ public class PathFinder : MonoBehaviour
 
         MaxPos = transform.parent?.Find("MaxPos");
         MinPos = transform.parent?.Find("MinPos");
-
     }
     void FixedUpdate()
     {
@@ -68,6 +68,19 @@ public class PathFinder : MonoBehaviour
         else
         {
             RB.velocity = new Vector2(0f, RB.velocity.y);
+        }
+
+        if (Fallow is true && Flying is true && BodyY > PlayerY)
+        {
+            RB.velocity = new Vector2(RB.velocity.x, -0.5f);
+        }
+        else if (Fallow is true && Flying is true && BodyY < PlayerY)
+        {
+            RB.velocity = new Vector2(RB.velocity.x, 0.5f);
+        }
+        else if (Flying is true)
+        {
+            RB.velocity = new Vector2(RB.velocity.x, 0f);
         }
     } 
 }
