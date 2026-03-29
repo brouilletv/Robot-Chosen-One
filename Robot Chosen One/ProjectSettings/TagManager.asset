@@ -42,6 +42,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: World
+    uniqueID: 2145161427
+    locked: 0
   - name: Biome Blend
     uniqueID: 1692814755
     locked: 0

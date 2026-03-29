@@ -54,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
     // Input Booleans
     private bool jumpPressed;
     private bool jumpReleased;
+    private bool interactPressed = false;
 
     // Movement Booleans
     private bool isGrounded;
@@ -72,6 +73,8 @@ public class PlayerMovement : MonoBehaviour
     private float wallJumpingCounter;
     private float wallJumpingDuration = 0.4f;
     private Vector2 wallJumpingPower = new Vector2(8f, 16f);
+
+    public static event Action<bool> InteractUpdateFromPlayer;
 
 
     private void Awake()
@@ -143,6 +146,16 @@ public class PlayerMovement : MonoBehaviour
         if (canDash && unlockedDash)
         {
             StartCoroutine(HandleDash());
+        }
+    }
+
+
+    public void OnInteract(InputValue value)
+    {
+        if (!interactPressed)
+        {
+            interactPressed = true;
+            InteractUpdateFromPlayer?.Invoke(interactPressed);
         }
     }
     #endregion
@@ -329,6 +342,12 @@ public class PlayerMovement : MonoBehaviour
             previousFacingDirection = facingDirection;
         }
     }
+
+
+    private void UpdateInteractPressed(bool newInteractPressed)
+    {
+        interactPressed = newInteractPressed;
+    }
     #endregion
 
 
@@ -362,6 +381,7 @@ public class PlayerMovement : MonoBehaviour
         BasicAttackPatern.HitBounce += HandleBouceDirection;
         projectileStraight.HitBounce += HandleBouceDirection;
         projectileArch.HitBounce += HandleBouceDirection;
+        RegionDoorInteract.InteractUpdateFromDoor += UpdateInteractPressed;
     }
 
 
@@ -371,6 +391,7 @@ public class PlayerMovement : MonoBehaviour
         BasicAttackPatern.HitBounce -= HandleBouceDirection;
         projectileStraight.HitBounce -= HandleBouceDirection;
         projectileArch.HitBounce += HandleBouceDirection;
+        RegionDoorInteract.InteractUpdateFromDoor += UpdateInteractPressed;
     }
     #endregion
 }

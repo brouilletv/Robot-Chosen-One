@@ -60,7 +60,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &4981758355808284812
 MonoBehaviour:
@@ -775,7 +775,7 @@ Rigidbody2D:
     serializedVersion: 2
     m_Bits: 0
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &4394658483900559627
@@ -911,11 +911,11 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 0
-  groundSpeed: 10
-  jumpForce: 16
+  groundSpeed: 7
+  jumpForce: 17
   jumpCutMultiplier: 0.5
   normalGravity: 6
-  fallGravity: 10
+  fallGravity: 9
   jumpGravity: 4
   dashingPower: 24
   dashingTime: 0.2
@@ -929,6 +929,7 @@ MonoBehaviour:
   unlockedDash: 0
   moveDirectionX: 0
   moveDirectionY: 0
+  wallSlidingSpeed: 2
 --- !u!114 &1168437065262223502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1532,10 +1533,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1980, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3

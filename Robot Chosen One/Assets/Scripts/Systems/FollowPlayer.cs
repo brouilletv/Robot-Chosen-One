@@ -27,6 +27,9 @@ public class FollowPlayer : MonoBehaviour
     {
         CameraT = GetComponent<Transform>();
         player = GameObject.FindWithTag("Player").transform;
+        Vector3 RobotP = player.position;
+        RobotP.z = CameraT.position.z;
+        CameraT.position = Vector3.SmoothDamp(CameraT.position, RobotP, ref vel, 0f);
     }
 
 
