@@ -33,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dashingTime = 0.2f;
     [SerializeField] float dashingCooldown = 1f;
 
+    public bool playerStop;
+
     // Ground Check
     [Header("Ground Check")]
     [SerializeField] Transform groundCheck;
@@ -79,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        playerStop = false;
         rb.gravityScale = normalGravity;
         playerInput = GetComponent<PlayerInput>();
     }
@@ -94,13 +97,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        setFacingDirection();
-        HandleGravity();
-        GroundedCheck();
-        HandleMovement();
-        HandleJump();
-        HandleWallslide();
-        knockback = new Vector2(0, 0);
+        if (!playerStop)
+        {
+            setFacingDirection();
+            HandleGravity();
+            GroundedCheck();
+            HandleMovement();
+            HandleJump();
+            HandleWallslide();
+            knockback = new Vector2(0, 0);
+        }
+        else
+        {
+            rb.velocity = new Vector2(0, 0);
+        }
     }
     #endregion
 
@@ -108,8 +118,8 @@ public class PlayerMovement : MonoBehaviour
     #region Input Methods
     public void OnMove(InputValue value)
     {
-        moveDirectionX = value.Get<Vector2>().x;
-        moveDirectionY = value.Get<Vector2>().y;
+            moveDirectionX = value.Get<Vector2>().x;
+            moveDirectionY = value.Get<Vector2>().y;
     }
 
 
@@ -286,6 +296,17 @@ public class PlayerMovement : MonoBehaviour
 
 
     #region Checks & SetVariables
+    public void PlayerStopTrue()
+    {
+        playerStop = true;
+    }
+
+
+    public void PlayerStopFalse()
+    {
+        playerStop = false;
+    }
+
     private void GroundedCheck()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);

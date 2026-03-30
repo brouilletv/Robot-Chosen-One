@@ -8,16 +8,18 @@ public class HealthHeartBarV2 : MonoBehaviour
 {
     public GameObject heartPrefab;
     public float maxHealth = 12;
-    public float health = 12;
+    public float startingHealth = 12;
+    public float health;
+    private float respawnTime = 0.75f;
 
 
     private List<HealthHeart> hearts = new List<HealthHeart>();
 
-    public static event Action<int> Respawn;
+    public static event Action<float> Respawn;
 
-    private void Start()
+    private void Awake()
     {
-        health = Mathf.Clamp(health, 0, maxHealth);
+        health = Mathf.Clamp(startingHealth, 0, maxHealth);
         DrawHearts();
     }
 
@@ -46,15 +48,15 @@ public class HealthHeartBarV2 : MonoBehaviour
         SetHealth(health - amount);
         if (health <= 0)
         {
-            Dead(0);
-            StartCoroutine(Cooldown());
+            Dead(respawnTime);
+            StartCoroutine(DeathHealCooldown());
         }
+    }
 
-        IEnumerator Cooldown()
-        {
-            yield return new WaitForSeconds(0f);
-            Heal(maxHealth);
-        }
+    IEnumerator DeathHealCooldown()
+    {
+        yield return new WaitForSeconds(respawnTime);
+        Heal(maxHealth);
     }
 
     public void Heal(float amount)
@@ -120,7 +122,7 @@ public class HealthHeartBarV2 : MonoBehaviour
         TakeDamage(newHealth);
     }
 
-    public void Dead(int respawnTime)
+    public void Dead(float respawnTime)
     {
         Respawn?.Invoke(respawnTime);
     }

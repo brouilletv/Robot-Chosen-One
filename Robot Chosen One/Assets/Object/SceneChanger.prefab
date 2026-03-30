@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 1173556132416034096}
   - component: {fileID: 6614902467276747321}
   m_Layer: 5
-  m_Name: FadeToBlack
+  m_Name: FadeAnimation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

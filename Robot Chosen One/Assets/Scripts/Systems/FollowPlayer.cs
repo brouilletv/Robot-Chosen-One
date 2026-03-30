@@ -11,18 +11,6 @@ public class FollowPlayer : MonoBehaviour
     private Vector3 vel = Vector3.zero;
 
 
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         CameraT = GetComponent<Transform>();
@@ -38,5 +26,17 @@ public class FollowPlayer : MonoBehaviour
         Vector3 RobotP = player.position;
         RobotP.z = CameraT.position.z;
         CameraT.position = Vector3.SmoothDamp(CameraT.position, RobotP, ref vel, damping);
+    }
+
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

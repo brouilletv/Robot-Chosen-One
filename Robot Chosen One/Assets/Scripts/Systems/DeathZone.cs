@@ -8,7 +8,7 @@ public class DeathZone : MonoBehaviour
     [SerializeField] public int deathZoneDamage = 1;
     private HealthHeartBarV2 healthScript;
 
-    public static event Action<int> Respawn;
+    public static event Action<float> Respawn;
 
 
     private void OnTriggerEnter2D(Collider2D collision)
