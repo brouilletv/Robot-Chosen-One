@@ -27,7 +27,7 @@ public class BasicAttackPatern : MonoBehaviour
     private bool meleeOnCooldown = false;
     [SerializeField] float meleeCooldownTime;
 
-    public static event Action<int> Hit;
+    public static event Action<float> Hit;
     public static event Action<int> HitBounce;
 
     [Header("Range settings")]

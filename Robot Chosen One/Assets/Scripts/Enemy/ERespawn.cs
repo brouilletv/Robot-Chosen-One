@@ -1,26 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 
 public class ERespawn : MonoBehaviour
 {
     [SerializeField] GameObject enemy;
-    [SerializeField] GameObject player;
+    private GameObject player;
 
-    void Start()
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        player = GameObject.FindWithTag("Player");
         Create();
     }
+
     void OnEnable()
     {
         Respawn.enemyRespawn += RespawnE;
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
 
     void OnDisable()
     {
         Respawn.enemyRespawn -= RespawnE;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     void RespawnE(bool r)

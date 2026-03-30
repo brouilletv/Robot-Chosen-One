@@ -78,7 +78,6 @@ public class PlayerMovement : MonoBehaviour
 
     public static event Action<bool> InteractUpdateFromPlayer;
 
-
     private void Awake()
     {
         playerStop = false;
@@ -403,6 +402,7 @@ public class PlayerMovement : MonoBehaviour
         projectileStraight.HitBounce += HandleBouceDirection;
         projectileArch.HitBounce += HandleBouceDirection;
         RegionDoorInteract.InteractUpdateFromDoor += UpdateInteractPressed;
+        SpawnLocation.InteractUpdateFromSpawn += UpdateInteractPressed;
     }
 
 
@@ -411,8 +411,9 @@ public class PlayerMovement : MonoBehaviour
         TouchDmg.HitBounce -= HandleBouceDirection;
         BasicAttackPatern.HitBounce -= HandleBouceDirection;
         projectileStraight.HitBounce -= HandleBouceDirection;
-        projectileArch.HitBounce += HandleBouceDirection;
-        RegionDoorInteract.InteractUpdateFromDoor += UpdateInteractPressed;
+        projectileArch.HitBounce -= HandleBouceDirection;
+        RegionDoorInteract.InteractUpdateFromDoor -= UpdateInteractPressed;
+        SpawnLocation.InteractUpdateFromSpawn -= UpdateInteractPressed;
     }
     #endregion
 }

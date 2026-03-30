@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EHealth : MonoBehaviour
 {
@@ -9,9 +10,9 @@ public class EHealth : MonoBehaviour
     private float cooldownTime = 1f;
     private bool cooldown = false;
 
-    void Start()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        currentHealth = maxHealth; 
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -37,5 +38,17 @@ public class EHealth : MonoBehaviour
         cooldown = true;
         yield return new WaitForSeconds(cooldownTime);
         cooldown = false;
+    }
+
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

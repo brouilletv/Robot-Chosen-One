@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3818792070519462628}
   - component: {fileID: 7712022527091569825}
   - component: {fileID: 1706902531057232358}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cobble
   m_TagString: Untagged
   m_Icon: {fileID: 0}

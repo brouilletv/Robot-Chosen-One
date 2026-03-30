@@ -6,7 +6,7 @@ using System;
 public class projectileArch : MonoBehaviour
 {
     private string playerDirection;
-    private int rangeDmg;
+    private float rangeDmg = 1f;
     private int playerDirectionInt;
 
     private Vector2 target;
@@ -22,7 +22,7 @@ public class projectileArch : MonoBehaviour
     private LayerMask playerMask;
     private LayerMask groundMask;
 
-    public static event Action<int> Hit;
+    public static event Action<float> Hit;
     public static event Action<int> HitBounce;
 
     void Update()
@@ -78,7 +78,7 @@ public class projectileArch : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    void ApplyDmg(int dmg)
+    void ApplyDmg(float dmg)
     {
         Hit?.Invoke(dmg);
     }

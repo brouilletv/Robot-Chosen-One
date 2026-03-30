@@ -7,7 +7,7 @@ public class TouchDmg : MonoBehaviour
     private bool OnCooldown = false;
     [SerializeField] GameObject Player;
 
-    public static event Action<int> Hit;
+    public static event Action<float> Hit;
     [SerializeField] int touchDmg = 1;
 
     [SerializeField] private Transform Body;

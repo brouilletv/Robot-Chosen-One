@@ -20,7 +20,7 @@ public class projectileStraight : MonoBehaviour
     private LayerMask playerMask;
     private LayerMask groundMask;
 
-    public static event Action<int> Hit;
+    public static event Action<float> Hit;
     public static event Action<int> HitBounce;
 
     void Update()

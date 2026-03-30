@@ -14,6 +14,8 @@ public class PathFinder : MonoBehaviour
 
     private bool Fallow = false;
     private bool GoRight = false;
+
+
     public void InitializePathFinder(Transform Player)
     {
         this.Player = Player;
@@ -82,5 +84,5 @@ public class PathFinder : MonoBehaviour
         {
             RB.velocity = new Vector2(RB.velocity.x, 0f);
         }
-    } 
+    }
 }

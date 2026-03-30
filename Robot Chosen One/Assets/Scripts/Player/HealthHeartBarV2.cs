@@ -8,7 +8,7 @@ public class HealthHeartBarV2 : MonoBehaviour
 {
     public GameObject heartPrefab;
     public float maxHealth = 12;
-    public float startingHealth = 12;
+    public float startingHealth = 6;
     public float health;
     private float respawnTime = 0.75f;
 
@@ -117,7 +117,7 @@ public class HealthHeartBarV2 : MonoBehaviour
         projectileArch.Hit -= HandleHealthChanged;
     }
 
-    void HandleHealthChanged(int newHealth)
+    void HandleHealthChanged(float newHealth)
     {
         TakeDamage(newHealth);
     }
