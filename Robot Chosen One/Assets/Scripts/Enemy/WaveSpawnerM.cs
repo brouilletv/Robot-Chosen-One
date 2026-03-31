@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class WaveSpawnerM : MonoBehaviour
@@ -10,10 +11,12 @@ public class WaveSpawnerM : MonoBehaviour
     private GameObject Player;
     private LayerMask playerMask;
 
+    private string state = "inactive";
+
     void Start()
     {
-        MaxPos = transform?.Find("MaxPos");
-        MinPos = transform?.Find("MinPos");
+        MaxPos = transform.Find("MaxPos");
+        MinPos = transform.Find("MinPos");
 
         playerMask = LayerMask.GetMask("PlayerMask");
         Player = System.Array.Find(FindObjectsOfType<GameObject>(), o => ((1 << o.layer) & playerMask) != 0);
@@ -21,6 +24,22 @@ public class WaveSpawnerM : MonoBehaviour
 
     void Update()
     {
-        //add that it start when the player enter the zone
+        if (Player.transform.position.x >= MinPos.position.x && Player.transform.position.x <= MaxPos.position.x && Player.transform.position.y >= MinPos.position.y && Player.transform.position.y <= MaxPos.position.y && state == "inactive")
+        {
+            state = "active";
+        }
+        else if (state == "active")
+        {
+            foreach (int wave in Enumerable.Range(2, transform.childCount - 2))
+            {
+                if (transform.GetChild(wave).childCount > 0 && transform.GetChild(wave-1).childCount == 0)
+                {
+                    foreach (int enemy in Enumerable.Range(0, transform.GetChild(wave).childCount))
+                    {
+                        transform.GetChild(wave).GetChild(enemy).GetComponent<WaveSpawnerS>().Create();
+                    }
+                }
+            }
+        }
     }
 }

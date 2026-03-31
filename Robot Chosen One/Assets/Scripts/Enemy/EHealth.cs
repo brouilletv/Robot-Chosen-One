@@ -15,6 +15,11 @@ public class EHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    private void Awake()
+    {
+        currentHealth = maxHealth;
+    }
+
     void Update()
     {
 
@@ -27,7 +32,14 @@ public class EHealth : MonoBehaviour
             currentHealth -= amount;
             if (currentHealth <= 0)
             {
-                Destroy(gameObject);
+                if (transform.parent.name == "E")
+                {
+                    Destroy(transform.parent.gameObject);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
             StartCoroutine(Cooldown());
         }

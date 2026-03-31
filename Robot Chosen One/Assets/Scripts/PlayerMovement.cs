@@ -336,12 +336,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (direction == 0)
         {
-            knockback = new Vector2(-50, 15);
+            knockback = new Vector2(-10, 5);
 
         }
         else if (direction == 1)
         {
-            knockback = new Vector2(50, 15);
+            knockback = new Vector2(10, 5);
         }
     }
     #endregion
