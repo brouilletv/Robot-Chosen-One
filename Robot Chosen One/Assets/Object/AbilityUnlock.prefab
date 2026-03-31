@@ -307,6 +307,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactText: {fileID: 4334804129016854093}
+  abilitySprite: {fileID: 2668092180517716256}
+  DashUnlock: 0
+  DoubleJumpUnlock: 0
+  WallJumpUnlock: 0
 --- !u!1 &8736007648443040012
 GameObject:
   m_ObjectHideFlags: 0

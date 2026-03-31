@@ -6,14 +6,15 @@ using UnityEngine;
 public class AbilityInteract : MonoBehaviour
 {
     [SerializeField] Canvas interactText;
+    [SerializeField] SpriteRenderer abilitySprite;
     private Transform player;
     private PlayerMovement playerMovement;
-
 
     [Header("TypeOfUnlock")]
     public bool DashUnlock;
     public bool DoubleJumpUnlock;
     public bool WallJumpUnlock;
+
 
     private void UnlockAbility(PlayerMovement playerMovement)
     {
@@ -31,9 +32,19 @@ public class AbilityInteract : MonoBehaviour
         }
     }
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        interactText.enabled = true;
+        if (player != null)
+        {
+            player = collision.transform;
+            playerMovement = collision.GetComponent<PlayerMovement>();
+        }
+
+        if ((DashUnlock && !playerMovement.unlockedDash) || (DoubleJumpUnlock && !playerMovement.unlockedDoubleJump) || (WallJumpUnlock && !playerMovement.unlockedWallJump))
+        {
+            interactText.enabled = true;
+        }
     }
 
 
@@ -41,14 +52,18 @@ public class AbilityInteract : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            player = collision.transform;
-            playerMovement = collision.GetComponent<PlayerMovement>();
+            if (player != null)
+            {
+                player = collision.transform;
+                playerMovement = collision.GetComponent<PlayerMovement>();
+            }
 
             if (playerMovement.interactPressed)
             {
                 UnlockAbility(playerMovement);
                 playerMovement.interactPressed = false;
                 interactText.enabled = false;
+                abilitySprite.enabled = false;
             }
         }
     }
