@@ -120,7 +120,10 @@ public class PlayerMelee : MonoBehaviour
                 Collider2D[] enemiesinRange = Physics2D.OverlapCircleAll(attackZone.position, attackRadius, enemyLayer);
                 foreach (var enemy in enemiesinRange)
                 {
-                    enemy.GetComponent<EHealth>().TakeDamage(attackDamage);
+                    if (enemy.GetComponent<EHealth>() != null)
+                    {
+                        enemy.GetComponent<EHealth>().TakeDamage(attackDamage);
+                    }
                 }
                 cooldownTimer = cooldownTime;
                 attackPressed = false;

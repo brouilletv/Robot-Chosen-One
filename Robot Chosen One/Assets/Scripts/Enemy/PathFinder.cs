@@ -16,12 +16,11 @@ public class PathFinder : MonoBehaviour
     private bool GoRight = false;
 
 
-    public void InitializePathFinder(Transform Player)
+    public void InitializePathFinder(Transform Player, Transform MaxPos, Transform MinPos)
     {
         this.Player = Player;
-
-        MaxPos = transform.parent?.Find("MaxPos");
-        MinPos = transform.parent?.Find("MinPos");
+        this.MaxPos = MaxPos;
+        this.MinPos = MinPos;
     }
     void FixedUpdate()
     {
