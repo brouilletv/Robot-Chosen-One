@@ -7,6 +7,7 @@ public class SceneChangerPauseMenu : MonoBehaviour
 {
     public Animator fadeAnim;
     public float fadeTime = 1f;
+    private Vector2 newPlayerPosition = new Vector2(0, 0);
     private string mainMenu = "Main Menu";
     private Transform player;
     private PlayerMovement playerMovement;
@@ -31,6 +32,7 @@ public class SceneChangerPauseMenu : MonoBehaviour
     IEnumerator DelayFade()
     {
         yield return new WaitForSeconds(fadeTime);
+        player.transform.position = newPlayerPosition;
         SceneManager.LoadScene(mainMenu);
     }
 

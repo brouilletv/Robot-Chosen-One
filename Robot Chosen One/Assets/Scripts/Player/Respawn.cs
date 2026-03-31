@@ -22,7 +22,10 @@ public class Respawn : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        currentSpawnpoint = GameObject.FindWithTag("DefaultRespawn").transform;
+        if (currentSpawnpoint != null)
+        {
+            currentSpawnpoint = GameObject.FindWithTag("DefaultRespawn").transform;
+        }
         platformingSpawnpoint = currentSpawnpoint;
         healthScript = player.transform.GetChild(1).GetChild(0).GetComponent<HealthHeartBarV2>();
         playerMovement = player.GetComponent<PlayerMovement>();
