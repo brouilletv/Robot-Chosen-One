@@ -88,6 +88,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 457997f8d5d73ad449c4444e6382ce32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullHeart: {fileID: 21300000, guid: 0d593859c761ad749b68dc0ab66b8242, type: 3}
-  halfHeart: {fileID: 21300000, guid: b3a81cc5ff9a8dd49bc43f10fc89eeac, type: 3}
-  emptyHeart: {fileID: 21300000, guid: f749e5f6a220ff4449ee097e01f8975c, type: 3}
+  fullHeart: {fileID: 21300000, guid: e80821526d7c88a40bbcb30ef8ab800e, type: 3}
+  halfHeart: {fileID: 21300000, guid: 13481fe8eb632864bb7428199b5fb2a6, type: 3}
+  emptyHeart: {fileID: 21300000, guid: 9c07d11989eb1db41b515ab34c8c02ff, type: 3}

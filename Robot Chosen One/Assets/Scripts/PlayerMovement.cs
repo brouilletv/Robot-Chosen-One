@@ -12,13 +12,22 @@ public class PlayerMovement : MonoBehaviour
 {
     #region Variables & Awake
     // References
+    [Header("References")]
     [SerializeField] Rigidbody2D rb;
     [SerializeField] SpriteRenderer robotSprite;
     [SerializeField] private TrailRenderer tr;
     [SerializeField] private SpriteRenderer sr;
+    [SerializeField] Transform groundCheck;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
     private PlayerInput playerInput;
+
+    // Flags
+    [Header("Flags")]
+    public string lastScene = "Junkyard Map";
+    public bool unlockedDoubleJump;
+    public bool unlockedDash;
+    public bool unlockedWallJump;
 
     // Movement Variables
     [Header("Movement Variables")]
@@ -28,25 +37,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float normalGravity = 6f;
     [SerializeField] float fallGravity = 10f;
     [SerializeField] float jumpGravity = 4f;
-
     [SerializeField] float dashingPower = 24f;
     [SerializeField] float dashingTime = 0.2f;
     [SerializeField] float dashingCooldown = 1f;
-
+    [SerializeField] float wallSlidingSpeed = 2f;
     public bool playerStop;
 
-    // Ground Check
-    [Header("Ground Check")]
-    [SerializeField] Transform groundCheck;
-    [SerializeField] float groundCheckRadius = 0.3f;
-    [SerializeField] LayerMask groundLayer;
-
-    // Flags
-    [Header("Flags")]
-    public bool unlockedDoubleJump;
-    public bool unlockedDash;
-
     // Input Variables
+    [Header("Input Variables")]
     public float moveDirectionX;
     public float moveDirectionY;
     private int facingDirection;
@@ -54,31 +52,34 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 knockback;
 
     // Input Booleans
+    [Header("Input Booleans")]
     private bool jumpPressed;
     private bool jumpReleased;
-    private bool interactPressed = false;
+    public bool interactPressed = false;
 
     // Movement Booleans
     private bool isGrounded;
     private bool isDashing = false;
     private bool canDash = true;
     private bool canDoubleJump = true;
-
-    // Wall Slide Variables
     private bool isWallSliding;
-    [SerializeField] float wallSlidingSpeed = 2f;
+    private bool isWallJumping;
+
+    // Ground Check
+    [Header("GroundCheck")]
+    [SerializeField] float groundCheckRadius = 0.3f;
+    [SerializeField] LayerMask groundLayer;
 
     //Wall Jump Variables
-    private bool isWallJumping;
-    private float wallJumpingDirection;
-    private float wallJumpingTime = 0.2f;
-    private float wallJumpingCounter;
-    private float wallJumpingDuration = 0.4f;
-    private Vector2 wallJumpingPower = new Vector2(8f, 16f);
-    private float wallJumpMoveOverride = 0f;
+    [Header("WallJump")]
     [SerializeField] float wallJumpMoveOverrideDuration = 0.5f;
+    [SerializeField] private float wallJumpingDirection;
+    [SerializeField] private float wallJumpingTime = 0.2f;
+    [SerializeField] private float wallJumpingCounter;
+    [SerializeField] private float wallJumpingDuration = 0.4f;
+    [SerializeField] private Vector2 wallJumpingPower = new Vector2(8f, 16f);
+    [SerializeField] private float wallJumpMoveOverride = 0f;
 
-    public static event Action<bool> InteractUpdateFromPlayer;
 
     private void Awake()
     {
@@ -108,11 +109,14 @@ public class PlayerMovement : MonoBehaviour
             GroundedCheck();
             HandleMovement();
             HandleWallslide();
-            WallJump(); // ← moved here, removed from Update()
+            HandleWallJump(); // ← moved here, removed from Update()
             HandleJump();
             knockback = Vector2.zero;
         }
-        else { rb.velocity = Vector2.zero; }
+        else
+        {
+            rb.velocity = Vector2.zero; 
+        }
     }
     #endregion
 
@@ -120,8 +124,8 @@ public class PlayerMovement : MonoBehaviour
     #region Input Methods
     public void OnMove(InputValue value)
     {
-            moveDirectionX = value.Get<Vector2>().x;
-            moveDirectionY = value.Get<Vector2>().y;
+        moveDirectionX = value.Get<Vector2>().x;
+        moveDirectionY = value.Get<Vector2>().y;
     }
 
 
@@ -164,10 +168,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnInteract(InputValue value)
     {
-        if (!interactPressed)
+        if (value.isPressed)
         {
             interactPressed = true;
-            InteractUpdateFromPlayer?.Invoke(interactPressed);
         }
     }
     #endregion
@@ -271,6 +274,45 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
+    private void HandleWallJump()
+    {
+        if (isWallSliding)
+        {
+            wallJumpMoveOverride = 0f; // ← clear override when touching any wall
+            isWallJumping = false;
+            wallJumpingDirection = -facingDirection;
+            wallJumpingCounter = wallJumpingTime;
+            CancelInvoke(nameof(StopWallJumping));
+        }
+        else
+        {
+            wallJumpingCounter -= Time.deltaTime;
+        }
+
+        if (jumpPressed && wallJumpingCounter > 0f)
+        {
+            isWallJumping = true;
+            wallJumpMoveOverride = wallJumpMoveOverrideDuration;
+            rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
+            wallJumpingCounter = 0f;
+            jumpPressed = false;
+
+            facingDirection = (int)wallJumpingDirection;
+            previousFacingDirection = facingDirection;
+        }
+
+        if (wallJumpMoveOverride > 0f)
+        {
+            wallJumpMoveOverride -= Time.fixedDeltaTime;
+        }
+
+        if (isWallJumping && wallJumpMoveOverride <= 0f && (isGrounded || isWallSliding))
+        {
+            isWallJumping = false;
+        }
+    }
+
+
     private IEnumerator HandleDash()
     {
         isDashing = true;
@@ -335,48 +377,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void WallJump()
-    {
-        if (isWallSliding)
-        {
-            wallJumpMoveOverride = 0f; // ← clear override when touching any wall
-            isWallJumping = false;
-            wallJumpingDirection = -facingDirection;
-            wallJumpingCounter = wallJumpingTime;
-            CancelInvoke(nameof(StopWallJumping));
-        }
-        else
-        {
-            wallJumpingCounter -= Time.deltaTime;
-        }
-
-        if (jumpPressed && wallJumpingCounter > 0f)
-        {
-            isWallJumping = true;
-            wallJumpMoveOverride = wallJumpMoveOverrideDuration;
-            rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
-            wallJumpingCounter = 0f;
-            jumpPressed = false;
-
-            facingDirection = (int)wallJumpingDirection;
-            previousFacingDirection = facingDirection;
-        }
-
-        if (wallJumpMoveOverride > 0f)
-        {
-            wallJumpMoveOverride -= Time.fixedDeltaTime;
-        }
-
-        if (isWallJumping && wallJumpMoveOverride <= 0f && (isGrounded || isWallSliding))
-        {
-            isWallJumping = false;
-        }
-    }
-
     private void StopWallJumping()
     {
         isWallJumping = false;
     }
+
 
     private void setFacingDirection()
     {
@@ -402,12 +407,6 @@ public class PlayerMovement : MonoBehaviour
             previousFacingDirection = facingDirection;
         }
     }
-
-
-    private void UpdateInteractPressed(bool newInteractPressed)
-    {
-        interactPressed = newInteractPressed;
-    }
     #endregion
 
 
@@ -416,7 +415,6 @@ public class PlayerMovement : MonoBehaviour
     {
         playerInput.actions.FindActionMap("Player").Disable();
         playerInput.actions.FindActionMap("UI").Enable();
-        print("switched to UI");
     }
 
 
@@ -424,7 +422,6 @@ public class PlayerMovement : MonoBehaviour
     {
         playerInput.actions.FindActionMap("UI").Disable();
         playerInput.actions.FindActionMap("Player").Enable();
-        print("switched to Player");
     }
 
 
@@ -441,8 +438,6 @@ public class PlayerMovement : MonoBehaviour
         BasicAttackPatern.HitBounce += HandleBouceDirection;
         projectileStraight.HitBounce += HandleBouceDirection;
         projectileArch.HitBounce += HandleBouceDirection;
-        RegionDoorInteract.InteractUpdateFromDoor += UpdateInteractPressed;
-        SpawnLocation.InteractUpdateFromSpawn += UpdateInteractPressed;
     }
 
 
@@ -452,8 +447,6 @@ public class PlayerMovement : MonoBehaviour
         BasicAttackPatern.HitBounce -= HandleBouceDirection;
         projectileStraight.HitBounce -= HandleBouceDirection;
         projectileArch.HitBounce -= HandleBouceDirection;
-        RegionDoorInteract.InteractUpdateFromDoor -= UpdateInteractPressed;
-        SpawnLocation.InteractUpdateFromSpawn -= UpdateInteractPressed;
     }
     #endregion
 }

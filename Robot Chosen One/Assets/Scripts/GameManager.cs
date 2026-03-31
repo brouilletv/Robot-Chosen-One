@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     private void CleanUpAndDestroy()
     {
         foreach (GameObject obj in persistentObjects)
@@ -46,5 +47,18 @@ public class GameManager : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+
+    public void QuitGame()
+    {
+        if (Application.isEditor)
+        {
+            UnityEditor.EditorApplication.ExitPlaymode();
+        }
+        else
+        {
+            Application.Quit();
+        }
     }
 }

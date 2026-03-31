@@ -21,10 +21,14 @@ public class PauseManager : MonoBehaviour
 
     public void OnPause(InputValue value)
     {
-        if (!isPaused)
+        if (!playerMovement.playerStop)
         {
-            PauseGame();
+            if (!isPaused)
+            {
+                PauseGame();
+            }
         }
+        
     }
 
 
@@ -54,5 +58,17 @@ public class PauseManager : MonoBehaviour
         isPaused = false;
         PauseMenu.SetActive(false);
         playerMovement.SwitchActionMapToPlayer();
+    }
+
+    public void QuitGame()
+    {
+        if (Application.isEditor)
+        {
+            UnityEditor.EditorApplication.ExitPlaymode();
+        }
+        else
+        {
+            Application.Quit();
+        }
     }
 }

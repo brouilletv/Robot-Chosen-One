@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Maps/Mines Map.unity
     guid: 17f48aa8d4f9b314a9ddf6488a92eb60
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: b769027e0ab46eb48b05721a940b7774
   m_configObjects: {}

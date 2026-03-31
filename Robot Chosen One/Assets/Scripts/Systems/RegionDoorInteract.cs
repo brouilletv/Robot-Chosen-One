@@ -2,43 +2,40 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class RegionDoorInteract : MonoBehaviour
 {
+    [SerializeField] Canvas interactText;
     [SerializeField] DoorBehaviour doorBehaviour;
-    private bool interactPressed = false;
+    private Transform player;
+    private PlayerMovement playerMovement;
 
-    public static event Action<bool> InteractUpdateFromDoor;
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        interactText.enabled = true;
+    }
 
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            if (interactPressed)
+            player = collision.transform;
+            playerMovement = collision.GetComponent<PlayerMovement>();
+
+            if (playerMovement.interactPressed)
             {
                 doorBehaviour.isDoorOpen = !doorBehaviour.isDoorOpen;
-                interactPressed = false;
-                InteractUpdateFromDoor?.Invoke(interactPressed);
+                playerMovement.interactPressed = false;
+                interactText.enabled = false;
             }
         }
     }
 
 
-    private void UpdateInteractPressed(bool newInteractPressed)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        interactPressed = newInteractPressed;
-    }
-
-
-    private void OnEnable()
-    {
-        PlayerMovement.InteractUpdateFromPlayer += UpdateInteractPressed;
-    }
-
-    private void OnDisable()
-    {
-        PlayerMovement.InteractUpdateFromPlayer -= UpdateInteractPressed;
+        interactText.enabled = false;
     }
 }

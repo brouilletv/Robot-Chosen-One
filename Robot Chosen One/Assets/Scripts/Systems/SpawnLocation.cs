@@ -11,9 +11,9 @@ public class SpawnLocation : MonoBehaviour
     [SerializeField] CircleCollider2D respawnCollider;
     [SerializeField] Transform spawnLocation;
     [SerializeField] DoorBehaviour doorBehaviour;
-    private bool interactPressed = false;
+    private Transform playerTransform;
+    private PlayerMovement playerMovement;
 
-    public static event Action<bool> InteractUpdateFromSpawn;
     public static event Action<Transform> NewLocation;
 
     private bool inRange;
@@ -22,11 +22,13 @@ public class SpawnLocation : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (interactPressed)
+            playerTransform = collision.transform;
+            playerMovement = collision.GetComponent<PlayerMovement>();
+
+            if (playerMovement.interactPressed)
             {
                 ChangeLocation(spawnLocation);
-                interactPressed = false;
-                InteractUpdateFromSpawn?.Invoke(interactPressed);
+                playerMovement.interactPressed = false;
             }
         }
     }
@@ -34,20 +36,5 @@ public class SpawnLocation : MonoBehaviour
     public void ChangeLocation(Transform spawnLocation)
     {
         NewLocation?.Invoke(spawnLocation);
-    }
-
-    private void UpdateInteractPressed(bool newInteractPressed)
-    {
-        interactPressed = newInteractPressed;
-    }
-
-    private void OnEnable()
-    {
-        PlayerMovement.InteractUpdateFromPlayer += UpdateInteractPressed;
-    }
-
-    private void OnDisable()
-    {
-        PlayerMovement.InteractUpdateFromPlayer -= UpdateInteractPressed;
     }
 }
