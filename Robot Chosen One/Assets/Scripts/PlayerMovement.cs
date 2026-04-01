@@ -25,9 +25,12 @@ public class PlayerMovement : MonoBehaviour
     // Flags
     [Header("Flags")]
     public string lastScene = "Junkyard Map";
-    public bool unlockedDoubleJump;
-    public bool unlockedDash;
-    public bool unlockedWallJump;
+    public bool unlockedDoubleJump = false;
+    public bool unlockedDash = false;
+    public bool unlockedWallJump = false;
+    public bool maxHealthIncreaseJunkyard = false;
+    public bool maxHealthIncreaseMines = false;
+    public bool maxHealthIncreaseTower = false;
 
     // Movement Variables
     [Header("Movement Variables")]
@@ -47,7 +50,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Input Variables")]
     public float moveDirectionX;
     public float moveDirectionY;
-    private int facingDirection;
+    public int facingDirection;
+    public int inputVerticalDirection;
     private float previousFacingDirection;
     private Vector2 knockback;
 
@@ -55,7 +59,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Input Booleans")]
     private bool jumpPressed;
     private bool jumpReleased;
-    public bool interactPressed = false;
+    public bool interactPressed;
+    public bool cameraPanPressed;
+
 
     // Movement Booleans
     private bool isGrounded;
@@ -105,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
         if (!playerStop)
         {
             setFacingDirection();
+            setInputVerticalDirection();
             HandleGravity();
             GroundedCheck();
             HandleMovement();
@@ -124,53 +131,84 @@ public class PlayerMovement : MonoBehaviour
     #region Input Methods
     public void OnMove(InputValue value)
     {
-        moveDirectionX = value.Get<Vector2>().x;
-        moveDirectionY = value.Get<Vector2>().y;
+        if (!playerStop)
+        {
+            moveDirectionX = value.Get<Vector2>().x;
+            moveDirectionY = value.Get<Vector2>().y;
+        }
     }
 
 
     public void OnJump(InputValue value)
     {
-        if (value.isPressed)
+        if (!playerStop)
         {
-            if (isGrounded)
+            if (value.isPressed)
             {
-                jumpPressed = true;
-                jumpReleased = false;
-                canDoubleJump = true;
+                if (isGrounded)
+                {
+                    jumpPressed = true;
+                    jumpReleased = false;
+                    canDoubleJump = true;
+                }
+                else if (isWallSliding) // ← ADD THIS BRANCH
+                {
+                    jumpPressed = true;
+                    jumpReleased = false;
+                }
+                else if (!isGrounded && unlockedDoubleJump)
+                {
+                    jumpPressed = true;
+                    jumpReleased = false;
+                }
             }
-            else if (isWallSliding) // ← ADD THIS BRANCH
+            else
             {
-                jumpPressed = true;
-                jumpReleased = false;
+                jumpReleased = true;
             }
-            else if (!isGrounded && unlockedDoubleJump)
-            {
-                jumpPressed = true;
-                jumpReleased = false;
-            }
-        }
-        else
-        {
-            jumpReleased = true;
         }
     }
 
 
     public void OnDash(InputValue value)
     {
-        if (canDash && unlockedDash)
+        if (!playerStop)
         {
-            StartCoroutine(HandleDash());
+            if (canDash && unlockedDash)
+            {
+                StartCoroutine(HandleDash());
+            }
         }
     }
 
 
     public void OnInteract(InputValue value)
     {
-        if (value.isPressed)
+        if (!playerStop)
         {
-            interactPressed = true;
+            if (value.isPressed)
+            {
+                interactPressed = true;
+            }
+            else
+            {
+                interactPressed = false;
+            }
+        }
+    }
+
+    public void OnCameraPan(InputValue value)
+    {
+        if (!playerStop)
+        {
+            if (value.isPressed)
+            {
+                cameraPanPressed = true;
+            }
+            else
+            {
+                cameraPanPressed = false;
+            }
         }
     }
     #endregion
@@ -220,7 +258,7 @@ public class PlayerMovement : MonoBehaviour
             float targetSpeed = facingDirection * groundSpeed;
             // Smoothly transition horizontal speed instead of snapping
             float newX = Mathf.Lerp(rb.velocity.x, targetSpeed, 0.1f);
-            rb.velocity = new Vector2(newX, rb.velocity.y) + knockback;
+            rb.velocity = new Vector2(facingDirection * groundSpeed, rb.velocity.y) + knockback;
         }
     }
 
@@ -405,6 +443,28 @@ public class PlayerMovement : MonoBehaviour
         if (facingDirection != 0)
         {
             previousFacingDirection = facingDirection;
+        }
+    }
+
+
+    private void setInputVerticalDirection()
+    {
+        if (cameraPanPressed)
+        {
+            float value = moveDirectionY;
+
+            if (value > 0)
+            {
+                inputVerticalDirection = 1;
+            }
+            else if (value < 0)
+            {
+                inputVerticalDirection = -1;
+            }
+            else if (value == 0)
+            {
+                inputVerticalDirection = 0;
+            }
         }
     }
     #endregion

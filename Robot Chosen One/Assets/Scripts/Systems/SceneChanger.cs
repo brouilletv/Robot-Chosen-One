@@ -44,7 +44,7 @@ public class SceneChanger : MonoBehaviour
     {
         yield return new WaitForSeconds(fadeTime);
         player.transform.position = newPlayerPosition;
-        respawn.currentSpawnpoint.position = newPlayerPosition;
+        respawn.currentSpawnpoint = newPlayerPosition;
         playerMovement.lastScene = sceneToLoad;
         SceneManager.LoadScene(sceneToLoad);
     }

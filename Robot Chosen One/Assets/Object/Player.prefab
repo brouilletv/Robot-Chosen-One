@@ -1014,6 +1014,10 @@ MonoBehaviour:
   lastScene: Junkyard Map
   unlockedDoubleJump: 0
   unlockedDash: 0
+  unlockedWallJump: 0
+  maxHealthIncreaseJunkyard: 0
+  maxHealthIncreaseMines: 0
+  maxHealthIncreaseTower: 0
   groundSpeed: 7
   jumpForce: 17
   jumpCutMultiplier: 0.5
@@ -1066,8 +1070,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 3104547831339970628}
   fadeAnim: {fileID: 3777749608655791574}
-  currentSpawnpoint: {fileID: 0}
-  platformingSpawnpoint: {fileID: 0}
+  currentSpawnpoint: {x: 0, y: 0}
+  platformingSpawnpoint: {x: 0, y: 0}
 --- !u!114 &2642156841284502340
 MonoBehaviour:
   m_ObjectHideFlags: 0

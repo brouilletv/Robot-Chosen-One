@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CameraPan",
+                    "type": "Button",
+                    "id": "2d138fa8-2bdf-4bfe-87ac-71137be7f9c4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -228,12 +237,23 @@
                 },
                 {
                     "name": "",
-                    "id": "cdfd4091-4a63-4f8a-a60f-a6fee8ff7913",
-                    "path": "<Keyboard>/e",
+                    "id": "803fdc08-cd2d-436f-bf3c-aede3b165aae",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Interact",
+                    "action": "CameraPan",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b5e280cc-8e41-4e1e-a424-e7755dd8deac",
+                    "path": "<Keyboard>/rightShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraPan",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -13,7 +13,10 @@ public class RegionDoorInteract : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        interactText.enabled = true;
+        if (collision.CompareTag("Player"))
+        {
+            interactText.enabled = true;
+        }
     }
 
 
@@ -24,11 +27,19 @@ public class RegionDoorInteract : MonoBehaviour
             player = collision.transform;
             playerMovement = collision.GetComponent<PlayerMovement>();
 
-            if (playerMovement.interactPressed)
+            if (!doorBehaviour.doorIsClosed && !doorBehaviour.doorIsOpen)
             {
-                doorBehaviour.isDoorOpen = !doorBehaviour.isDoorOpen;
-                playerMovement.interactPressed = false;
                 interactText.enabled = false;
+            }
+            else if (doorBehaviour.doorIsClosed || doorBehaviour.doorIsOpen)
+            {
+                interactText.enabled = true;
+
+                if (playerMovement.interactPressed)
+                {
+                    playerMovement.interactPressed = false;
+                    doorBehaviour.isDoorOpen = !doorBehaviour.isDoorOpen;
+                }
             }
         }
     }
@@ -36,6 +47,9 @@ public class RegionDoorInteract : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        interactText.enabled = false;
+        if (collision.CompareTag("Player"))
+        {
+            interactText.enabled = false;
+        }
     }
 }
