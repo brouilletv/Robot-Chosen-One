@@ -197,6 +197,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // Pans the camera up or down when shift is pressed
     public void OnCameraPan(InputValue value)
     {
         if (!playerStop)
