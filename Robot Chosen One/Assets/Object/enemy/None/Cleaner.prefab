@@ -327,7 +327,7 @@ MonoBehaviour:
   Roming: 1
   FullRoming: 1
   Flying: 0
-  Speed: 0
+  Speed: 1
   distance: 0
   RB: {fileID: 2477096361492613448}
   Body: {fileID: 7897088512688483182}
@@ -535,6 +535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpPower: 5
+  cooldownTime: 3
 --- !u!1 &7740926163088657295
 GameObject:
   m_ObjectHideFlags: 0

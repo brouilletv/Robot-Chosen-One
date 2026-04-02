@@ -388,6 +388,8 @@ MonoBehaviour:
   Roming: 0
   FullRoming: 0
   Flying: 1
+  Speed: 1
+  distance: 0
   RB: {fileID: 207838655061344949}
   Body: {fileID: 5681004471667428649}
 --- !u!114 &2033946808141147520
