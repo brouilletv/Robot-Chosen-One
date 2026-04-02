@@ -6,17 +6,22 @@ using System;
 
 public class SpawnLocation : MonoBehaviour
 {
-
-    [SerializeField] CapsuleCollider2D player;
-    [SerializeField] CircleCollider2D respawnCollider;
     [SerializeField] Transform spawnLocation;
-    [SerializeField] DoorBehaviour doorBehaviour;
+    [SerializeField] Canvas interactText;
     private Transform playerTransform;
     private PlayerMovement playerMovement;
 
     public static event Action<Transform> NewLocation;
 
-    private bool inRange;
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            interactText.enabled = true;
+        }
+    }
+
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -28,10 +33,21 @@ public class SpawnLocation : MonoBehaviour
             if (playerMovement.interactPressed)
             {
                 ChangeLocation(spawnLocation);
+                interactText.enabled = false;
                 playerMovement.interactPressed = false;
             }
         }
     }
+
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            interactText.enabled = false;
+        }
+    }
+
 
     public void ChangeLocation(Transform spawnLocation)
     {

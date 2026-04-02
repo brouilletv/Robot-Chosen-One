@@ -131,53 +131,44 @@ public class PlayerMovement : MonoBehaviour
     #region Input Methods
     public void OnMove(InputValue value)
     {
-        if (!playerStop)
-        {
-            moveDirectionX = value.Get<Vector2>().x;
-            moveDirectionY = value.Get<Vector2>().y;
-        }
+        moveDirectionX = value.Get<Vector2>().x;
+        moveDirectionY = value.Get<Vector2>().y;
     }
 
 
     public void OnJump(InputValue value)
     {
-        if (!playerStop)
+        if (value.isPressed)
         {
-            if (value.isPressed)
+            if (isGrounded)
             {
-                if (isGrounded)
-                {
-                    jumpPressed = true;
-                    jumpReleased = false;
-                    canDoubleJump = true;
-                }
-                else if (isWallSliding) // ← ADD THIS BRANCH
-                {
-                    jumpPressed = true;
-                    jumpReleased = false;
-                }
-                else if (!isGrounded && unlockedDoubleJump)
-                {
-                    jumpPressed = true;
-                    jumpReleased = false;
-                }
+                jumpPressed = true;
+                jumpReleased = false;
+                canDoubleJump = true;
             }
-            else
+            else if (isWallSliding) // ← ADD THIS BRANCH
             {
-                jumpReleased = true;
+                jumpPressed = true;
+                jumpReleased = false;
             }
+            else if (!isGrounded && unlockedDoubleJump)
+            {
+                jumpPressed = true;
+                jumpReleased = false;
+            }
+        }
+        else
+        {
+            jumpReleased = true;
         }
     }
 
 
     public void OnDash(InputValue value)
     {
-        if (!playerStop)
+        if (canDash && unlockedDash)
         {
-            if (canDash && unlockedDash)
-            {
-                StartCoroutine(HandleDash());
-            }
+            StartCoroutine(HandleDash());
         }
     }
 
@@ -354,20 +345,23 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator HandleDash()
     {
-        isDashing = true;
-        canDash = false;
-        rb.velocity = new Vector2(previousFacingDirection * dashingPower, 0f);
-        rb.gravityScale = 0f;
+        if (!playerStop)
+        {
+            isDashing = true;
+            canDash = false;
+            rb.velocity = new Vector2(previousFacingDirection * dashingPower, 0f);
+            rb.gravityScale = 0f;
 
-        //tr.emitting = true;
+            //tr.emitting = true;
 
-        yield return new WaitForSeconds(dashingTime);
-        isDashing = false;
+            yield return new WaitForSeconds(dashingTime);
+            isDashing = false;
 
-        //tr.emitting = false;
+            //tr.emitting = false;
 
-        yield return new WaitForSeconds(dashingCooldown);
-        canDash = true;
+            yield return new WaitForSeconds(dashingCooldown);
+            canDash = true;
+        }
     }
 
 
