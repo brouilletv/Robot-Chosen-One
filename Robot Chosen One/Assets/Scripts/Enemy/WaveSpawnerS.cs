@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class WaveSpawnerS : MonoBehaviour
 {
     [SerializeField] GameObject enemy;
+    [SerializeField] int Ecount = 1;
+    [SerializeField] int Ecooldown = 0;
+
     private GameObject player;
     private Transform MaxPos;
     private Transform MinPos;
@@ -15,10 +19,17 @@ public class WaveSpawnerS : MonoBehaviour
         MaxPos = transform.parent.parent.Find("MaxPos");
         MinPos = transform.parent.parent.Find("MinPos");
     }
-    public void Create()
+    public void Spawn()
     {
-        if (transform.childCount == 0)
+        foreach (int i in Enumerable.Range(0, Ecount - transform.childCount))
         {
+            StartCoroutine(Create(i));
+        }
+
+        IEnumerator Create(int n)
+        {
+            yield return new WaitForSeconds(n * Ecooldown);
+
             GameObject Clone = Instantiate(enemy, transform.position, transform.rotation, transform);
 
             PathFinder EPathFinder = Clone.GetComponent<PathFinder>();

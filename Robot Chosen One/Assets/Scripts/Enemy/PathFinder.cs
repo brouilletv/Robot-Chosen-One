@@ -5,6 +5,8 @@ public class PathFinder : MonoBehaviour
     [SerializeField] bool Roming;
     [SerializeField] bool FullRoming;
     [SerializeField] bool Flying;
+    [SerializeField] float Speed;
+    [SerializeField] float distance = 0;
 
     [SerializeField] private Rigidbody2D RB;
     [SerializeField] private Transform Body;
@@ -30,7 +32,7 @@ public class PathFinder : MonoBehaviour
         float BodyX = Body.position.x;
         float BodyY = Body.position.y;
 
-        if (PlayerX >= MinPos.position.x && PlayerX <= MaxPos.position.x && PlayerY >= MinPos.position.y && PlayerY <= MaxPos.position.y && FullRoming is false)
+        if (PlayerX >= MinPos.position.x && PlayerX <= MaxPos.position.x && PlayerY >= MinPos.position.y && PlayerY <= MaxPos.position.y && Vector2.Distance(transform.position, Player.position) > distance && FullRoming is false)
         {
             Fallow = true;  
         }
@@ -41,17 +43,17 @@ public class PathFinder : MonoBehaviour
 
         if (Fallow is true && BodyX > PlayerX)
         {
-            RB.velocity = new Vector2(-1f, RB.velocity.y);
+            RB.velocity = new Vector2(-1f * Speed, RB.velocity.y);
         }
         else if (Fallow is true && BodyX < PlayerX)
         {
-            RB.velocity = new Vector2(1f, RB.velocity.y);
+            RB.velocity = new Vector2(1f * Speed, RB.velocity.y);
         }
         else if (Roming is true)
         {
             if (GoRight is false && BodyX >= MinPos.transform.position.x)
             {
-                RB.velocity = new Vector2(-1f, RB.velocity.y);
+                RB.velocity = new Vector2(-1f * Speed, RB.velocity.y);
             }
             else if (GoRight is false)
             {
@@ -59,7 +61,7 @@ public class PathFinder : MonoBehaviour
             }
             else if (GoRight is true && BodyX <= MaxPos.transform.position.x)
             {
-                RB.velocity = new Vector2(1f, RB.velocity.y);
+                RB.velocity = new Vector2(1f * Speed, RB.velocity.y);
             }
             else if (GoRight is true)
             {
@@ -73,11 +75,11 @@ public class PathFinder : MonoBehaviour
 
         if (Fallow is true && Flying is true && BodyY > PlayerY)
         {
-            RB.velocity = new Vector2(RB.velocity.x, -0.5f);
+            RB.velocity = new Vector2(RB.velocity.x, -0.5f * Speed);
         }
         else if (Fallow is true && Flying is true && BodyY < PlayerY)
         {
-            RB.velocity = new Vector2(RB.velocity.x, 0.5f);
+            RB.velocity = new Vector2(RB.velocity.x, 0.5f * Speed);
         }
         else if (Flying is true)
         {

@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using System.Linq;
 
 public class ERespawn : MonoBehaviour
 {
     [SerializeField] GameObject enemy;
+    [SerializeField] int Ecount = 1;
+    [SerializeField] int Ecooldown = 0;
+
     private GameObject player;
     private Transform MaxPos;
     private Transform MinPos;
@@ -16,7 +20,10 @@ public class ERespawn : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         MaxPos = transform.Find("MaxPos");
         MinPos = transform.Find("MinPos");
-        Create();
+        foreach (int i in Enumerable.Range(0, Ecount - (transform.childCount - 2)))
+        {
+            StartCoroutine(Create(i));
+        }
     }
 
     void OnEnable()
@@ -34,14 +41,16 @@ public class ERespawn : MonoBehaviour
 
     void RespawnE(bool r)
     {
-        if (r is true && transform.childCount == 2)
+        foreach (int i in Enumerable.Range(0, Ecount - (transform.childCount - 2)))
         {
-            Create();
+            StartCoroutine(Create(i));
         }
     }
 
-    void Create()
+    IEnumerator Create(int n)
     {
+        yield return new WaitForSeconds(n * Ecooldown);
+
         GameObject Clone = Instantiate(enemy, transform.position, transform.rotation, transform);
 
         PathFinder EPathFinder = Clone.GetComponent<PathFinder>();
