@@ -10,7 +10,7 @@ public class PlatformingSpawnpointLogic : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<Respawn>().platformingSpawnpoint = spawnpoint;
+            collision.GetComponent<Respawn>().platformingSpawnpoint = spawnpoint.position;
         }
     }
 }

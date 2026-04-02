@@ -10,8 +10,8 @@ public class Respawn : MonoBehaviour
     private PlayerMovement playerMovement;
     public Animator fadeAnim;
 
-    public Transform currentSpawnpoint;
-    public Transform platformingSpawnpoint;
+    public Vector2 currentSpawnpoint;
+    public Vector2 platformingSpawnpoint;
     private bool respawnStop = false;
 
     private HealthHeartBarV2 healthScript;
@@ -20,12 +20,13 @@ public class Respawn : MonoBehaviour
     public static event Action<bool> enemyRespawn;
 
 
+    private void Awake()
+    {
+        currentSpawnpoint = GameObject.FindWithTag("DefaultRespawn").transform.position;
+    }
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (currentSpawnpoint != null)
-        {
-            currentSpawnpoint = GameObject.FindWithTag("DefaultRespawn").transform;
-        }
         platformingSpawnpoint = currentSpawnpoint;
         healthScript = player.transform.GetChild(1).GetChild(0).GetComponent<HealthHeartBarV2>();
         playerMovement = player.GetComponent<PlayerMovement>();
@@ -64,12 +65,12 @@ public class Respawn : MonoBehaviour
 
         if (death)
         {
-            player.transform.position = currentSpawnpoint.position;
+            player.transform.position = currentSpawnpoint;
         }
 
         else if (!death)
         {
-            player.transform.position = platformingSpawnpoint.position;
+            player.transform.position = platformingSpawnpoint;
         }
 
         fadeAnim.SetTrigger("ContinueFade");
@@ -82,7 +83,7 @@ public class Respawn : MonoBehaviour
     {
         healthScript.Heal(healthScript.maxHealth - healthScript.health);
         enemyRespawn?.Invoke(true);
-        currentSpawnpoint = newLocation;
+        currentSpawnpoint = newLocation.position;
     }
 
 

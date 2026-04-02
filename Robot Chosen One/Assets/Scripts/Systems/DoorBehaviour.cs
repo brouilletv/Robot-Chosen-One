@@ -10,6 +10,8 @@ public class DoorBehaviour : MonoBehaviour
     public float doorSpeed = 5f;
     private float doorHeight;
     public bool isDoorOpen = false;
+    public bool doorIsClosed;
+    public bool doorIsOpen;
 
 
     void Awake()
@@ -29,6 +31,22 @@ public class DoorBehaviour : MonoBehaviour
         else if (!isDoorOpen)
         {
             CloseDoor();
+        }
+
+        if (transform.position == doorOpenPos)
+        {
+            doorIsClosed = false;
+            doorIsOpen = true;
+        }
+        else if (transform.position == doorClosedPos)
+        {
+            doorIsClosed = true;
+            doorIsOpen = false;
+        }
+        else
+        {
+            doorIsClosed = false;
+            doorIsOpen = false;
         }
     }
 

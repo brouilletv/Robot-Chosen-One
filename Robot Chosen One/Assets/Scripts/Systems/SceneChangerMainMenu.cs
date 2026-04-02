@@ -33,7 +33,7 @@ public class SceneChangerMainMenu : MonoBehaviour
     IEnumerator DelayFade(Transform player, PlayerMovement playerMovement, Respawn respawn)
     {
         yield return new WaitForSeconds(fadeTime);
-        player.transform.position = respawn.currentSpawnpoint.position;
+        player.transform.position = respawn.currentSpawnpoint;
         SceneManager.LoadScene(playerMovement.lastScene);
     }
 

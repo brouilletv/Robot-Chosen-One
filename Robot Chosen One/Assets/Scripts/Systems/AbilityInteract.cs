@@ -18,15 +18,15 @@ public class AbilityInteract : MonoBehaviour
 
     private void UnlockAbility(PlayerMovement playerMovement)
     {
-        if (DashUnlock)
+        if (DashUnlock && !playerMovement.unlockedDash)
         {
             playerMovement.unlockedDash = true;
         }
-        else if (DoubleJumpUnlock)
+        else if (DoubleJumpUnlock && !playerMovement.unlockedDoubleJump)
         {
             playerMovement.unlockedDoubleJump = true;
         }
-        else if (WallJumpUnlock)
+        else if (WallJumpUnlock && !playerMovement.unlockedWallJump)
         {
             playerMovement.unlockedWallJump = true;
         }
@@ -35,15 +35,15 @@ public class AbilityInteract : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (player != null)
+        if (collision.CompareTag("Player"))
         {
             player = collision.transform;
             playerMovement = collision.GetComponent<PlayerMovement>();
-        }
 
-        if ((DashUnlock && !playerMovement.unlockedDash) || (DoubleJumpUnlock && !playerMovement.unlockedDoubleJump) || (WallJumpUnlock && !playerMovement.unlockedWallJump))
-        {
-            interactText.enabled = true;
+            if ((DashUnlock && !playerMovement.unlockedDash) || (DoubleJumpUnlock && !playerMovement.unlockedDoubleJump) || (WallJumpUnlock && !playerMovement.unlockedWallJump))
+            {
+                interactText.enabled = true;
+            }
         }
     }
 
@@ -52,18 +52,12 @@ public class AbilityInteract : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (player != null)
-            {
-                player = collision.transform;
-                playerMovement = collision.GetComponent<PlayerMovement>();
-            }
-
             if (playerMovement.interactPressed)
             {
-                UnlockAbility(playerMovement);
                 playerMovement.interactPressed = false;
                 interactText.enabled = false;
                 abilitySprite.enabled = false;
+                UnlockAbility(playerMovement);
             }
         }
     }
@@ -71,6 +65,9 @@ public class AbilityInteract : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        interactText.enabled = false;
+        if (collision.CompareTag("Player"))
+        {
+            interactText.enabled = false;
+        }
     }
 }
