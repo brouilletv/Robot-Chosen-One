@@ -78,13 +78,15 @@ public class PlayerMovement : MonoBehaviour
 
     //Wall Jump Variables
     [Header("WallJump")]
-    [SerializeField] float wallJumpMoveOverrideDuration = 0.5f;
+    [SerializeField] float wallJumpMoveOverrideDuration = 0.12f;
     [SerializeField] private float wallJumpingDirection;
     [SerializeField] private float wallJumpingTime = 0.2f;
     [SerializeField] private float wallJumpingCounter;
     [SerializeField] private float wallJumpingDuration = 0.4f;
     [SerializeField] private Vector2 wallJumpingPower = new Vector2(8f, 16f);
     [SerializeField] private float wallJumpMoveOverride = 0f;
+    private int currentWallSide = 0;   // -1 = left wall, 1 = right wall, 0 = no wall
+    private int lastWallJumpSide = 0;  // wall side jumped from
 
 
     private void Awake()
@@ -114,9 +116,10 @@ public class PlayerMovement : MonoBehaviour
             setInputVerticalDirection();
             HandleGravity();
             GroundedCheck();
+            currentWallSide = GetWallSide();
             HandleMovement();
             HandleWallslide();
-            HandleWallJump(); // ← moved here, removed from Update()
+            HandleWallJump();
             HandleJump();
             knockback = Vector2.zero;
         }
@@ -286,13 +289,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleWallslide()
     {
-        if (wallJumpMoveOverride > 0f) // ← don't allow wall slide during jump arc
+        // If we touch the opposite wall after wall jump, cancel override
+        if (wallJumpMoveOverride > 0f && currentWallSide != 0 && currentWallSide != lastWallJumpSide && !isGrounded)
+        {
+            wallJumpMoveOverride = 0f;
+        }
+
+        if (wallJumpMoveOverride > 0f)
         {
             isWallSliding = false;
             return;
         }
 
-        if (IsWalled() && !isGrounded && moveDirectionX != 0)
+        if (currentWallSide != 0 && !isGrounded && moveDirectionX != 0)
         {
             isWallSliding = true;
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
@@ -323,6 +332,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isWallJumping = true;
             wallJumpMoveOverride = wallJumpMoveOverrideDuration;
+            lastWallJumpSide = currentWallSide;
             rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
             jumpPressed = false;
@@ -336,7 +346,11 @@ public class PlayerMovement : MonoBehaviour
             wallJumpMoveOverride -= Time.fixedDeltaTime;
         }
 
-        if (isWallJumping && wallJumpMoveOverride <= 0f && (isGrounded || isWallSliding))
+        if (isGrounded)
+        {
+            isWallJumping = false;
+        }
+        else if (isWallJumping && wallJumpMoveOverride <= 0f && isWallSliding)
         {
             isWallJumping = false;
         }
@@ -398,11 +412,27 @@ public class PlayerMovement : MonoBehaviour
 
         if (isGrounded)
         {
-            // isWallJumping = false; ← remove this, WallJump() handles it now
             canDoubleJump = true;
+            isWallJumping = false;
+            isWallSliding = false;
+            wallJumpMoveOverride = 0f;
+            wallJumpingCounter = 0f;
         }
     }
 
+    private int GetWallSide()
+    {
+        Vector2 rightCheck = new Vector2(transform.position.x + 0.5f, wallCheck.position.y);
+        Vector2 leftCheck = new Vector2(transform.position.x - 0.5f, wallCheck.position.y);
+
+        bool wallRight = Physics2D.OverlapCircle(rightCheck, 0.2f, wallLayer);
+        bool wallLeft = Physics2D.OverlapCircle(leftCheck, 0.2f, wallLayer);
+
+        if (wallLeft) return -1;
+        if (wallRight) return 1;
+
+        return 0;
+    }
 
     private bool IsWalled()
     {
