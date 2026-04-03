@@ -11,6 +11,13 @@ public class RegionDoorInteract : MonoBehaviour
     private PlayerMovement playerMovement;
 
 
+    private void Awake()
+    {
+        doorBehaviour.doorOpenUpward = true;
+        doorBehaviour.doorOpenDownward = false;
+    }
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

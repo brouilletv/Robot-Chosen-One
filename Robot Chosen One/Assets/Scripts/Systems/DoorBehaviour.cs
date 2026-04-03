@@ -6,9 +6,12 @@ using UnityEngine;
 public class DoorBehaviour : MonoBehaviour
 {
     private Vector3 doorClosedPos;
-    private Vector3 doorOpenPos;
-    public float doorSpeed = 5f;
+    private Vector3 doorOpenUpPos;
+    private Vector3 doorOpenDownPos;
     private float doorHeight;
+    public float doorSpeed = 5f;
+    public bool doorOpenDownward;
+    public bool doorOpenUpward;
     public bool isDoorOpen = false;
     public bool doorIsClosed;
     public bool doorIsOpen;
@@ -18,7 +21,8 @@ public class DoorBehaviour : MonoBehaviour
     {
         doorHeight = GetComponent<CompositeCollider2D>().bounds.size.y;
         doorClosedPos = transform.position;
-        doorOpenPos = new Vector3(transform.position.x, transform.position.y + doorHeight - 0.75f, transform.position.z);
+        doorOpenUpPos = new Vector3(transform.position.x, transform.position.y + doorHeight - 0.75f, transform.position.z);
+        doorOpenDownPos = new Vector3(transform.position.x, transform.position.y - doorHeight + 0.75f, transform.position.z);
     }
 
 
@@ -33,7 +37,7 @@ public class DoorBehaviour : MonoBehaviour
             CloseDoor();
         }
 
-        if (transform.position == doorOpenPos)
+        if ((transform.position == doorOpenUpPos) || (transform.position == doorOpenDownPos))
         {
             doorIsClosed = false;
             doorIsOpen = true;
@@ -53,9 +57,13 @@ public class DoorBehaviour : MonoBehaviour
 
     void OpenDoor()
     {
-        if (transform.position != doorOpenPos)
+        if ((transform.position != doorOpenUpPos) && doorOpenUpward)
         {
-            transform.position = Vector3.MoveTowards(transform.position, doorOpenPos, doorSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, doorOpenUpPos, doorSpeed * Time.deltaTime);
+        }
+        else if ((transform.position != doorOpenDownPos) && doorOpenDownward)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, doorOpenDownPos, doorSpeed * Time.deltaTime);
         }
     }
 

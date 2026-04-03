@@ -13,12 +13,16 @@ public class ObstacleDoorInteract : MonoBehaviour
     private Transform player;
     private PlayerMovement playerMovement;
     private bool canOpenDoor = true;
+    public bool doorOpenDownward;
+    public bool doorOpenUpward;
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         interactText = GetComponentInChildren<Canvas>();
         doorBehaviour = obstacleDoorObject.transform.GetComponentInChildren<DoorBehaviour>();
+        doorBehaviour.doorOpenDownward = doorOpenDownward;
+        doorBehaviour.doorOpenUpward = doorOpenUpward;
 
         if (collision.CompareTag("Player"))
         {
