@@ -28,8 +28,10 @@ public class FollowPlayer : MonoBehaviour
     {
         Vector3 RobotP = player.position;
         RobotP.z = CameraT.position.z;
-
-        RobotP.y += cameraPanOffset * playerMovement.inputVerticalDirection;
+        if (playerMovement.cameraPanPressed)
+        {
+            RobotP.y += cameraPanOffset * playerMovement.inputVerticalDirection;
+        }
 
         CameraT.position = Vector3.SmoothDamp(CameraT.position, RobotP, ref vel, damping);
     }

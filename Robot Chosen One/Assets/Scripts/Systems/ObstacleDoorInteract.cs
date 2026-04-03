@@ -1,23 +1,33 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class RegionDoorInteract : MonoBehaviour
+public class ObstacleDoorInteract : MonoBehaviour
 {
-    [SerializeField] Canvas interactText;
-    [SerializeField] DoorBehaviour doorBehaviour;
+    [SerializeField] GameObject obstacleDoorObject;
+    private Canvas interactText;
+    private DoorBehaviour doorBehaviour;
     private Transform player;
     private PlayerMovement playerMovement;
+    private bool canOpenDoor = true;
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        interactText = GetComponentInChildren<Canvas>();
+        doorBehaviour = obstacleDoorObject.transform.GetComponentInChildren<DoorBehaviour>();
+
         if (collision.CompareTag("Player"))
         {
-            player = collision.transform;
-            playerMovement = collision.GetComponent<PlayerMovement>();
-            interactText.enabled = true;
+            if (canOpenDoor)
+            {
+                player = collision.transform;
+                playerMovement = collision.GetComponent<PlayerMovement>();
+                interactText.enabled = true;
+            }
         }
     }
 
@@ -32,11 +42,10 @@ public class RegionDoorInteract : MonoBehaviour
             }
             else if (doorBehaviour.doorIsClosed || doorBehaviour.doorIsOpen)
             {
-                interactText.enabled = true;
-
-                if (playerMovement.interactPressed)
+                if (playerMovement.interactPressed && canOpenDoor)
                 {
                     playerMovement.interactPressed = false;
+                    canOpenDoor = false;
                     doorBehaviour.isDoorOpen = !doorBehaviour.isDoorOpen;
                 }
             }

@@ -1031,7 +1031,11 @@ MonoBehaviour:
   playerStop: 0
   moveDirectionX: 0
   moveDirectionY: 0
+  facingDirection: 0
+  inputVerticalDirection: 0
+  knockback: {x: 0, y: 0}
   interactPressed: 0
+  cameraPanPressed: 0
   groundCheckRadius: 0.3
   groundLayer:
     serializedVersion: 2
@@ -1088,7 +1092,8 @@ MonoBehaviour:
   attackZone: {fileID: 5293637703025151396}
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
+  pogoKnockback: 50
   attackRadius: 1
   attackDamage: 1
   attackZoneOrigin: 0.4

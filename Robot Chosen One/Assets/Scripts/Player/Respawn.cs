@@ -10,7 +10,7 @@ public class Respawn : MonoBehaviour
     private PlayerMovement playerMovement;
     public Animator fadeAnim;
 
-    public Vector2 currentSpawnpoint;
+    public Vector2 currentSpawnpoint = new Vector2(0, 0);
     public Vector2 platformingSpawnpoint;
     private bool respawnStop = false;
 

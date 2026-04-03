@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     public int facingDirection;
     public int inputVerticalDirection;
     private float previousFacingDirection;
-    private Vector2 knockback;
+    public Vector2 knockback;
 
     // Input Booleans
     [Header("Input Booleans")]
@@ -188,7 +188,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Pans the camera up or down when shift is pressed
+    // Pans the camera up or down when ctrl is pressed
     public void OnCameraPan(InputValue value)
     {
         if (!playerStop)
@@ -444,22 +444,19 @@ public class PlayerMovement : MonoBehaviour
 
     private void setInputVerticalDirection()
     {
-        if (cameraPanPressed)
-        {
-            float value = moveDirectionY;
+        float value = moveDirectionY;
 
-            if (value > 0)
-            {
-                inputVerticalDirection = 1;
-            }
-            else if (value < 0)
-            {
-                inputVerticalDirection = -1;
-            }
-            else if (value == 0)
-            {
-                inputVerticalDirection = 0;
-            }
+        if (value > 0)
+        {
+            inputVerticalDirection = 1;
+        }
+        else if (value < 0)
+        {
+            inputVerticalDirection = -1;
+        }
+        else if (value == 0)
+        {
+            inputVerticalDirection = 0;
         }
     }
     #endregion

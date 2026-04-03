@@ -57,7 +57,7 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "CameraPan",
@@ -65,8 +65,8 @@
                     "id": "2d138fa8-2bdf-4bfe-87ac-71137be7f9c4",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -204,6 +204,17 @@
                 },
                 {
                     "name": "",
+                    "id": "3604a213-0b6c-473f-b9bc-599a1da71ef4",
+                    "path": "<Keyboard>/rightShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "3a4bb1a0-cec7-4cff-849e-b56670465a3c",
                     "path": "<Keyboard>/z",
                     "interactions": "",
@@ -238,10 +249,10 @@
                 {
                     "name": "",
                     "id": "803fdc08-cd2d-436f-bf3c-aede3b165aae",
-                    "path": "<Keyboard>/leftShift",
+                    "path": "<Keyboard>/leftCtrl",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "CameraPan",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -249,10 +260,21 @@
                 {
                     "name": "",
                     "id": "b5e280cc-8e41-4e1e-a424-e7755dd8deac",
-                    "path": "<Keyboard>/rightShift",
+                    "path": "<Keyboard>/rightCtrl",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
+                    "action": "CameraPan",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bf196b1a-5441-4145-bc60-351ded0e01c2",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
                     "action": "CameraPan",
                     "isComposite": false,
                     "isPartOfComposite": false
