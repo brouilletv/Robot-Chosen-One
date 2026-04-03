@@ -1008,9 +1008,6 @@ MonoBehaviour:
   sr: {fileID: 0}
   groundCheck: {fileID: 7183691669760005473}
   wallCheck: {fileID: 8006552032483216397}
-  wallLayer:
-    serializedVersion: 2
-    m_Bits: 128
   lastScene: Junkyard Map
   unlockedDoubleJump: 0
   unlockedDash: 0
@@ -1024,29 +1021,27 @@ MonoBehaviour:
   normalGravity: 6
   fallGravity: 9
   jumpGravity: 4
+  wallSlidingGravity: 1
   dashingPower: 24
   dashingTime: 0.2
   dashingCooldown: 1
-  wallSlidingSpeed: 2
+  knockback: {x: 0, y: 0}
   playerStop: 0
   moveDirectionX: 0
   moveDirectionY: 0
   facingDirection: 0
   inputVerticalDirection: 0
-  knockback: {x: 0, y: 0}
   interactPressed: 0
   cameraPanPressed: 0
+  isWalled: 0
   groundCheckRadius: 0.3
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  wallJumpMoveOverrideDuration: 0.5
-  wallJumpingDirection: 0
-  wallJumpingTime: 0.2
-  wallJumpingCounter: 0
-  wallJumpingDuration: 0.4
-  wallJumpingPower: {x: 8, y: 16}
-  wallJumpMoveOverride: 0
+  wallCheckRadius: 0.5
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &1168437065262223502
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -19,7 +19,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] Transform groundCheck;
     [SerializeField] private Transform wallCheck;
-    [SerializeField] private LayerMask wallLayer;
     private PlayerInput playerInput;
 
     // Flags
@@ -34,16 +33,18 @@ public class PlayerMovement : MonoBehaviour
 
     // Movement Variables
     [Header("Movement Variables")]
-    [SerializeField] float groundSpeed = 10f;
-    [SerializeField] float jumpForce = 16f;
+    [SerializeField] float groundSpeed = 6f;
+    [SerializeField] float jumpForce = 17f;
     [SerializeField] float jumpCutMultiplier = 0.5f;
     [SerializeField] float normalGravity = 6f;
     [SerializeField] float fallGravity = 10f;
     [SerializeField] float jumpGravity = 4f;
+    [SerializeField] float wallSlidingGravity = 1f;
     [SerializeField] float dashingPower = 24f;
     [SerializeField] float dashingTime = 0.2f;
     [SerializeField] float dashingCooldown = 1f;
-    [SerializeField] float wallSlidingSpeed = 2f;
+    //[SerializeField] float wallSlidingSpeed = 2f;
+    public Vector2 knockback;
     public bool playerStop;
 
     // Input Variables
@@ -53,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
     public int facingDirection;
     public int inputVerticalDirection;
     private float previousFacingDirection;
-    public Vector2 knockback;
+    private int wallJumpFacingDirection;
 
     // Input Booleans
     [Header("Input Booleans")]
@@ -62,20 +63,27 @@ public class PlayerMovement : MonoBehaviour
     public bool interactPressed;
     public bool cameraPanPressed;
 
-
     // Movement Booleans
     private bool isGrounded;
+    public bool isWalled;
     private bool isDashing = false;
     private bool canDash = true;
     private bool canDoubleJump = true;
-    private bool isWallSliding;
-    private bool isWallJumping;
+    //private bool isWallSliding;
+    //private bool isWallJumping;
 
     // Ground Check
     [Header("GroundCheck")]
     [SerializeField] float groundCheckRadius = 0.3f;
     [SerializeField] LayerMask groundLayer;
 
+    // Wall Check
+    [Header("WallCheck")]
+    [SerializeField] float wallCheckRadius = 0.5f;
+    [SerializeField] private LayerMask wallLayer;
+
+
+    /*
     //Wall Jump Variables
     [Header("WallJump")]
     [SerializeField] float wallJumpMoveOverrideDuration = 0.12f;
@@ -87,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float wallJumpMoveOverride = 0f;
     private int currentWallSide = 0;   // -1 = left wall, 1 = right wall, 0 = no wall
     private int lastWallJumpSide = 0;  // wall side jumped from
+    */
 
 
     private void Awake()
@@ -101,10 +110,10 @@ public class PlayerMovement : MonoBehaviour
     #region Update & FixedUpdate
     private void Update()
     {
-        if (!isWallJumping) 
-        {
+        //if (!isWallJumping) 
+        //{
             HandleFlip();
-        }
+        //}
     }
 
 
@@ -116,10 +125,11 @@ public class PlayerMovement : MonoBehaviour
             setInputVerticalDirection();
             HandleGravity();
             GroundedCheck();
-            currentWallSide = GetWallSide();
+            WalledCheck();
+            //currentWallSide = GetWallSide();
             HandleMovement();
-            HandleWallslide();
-            HandleWallJump();
+            //HandleWallslide();
+            //HandleWallJump();
             HandleJump();
             knockback = Vector2.zero;
         }
@@ -149,12 +159,19 @@ public class PlayerMovement : MonoBehaviour
                 jumpReleased = false;
                 canDoubleJump = true;
             }
+            else if (isWalled && unlockedWallJump)
+            {
+                jumpPressed = true;
+                jumpReleased = false;
+            }
+            /*
             else if (isWallSliding) // ← ADD THIS BRANCH
             {
                 jumpPressed = true;
                 jumpReleased = false;
             }
-            else if (!isGrounded && unlockedDoubleJump)
+            */
+            else if (!isGrounded && !isWalled && unlockedDoubleJump)
             {
                 jumpPressed = true;
                 jumpReleased = false;
@@ -191,6 +208,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
     // Pans the camera up or down when ctrl is pressed
     public void OnCameraPan(InputValue value)
     {
@@ -215,13 +233,13 @@ public class PlayerMovement : MonoBehaviour
         if (facingDirection == 1)
         {
             robotSprite.flipX = false;
-            wallCheck.localPosition = new Vector2(0.5f, wallCheck.localPosition.y);
+            //wallCheck.localPosition = new Vector2(0.5f, wallCheck.localPosition.y);
         }
 
         else if (facingDirection == -1)
         {
             robotSprite.flipX = true;
-            wallCheck.localPosition = new Vector2(-0.5f, wallCheck.localPosition.y);
+            //wallCheck.localPosition = new Vector2(-0.5f, wallCheck.localPosition.y);
         }
     }
 
@@ -232,7 +250,14 @@ public class PlayerMovement : MonoBehaviour
         {
             if (rb.velocity.y < -0.05f)
             {
-                rb.gravityScale = fallGravity;
+                if (!isWalled)
+                {
+                    rb.gravityScale = fallGravity;
+                }
+                else if (isWalled)
+                {
+                    rb.gravityScale = wallSlidingGravity;
+                }
             }
             else if (rb.velocity.y > 0.05f)
             {
@@ -248,11 +273,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleMovement()
     {
-        if (!isDashing && !isWallJumping)
+        if (!isDashing /*&& !isWallJumping*/)
         {
-            float targetSpeed = facingDirection * groundSpeed;
+            //float targetSpeed = facingDirection * groundSpeed;
             // Smoothly transition horizontal speed instead of snapping
-            float newX = Mathf.Lerp(rb.velocity.x, targetSpeed, 0.1f);
+            //float newX = Mathf.Lerp(rb.velocity.x, targetSpeed, 0.1f);
             rb.velocity = new Vector2(facingDirection * groundSpeed, rb.velocity.y) + knockback;
         }
     }
@@ -268,6 +293,13 @@ public class PlayerMovement : MonoBehaviour
                 jumpPressed = false;
                 jumpReleased = false;
             }
+            else if (isWalled && unlockedWallJump)
+            {
+                setWallJumpFacingDirection();
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                jumpPressed = false;
+                jumpReleased = false;
+            }
             else if (!isGrounded && canDoubleJump && unlockedDoubleJump)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -276,6 +308,7 @@ public class PlayerMovement : MonoBehaviour
                 canDoubleJump = false;
             }
         }
+
         if (jumpReleased && !isGrounded)
         {
             if (rb.velocity.y > 0)
@@ -287,6 +320,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
+    /*
     private void HandleWallslide()
     {
         // If we touch the opposite wall after wall jump, cancel override
@@ -355,6 +389,7 @@ public class PlayerMovement : MonoBehaviour
             isWallJumping = false;
         }
     }
+    */
 
 
     private IEnumerator HandleDash()
@@ -384,7 +419,6 @@ public class PlayerMovement : MonoBehaviour
         if (direction == 0)
         {
             knockback = new Vector2(-10, 5);
-
         }
         else if (direction == 1)
         {
@@ -413,13 +447,21 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             canDoubleJump = true;
-            isWallJumping = false;
-            isWallSliding = false;
-            wallJumpMoveOverride = 0f;
-            wallJumpingCounter = 0f;
+            //isWallJumping = false;
+            //isWallSliding = false;
+            //wallJumpMoveOverride = 0f;
+            //wallJumpingCounter = 0f;
         }
     }
 
+
+    private void WalledCheck()
+    {
+        isWalled = Physics2D.OverlapCircle(wallCheck.position, wallCheckRadius, wallLayer);
+    }
+
+
+    /*
     private int GetWallSide()
     {
         Vector2 rightCheck = new Vector2(transform.position.x + 0.5f, wallCheck.position.y);
@@ -434,6 +476,7 @@ public class PlayerMovement : MonoBehaviour
         return 0;
     }
 
+
     private bool IsWalled()
     {
         return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
@@ -444,11 +487,12 @@ public class PlayerMovement : MonoBehaviour
     {
         isWallJumping = false;
     }
+    */
 
 
     private void setFacingDirection()
     {
-        if (isWallJumping) return;
+        //if (isWallJumping) return;
 
         float value = moveDirectionX;
 
@@ -469,6 +513,12 @@ public class PlayerMovement : MonoBehaviour
         {
             previousFacingDirection = facingDirection;
         }
+    }
+
+
+    private void setWallJumpFacingDirection()
+    {
+        wallJumpFacingDirection = facingDirection;
     }
 
 
@@ -511,6 +561,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+        Gizmos.DrawWireSphere(wallCheck.position, wallCheckRadius);
     }
 
 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6403060415085752670}
   - component: {fileID: 4298802865947471597}
   - component: {fileID: 86637644969216707}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ObstacleDoorObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 396216213713812768}
   - component: {fileID: 5305228646083717093}
   - component: {fileID: 2209143627747384036}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: ObstacleDoorMove
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -462,6 +462,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorSpeed: 10
+  doorOpenDownward: 0
+  doorOpenUpward: 0
   isDoorOpen: 0
   doorIsClosed: 0
   doorIsOpen: 0

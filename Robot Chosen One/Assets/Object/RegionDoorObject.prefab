@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5287226910885873036}
   - component: {fileID: 501110766394292793}
   - component: {fileID: 8367114274762008129}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: RegionDoorMove
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,6 +295,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorSpeed: 10
+  doorOpenDownward: 0
+  doorOpenUpward: 0
   isDoorOpen: 0
   doorIsClosed: 0
   doorIsOpen: 0
