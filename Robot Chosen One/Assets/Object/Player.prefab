@@ -1010,7 +1010,7 @@ MonoBehaviour:
   wallCheck: {fileID: 8006552032483216397}
   wallLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   lastScene: Junkyard Map
   unlockedDoubleJump: 0
   unlockedDash: 0
@@ -1093,7 +1093,6 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 1024
-  pogoKnockback: 50
   attackRadius: 1
   attackDamage: 1
   attackZoneOrigin: 0.4
