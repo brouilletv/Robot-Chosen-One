@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float fallGravity = 10f;
     [SerializeField] float jumpGravity = 4f;
     [SerializeField] float wallSlidingGravity = 1f;
+    [SerializeField] float wallJumpingKnockback = 25f;
     [SerializeField] float dashingPower = 24f;
     [SerializeField] float dashingTime = 0.2f;
     [SerializeField] float dashingCooldown = 1f;
@@ -52,9 +53,9 @@ public class PlayerMovement : MonoBehaviour
     public float moveDirectionX;
     public float moveDirectionY;
     public int facingDirection;
+    private int trueFacingDirection;
     public int inputVerticalDirection;
-    private float previousFacingDirection;
-    private int wallJumpFacingDirection;
+    public int wallJumpKnockbackDirection;
 
     // Input Booleans
     [Header("Input Booleans")]
@@ -302,8 +303,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (isWalled && unlockedWallJump)
             {
-                setWallJumpFacingDirection();
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                rb.velocity = new Vector2(rb.velocity.x + (wallJumpKnockbackDirection * wallJumpingKnockback), jumpForce);
                 jumpPressed = false;
                 jumpReleased = false;
             }
@@ -314,6 +314,10 @@ public class PlayerMovement : MonoBehaviour
                 jumpReleased = false;
                 canDoubleJump = false;
             }
+        }
+        else
+        {
+            wallJumpKnockbackDirection = -trueFacingDirection;
         }
 
         if (jumpReleased && !isGrounded)
@@ -405,7 +409,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isDashing = true;
             canDash = false;
-            rb.velocity = new Vector2(previousFacingDirection * dashingPower, 0f);
+            rb.velocity = new Vector2(trueFacingDirection * dashingPower, 0f);
             rb.gravityScale = 0f;
 
             //tr.emitting = true;
@@ -518,14 +522,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (facingDirection != 0)
         {
-            previousFacingDirection = facingDirection;
+            trueFacingDirection = facingDirection;
         }
-    }
-
-
-    private void setWallJumpFacingDirection()
-    {
-        wallJumpFacingDirection = facingDirection;
     }
 
 
