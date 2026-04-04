@@ -250,11 +250,18 @@ public class PlayerMovement : MonoBehaviour
         {
             if (rb.velocity.y < -0.05f)
             {
-                if (!isWalled)
+                if (unlockedWallJump)
                 {
-                    rb.gravityScale = fallGravity;
+                    if (!isWalled)
+                    {
+                        rb.gravityScale = fallGravity;
+                    }
+                    else if (isWalled)
+                    {
+                        rb.gravityScale = wallSlidingGravity;
+                    }
                 }
-                else if (isWalled)
+                else if (!unlockedWallJump)
                 {
                     rb.gravityScale = wallSlidingGravity;
                 }
