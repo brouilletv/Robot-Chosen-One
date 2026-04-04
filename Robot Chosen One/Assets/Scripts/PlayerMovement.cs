@@ -263,7 +263,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else if (!unlockedWallJump)
                 {
-                    rb.gravityScale = wallSlidingGravity;
+                    rb.gravityScale = fallGravity;
                 }
             }
             else if (rb.velocity.y > 0.05f)
