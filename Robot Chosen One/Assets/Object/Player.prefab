@@ -127,7 +127,7 @@ Transform:
   m_GameObject: {fileID: 1086411896198724748}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1011,18 +1011,19 @@ MonoBehaviour:
   lastScene: Junkyard Map
   unlockedDoubleJump: 0
   unlockedDash: 0
-  unlockedWallJump: 0
+  unlockedWallJump: 1
   maxHealthIncreaseJunkyard: 0
   maxHealthIncreaseMines: 0
   maxHealthIncreaseTower: 0
   groundSpeed: 7
   jumpForce: 17
+  wallJumpForce: 12
   jumpCutMultiplier: 0.5
   normalGravity: 6
   fallGravity: 9
   jumpGravity: 4
-  wallSlidingGravity: 1
-  wallJumpingKnockback: 25
+  wallSlidingGravity: 0.3
+  wallJumpingKnockback: 0
   dashingPower: 24
   dashingTime: 0.2
   dashingCooldown: 1
@@ -1040,7 +1041,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  wallCheckRadius: 0.5
+  wallCheckSize: 1
+  wallCheckHeight: 0.8
   wallLayer:
     serializedVersion: 2
     m_Bits: 8

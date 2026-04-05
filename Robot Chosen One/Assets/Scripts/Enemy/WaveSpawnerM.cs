@@ -11,7 +11,7 @@ public class WaveSpawnerM : MonoBehaviour
     private GameObject Player;
     private LayerMask playerMask;
 
-    private string state = "inactive";
+    public string state = "inactive";
     private int w = 0;
 
     void Start()

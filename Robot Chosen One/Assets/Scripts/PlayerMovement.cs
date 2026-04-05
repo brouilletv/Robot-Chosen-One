@@ -35,12 +35,13 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement Variables")]
     [SerializeField] float groundSpeed = 6f;
     [SerializeField] float jumpForce = 17f;
+    [SerializeField] float wallJumpForce = 12f;
     [SerializeField] float jumpCutMultiplier = 0.5f;
     [SerializeField] float normalGravity = 6f;
     [SerializeField] float fallGravity = 10f;
     [SerializeField] float jumpGravity = 4f;
-    [SerializeField] float wallSlidingGravity = 1f;
-    [SerializeField] float wallJumpingKnockback = 25f;
+    [SerializeField] float wallSlidingGravity = 0.3f;
+    [SerializeField] float wallJumpingKnockback = 0f;
     [SerializeField] float dashingPower = 24f;
     [SerializeField] float dashingTime = 0.2f;
     [SerializeField] float dashingCooldown = 1f;
@@ -80,7 +81,8 @@ public class PlayerMovement : MonoBehaviour
 
     // Wall Check
     [Header("WallCheck")]
-    [SerializeField] float wallCheckRadius = 0.5f;
+    [SerializeField] float wallCheckSize = 1f;
+    [SerializeField] float wallCheckHeight = 0.8f;
     [SerializeField] private LayerMask wallLayer;
 
 
@@ -303,7 +305,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (isWalled && unlockedWallJump)
             {
-                rb.velocity = new Vector2(rb.velocity.x + (wallJumpKnockbackDirection * wallJumpingKnockback), jumpForce);
+                rb.velocity = new Vector2(rb.velocity.x + (wallJumpKnockbackDirection * wallJumpingKnockback), wallJumpForce);
                 jumpPressed = false;
                 jumpReleased = false;
             }
@@ -468,7 +470,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void WalledCheck()
     {
-        isWalled = Physics2D.OverlapCircle(wallCheck.position, wallCheckRadius, wallLayer);
+        isWalled = Physics2D.OverlapBox(wallCheck.position, new(wallCheckSize, wallCheckHeight), 0f, wallLayer);
     }
 
 
@@ -566,7 +568,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-        Gizmos.DrawWireSphere(wallCheck.position, wallCheckRadius);
+        Gizmos.DrawWireCube(wallCheck.position, new(wallCheckSize, wallCheckHeight));
     }
 
 
