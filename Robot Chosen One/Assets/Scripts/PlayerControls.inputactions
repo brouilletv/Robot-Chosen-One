@@ -267,17 +267,6 @@
                     "action": "CameraPan",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "bf196b1a-5441-4145-bc60-351ded0e01c2",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "CameraPan",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },

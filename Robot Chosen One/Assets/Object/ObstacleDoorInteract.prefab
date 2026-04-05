@@ -409,3 +409,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstacleDoorObject: {fileID: 0}
+  doorOpenDownward: 0
+  doorOpenUpward: 0
