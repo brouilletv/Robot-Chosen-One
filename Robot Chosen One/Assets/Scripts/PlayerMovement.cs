@@ -288,7 +288,7 @@ public class PlayerMovement : MonoBehaviour
             //float targetSpeed = facingDirection * groundSpeed;
             // Smoothly transition horizontal speed instead of snapping
             //float newX = Mathf.Lerp(rb.velocity.x, targetSpeed, 0.1f);
-            rb.velocity = new Vector2(facingDirection * groundSpeed, rb.velocity.y) + knockback;
+            rb.velocity = new Vector2((facingDirection * groundSpeed) + (wallJumpKnockbackDirection * wallJumpingKnockback), rb.velocity.y) + knockback;
         }
     }
 
@@ -305,7 +305,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (isWalled && unlockedWallJump)
             {
-                rb.velocity = new Vector2(rb.velocity.x + (wallJumpKnockbackDirection * wallJumpingKnockback), wallJumpForce);
+                rb.velocity = new Vector2(rb.velocity.x, wallJumpForce);
                 jumpPressed = false;
                 jumpReleased = false;
             }
