@@ -24,7 +24,14 @@ public class RegionDoorInteract : MonoBehaviour
         {
             player = collision.transform;
             playerMovement = collision.GetComponent<PlayerMovement>();
-            interactText.enabled = true;
+            if (!doorBehaviour.doorIsClosed && !doorBehaviour.doorIsOpen)
+            {
+                interactText.enabled = false;
+            }
+            else if (doorBehaviour.doorIsClosed || doorBehaviour.doorIsOpen)
+            {
+                interactText.enabled = true;
+            }
         }
     }
 
