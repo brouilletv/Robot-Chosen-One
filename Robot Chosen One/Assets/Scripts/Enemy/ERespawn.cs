@@ -9,7 +9,7 @@ public class ERespawn : MonoBehaviour
 {
     [SerializeField] GameObject enemy;
     [SerializeField] int Ecount = 1;
-    [SerializeField] int Ecooldown = 0;
+    [SerializeField] float Ecooldown = 0;
 
     private GameObject player;
     private Transform MaxPos;

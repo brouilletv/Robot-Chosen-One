@@ -10,7 +10,7 @@ public class EJump : MonoBehaviour
     private bool cooldown = false;
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("World") && cooldown is false)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Ground") && cooldown is false)
         {
             transform.parent.GetComponent<Rigidbody2D>().velocity = new Vector2(transform.parent.GetComponent<Rigidbody2D>().velocity.x, JumpPower);
             StartCoroutine(Cooldown());
