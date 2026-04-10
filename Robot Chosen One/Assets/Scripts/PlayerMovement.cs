@@ -48,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float fallGravity = 10f;
     [SerializeField] float jumpGravity = 4f;
     [SerializeField] float wallSlidingGravity = 0.3f;
+    [SerializeField] float wallSlidingVelocityDamping;
     [SerializeField] float wallJumpingKnockback = 0f;
     [SerializeField] float dashingPower = 24f;
     [SerializeField] float dashingTime = 0.2f;
@@ -146,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
             //HandleWallslide();
             //HandleWallJump();
             HandleJump();
+            wallSlidingVelocityDamping = 0f;
             knockback = Vector2.zero;
         }
         else
@@ -166,44 +168,50 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnJump(InputValue value)
     {
-        if (value.isPressed)
+        if (!playerStop)
         {
-            if (isGrounded)
+            if (value.isPressed)
             {
-                jumpPressed = true;
-                jumpReleased = false;
-                canDoubleJump = true;
+                if (isGrounded)
+                {
+                    jumpPressed = true;
+                    jumpReleased = false;
+                    canDoubleJump = true;
+                }
+                else if (isWalled && unlockedWallJump)
+                {
+                    jumpPressed = true;
+                    jumpReleased = false;
+                }
+                /*
+                else if (isWallSliding) // ← ADD THIS BRANCH
+                {
+                    jumpPressed = true;
+                    jumpReleased = false;
+                }
+                */
+                else if (!isGrounded && !isWalled && unlockedDoubleJump)
+                {
+                    jumpPressed = true;
+                    jumpReleased = false;
+                }
             }
-            else if (isWalled && unlockedWallJump)
+            else
             {
-                jumpPressed = true;
-                jumpReleased = false;
+                jumpReleased = true;
             }
-            /*
-            else if (isWallSliding) // ← ADD THIS BRANCH
-            {
-                jumpPressed = true;
-                jumpReleased = false;
-            }
-            */
-            else if (!isGrounded && !isWalled && unlockedDoubleJump)
-            {
-                jumpPressed = true;
-                jumpReleased = false;
-            }
-        }
-        else
-        {
-            jumpReleased = true;
         }
     }
 
 
     public void OnDash(InputValue value)
     {
-        if (canDash && unlockedDash)
+        if (!playerStop)
         {
-            StartCoroutine(HandleDash());
+            if (canDash && unlockedDash)
+            {
+                StartCoroutine(HandleDash());
+            }
         }
     }
 
@@ -273,7 +281,8 @@ public class PlayerMovement : MonoBehaviour
                     }
                     else if (isWalled)
                     {
-                        rb.gravityScale = wallSlidingGravity;
+                        rb.gravityScale = fallGravity;
+                        wallSlidingVelocityDamping = rb.velocity.y / 1.5f;
                     }
                 }
                 else if (!unlockedWallJump)
@@ -300,7 +309,7 @@ public class PlayerMovement : MonoBehaviour
             //float targetSpeed = facingDirection * groundSpeed;
             // Smoothly transition horizontal speed instead of snapping
             //float newX = Mathf.Lerp(rb.velocity.x, targetSpeed, 0.1f);
-            rb.velocity = new Vector2(facingDirection * groundSpeed, rb.velocity.y) + knockback;
+            rb.velocity = new Vector2(facingDirection * groundSpeed, rb.velocity.y - wallSlidingVelocityDamping) + knockback;
         }
     }
 
