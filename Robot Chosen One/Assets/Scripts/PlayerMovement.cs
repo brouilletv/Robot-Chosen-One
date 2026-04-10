@@ -483,7 +483,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void WalledCheck()
     {
-        isWalled = Physics2D.OverlapBox(wallCheck.position, new(wallCheckSize, wallCheckHeight), 0f, wallLayer);
+        isWalled = Physics2D.OverlapBox(wallCheck.position, new Vector2(wallCheckSize, wallCheckHeight), 0f, wallLayer);
     }
 
 
