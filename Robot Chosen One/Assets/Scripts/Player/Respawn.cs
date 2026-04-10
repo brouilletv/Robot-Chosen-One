@@ -25,6 +25,7 @@ public class Respawn : MonoBehaviour
         currentSpawnpoint = GameObject.FindWithTag("DefaultRespawn").transform.position;
     }
 
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         platformingSpawnpoint = currentSpawnpoint;
