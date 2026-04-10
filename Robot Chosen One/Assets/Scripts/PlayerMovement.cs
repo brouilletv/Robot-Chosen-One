@@ -150,7 +150,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            rb.velocity = Vector2.zero; 
+            rb.velocity = Vector2.zero;
+            knockback = Vector2.zero;
         }
     }
     #endregion
@@ -300,7 +301,7 @@ public class PlayerMovement : MonoBehaviour
             //float targetSpeed = facingDirection * groundSpeed;
             // Smoothly transition horizontal speed instead of snapping
             //float newX = Mathf.Lerp(rb.velocity.x, targetSpeed, 0.1f);
-            rb.velocity = new Vector2(facingDirection * groundSpeed, rb.velocity.y) + knockback;
+            rb.velocity = new Vector2((facingDirection * groundSpeed) + knockback.x, rb.velocity.y + knockback.y);
         }
     }
 
@@ -443,11 +444,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (direction == 0)
         {
-            knockback = new Vector2(-10, 5);
+            knockback = new Vector2(-50, 10);
         }
         else if (direction == 1)
         {
-            knockback = new Vector2(10, 5);
+            knockback = new Vector2(50, 10);
         }
     }
     #endregion
@@ -580,7 +581,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-        Gizmos.DrawWireCube(wallCheck.position, new(wallCheckSize, wallCheckHeight));
+        Gizmos.DrawWireCube(wallCheck.position, new Vector2(wallCheckSize, wallCheckHeight));
     }
 
 

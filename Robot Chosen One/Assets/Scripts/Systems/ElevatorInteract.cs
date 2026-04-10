@@ -8,14 +8,45 @@ public class ElevatorInteract : MonoBehaviour
     [SerializeField] Canvas interactText1;
     [SerializeField] Canvas interactText2;
     [SerializeField] DoorBehaviour doorBehaviour;
-    private Transform player;
+    private GameObject player;
     private PlayerMovement playerMovement;
+    private ElevatorState elevatorState;
+    private ElevatorState previousElevatorState;
+    private bool elevatorIsOperating;
+    
+
+    private enum ElevatorState
+    {
+        ElevatorUp = 0,
+        ElevatorDown = 1
+    }
 
 
     private void Awake()
     {
+        player = GameObject.FindWithTag("Player");
+        playerMovement = player.GetComponent<PlayerMovement>();
+
         doorBehaviour.doorOpenUpward = true;
         doorBehaviour.doorOpenDownward = false;
+    }
+
+
+    private void FixedUpdate()
+    {
+        if (doorBehaviour.doorIsClosed)
+        {
+            elevatorState = ElevatorState.ElevatorDown;
+        }
+        else if (doorBehaviour.doorIsOpen)
+        {
+            elevatorState = ElevatorState.ElevatorUp;
+        }
+
+        if (elevatorState != previousElevatorState)
+        {
+            playerMovement.PlayerStopFalse();
+        }
     }
 
 
@@ -23,9 +54,6 @@ public class ElevatorInteract : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            player = collision.transform;
-            playerMovement = collision.GetComponent<PlayerMovement>();
-
             if (!doorBehaviour.doorIsClosed && !doorBehaviour.doorIsOpen)
             {
                 interactText1.enabled = false;
@@ -57,6 +85,8 @@ public class ElevatorInteract : MonoBehaviour
                 if (playerMovement.interactPressed)
                 {
                     playerMovement.interactPressed = false;
+                    previousElevatorState = elevatorState;
+                    playerMovement.PlayerStopTrue();
                     doorBehaviour.isDoorOpen = !doorBehaviour.isDoorOpen;
                 }
             }

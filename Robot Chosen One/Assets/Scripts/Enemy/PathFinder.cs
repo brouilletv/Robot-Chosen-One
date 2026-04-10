@@ -16,6 +16,7 @@ public class PathFinder : MonoBehaviour
 
     private bool Fallow = false;
     private bool GoRight = false;
+    private bool flip = false;
 
 
     public void InitializePathFinder(Transform Player, Transform MaxPos, Transform MinPos)
@@ -44,16 +45,19 @@ public class PathFinder : MonoBehaviour
         if (Fallow is true && BodyX > PlayerX)
         {
             RB.velocity = new Vector2(-1f * Speed, RB.velocity.y);
+            flip = false;
         }
         else if (Fallow is true && BodyX < PlayerX)
         {
             RB.velocity = new Vector2(1f * Speed, RB.velocity.y);
+            flip = true;
         }
         else if (Roming is true)
         {
             if (GoRight is false && BodyX >= MinPos.transform.position.x)
             {
                 RB.velocity = new Vector2(-1f * Speed, RB.velocity.y);
+                flip = false;
             }
             else if (GoRight is false)
             {
@@ -62,6 +66,7 @@ public class PathFinder : MonoBehaviour
             else if (GoRight is true && BodyX <= MaxPos.transform.position.x)
             {
                 RB.velocity = new Vector2(1f * Speed, RB.velocity.y);
+                flip = true;
             }
             else if (GoRight is true)
             {
@@ -84,6 +89,15 @@ public class PathFinder : MonoBehaviour
         else if (Flying is true)
         {
             RB.velocity = new Vector2(RB.velocity.x, 0f);
+        }
+
+        if (flip == true && transform.GetComponent<SpriteRenderer>().flipX == false)
+        {
+            transform.GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else if (flip == false && transform.GetComponent<SpriteRenderer>().flipX == true)
+        {
+            transform.GetComponent<SpriteRenderer>().flipX = false;
         }
     }
 }
