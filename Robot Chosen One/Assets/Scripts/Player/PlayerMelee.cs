@@ -12,12 +12,14 @@ public class PlayerMelee : MonoBehaviour
     public LayerMask enemyLayer;
 
     private bool attackPressed;
+    public bool healPressed = false;
 
     [SerializeField] float attackRadius = 1f;
     [SerializeField] int attackDamage = 1;
     [SerializeField] float attackZoneOrigin = 0.4f;
     [SerializeField] float cooldownTime = 0.5f;
     [SerializeField] float cooldownTimer = 0f;
+    public float attackCount = 0;
 
     private AttackDirection currentAttackDirection;
     private AttackDirection previousAttackDirection;
@@ -48,6 +50,14 @@ public class PlayerMelee : MonoBehaviour
         if (value.isPressed)
         {
             attackPressed = true;
+        }
+    }
+
+    public void OnHeal(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            healPressed = true;
         }
     }
 
@@ -123,6 +133,18 @@ public class PlayerMelee : MonoBehaviour
                     if (enemy.GetComponent<EHealth>() != null)
                     {
                         enemy.GetComponent<EHealth>().TakeDamage(attackDamage);
+                        if (attackCount < 10)
+                        {
+                            attackCount = attackCount + 1;
+                            Debug.Log("Total attacks: " + attackCount);
+                        }
+
+                        else
+                        {
+                            Debug.Log("Total attacks: " + attackCount);
+                        }
+
+
                     }
                 }
                 cooldownTimer = cooldownTime;

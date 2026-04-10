@@ -1,0 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+
+public class HealBar : MonoBehaviour
+{
+    private GameObject player;
+    private PlayerMelee playerMelee;
+    private Slider slider;
+
+    private void Awake()
+    {
+        player = GameObject.FindWithTag("Player");
+        playerMelee = player.GetComponent<PlayerMelee>();
+
+        slider = GetComponent<Slider>();
+
+    }
+
+
+    public void SetHealBar()
+    {
+        slider.value = playerMelee.attackCount / 10;
+    }
+
+    private void FixedUpdate()
+    {
+        SetHealBar();
+    }
+}
+
