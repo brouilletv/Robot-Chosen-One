@@ -21,15 +21,22 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform wallCheck;
     private PlayerInput playerInput;
 
+
     // Flags
     [Header("Flags")]
     public string lastScene = "Junkyard Map";
+
     public bool unlockedDoubleJump = false;
     public bool unlockedDash = false;
     public bool unlockedWallJump = false;
+
     public bool maxHealthIncreaseJunkyard = false;
     public bool maxHealthIncreaseMines = false;
     public bool maxHealthIncreaseTower = false;
+    public bool defeatedJunkyardBoss = false;
+    public bool defeatedMinesBoss = false;
+    public bool defeatedTowerBoss = false;
+
 
     // Movement Variables
     [Header("Movement Variables")]
@@ -49,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 knockback;
     public bool playerStop;
 
+
     // Input Variables
     [Header("Input Variables")]
     public float moveDirectionX;
@@ -58,12 +66,14 @@ public class PlayerMovement : MonoBehaviour
     public int inputVerticalDirection;
     public int wallJumpKnockbackDirection;
 
+
     // Input Booleans
     [Header("Input Booleans")]
     private bool jumpPressed;
     private bool jumpReleased;
     public bool interactPressed;
     public bool cameraPanPressed;
+
 
     // Movement Booleans
     private bool isGrounded;
@@ -74,10 +84,12 @@ public class PlayerMovement : MonoBehaviour
     //private bool isWallSliding;
     //private bool isWallJumping;
 
+
     // Ground Check
     [Header("GroundCheck")]
     [SerializeField] float groundCheckRadius = 0.3f;
     [SerializeField] LayerMask groundLayer;
+
 
     // Wall Check
     [Header("WallCheck")]
