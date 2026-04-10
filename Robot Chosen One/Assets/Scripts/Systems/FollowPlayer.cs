@@ -28,6 +28,7 @@ public class FollowPlayer : MonoBehaviour
     {
         Vector3 RobotP = player.position;
         RobotP.z = CameraT.position.z;
+
         if (playerMovement.cameraPanPressed)
         {
             RobotP.y += cameraPanOffset * playerMovement.inputVerticalDirection;
