@@ -1,12 +1,15 @@
-using System.Collections.Generic;
-using System.Collections;
 using System;
-using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class HealthHeartBarV2 : MonoBehaviour
 {
     public GameObject heartPrefab;
+    private GameObject player;
+    private PlayerMelee playerMelee;
     public float maxHealth = 12;
     public float startingHealth = 6;
     public float health;
@@ -19,13 +22,15 @@ public class HealthHeartBarV2 : MonoBehaviour
 
     private void Awake()
     {
+        player = GameObject.FindWithTag("Player");
+        playerMelee = player.GetComponent<PlayerMelee>();
         health = Mathf.Clamp(startingHealth, 0, maxHealth);
         DrawHearts();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.H))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             TakeDamage(1);
         }
@@ -34,6 +39,8 @@ public class HealthHeartBarV2 : MonoBehaviour
         {
             Heal(1);
         }
+
+        HandleHeal();
     }
 
 
@@ -53,7 +60,29 @@ public class HealthHeartBarV2 : MonoBehaviour
         }
     }
 
-    IEnumerator DeathHealCooldown()
+
+    public void HandleHeal()
+    {
+        if (playerMelee.healPressed)
+        {
+            if (playerMelee.attackCount == 10 && health < maxHealth)
+            {
+                playerMelee.healPressed = false;
+                Heal(1);
+                Debug.Log("Healed 1 health for reaching 10 attacks");
+                playerMelee.attackCount = 0;
+                Debug.Log("Attack count reset to: " + playerMelee.attackCount);
+            }
+
+            else
+            {
+                playerMelee.healPressed = false;
+                Debug.Log("Not healed, attack count is: " + playerMelee.attackCount);
+            }
+        }
+    }
+
+        IEnumerator DeathHealCooldown()
     {
         yield return new WaitForSeconds(respawnTime);
         Heal(maxHealth);
@@ -128,3 +157,5 @@ public class HealthHeartBarV2 : MonoBehaviour
     }
 
 }
+
+
