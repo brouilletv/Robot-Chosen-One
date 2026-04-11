@@ -563,6 +563,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e71049cad7bf1f48935fee91ff67d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorClosedPos: {x: 0, y: 0, z: 0}
+  doorOpenUpPos: {x: 0, y: 0, z: 0}
+  doorOpenDownPos: {x: 0, y: 0, z: 0}
+  doorHeight: 0
   doorSpeed: 1
   doorOpenDownward: 0
   doorOpenUpward: 0

@@ -12,7 +12,6 @@ public class ElevatorInteract : MonoBehaviour
     private PlayerMovement playerMovement;
     private ElevatorState elevatorState;
     private ElevatorState previousElevatorState;
-    private bool elevatorIsOperating;
     
 
     private enum ElevatorState
@@ -29,24 +28,6 @@ public class ElevatorInteract : MonoBehaviour
 
         doorBehaviour.doorOpenUpward = true;
         doorBehaviour.doorOpenDownward = false;
-    }
-
-
-    private void FixedUpdate()
-    {
-        if (doorBehaviour.doorIsClosed)
-        {
-            elevatorState = ElevatorState.ElevatorDown;
-        }
-        else if (doorBehaviour.doorIsOpen)
-        {
-            elevatorState = ElevatorState.ElevatorUp;
-        }
-
-        if (elevatorState != previousElevatorState)
-        {
-            playerMovement.PlayerStopFalse();
-        }
     }
 
 
@@ -89,6 +70,20 @@ public class ElevatorInteract : MonoBehaviour
                     playerMovement.PlayerStopTrue();
                     doorBehaviour.isDoorOpen = !doorBehaviour.isDoorOpen;
                 }
+            }
+
+            if (doorBehaviour.doorIsClosed)
+            {
+                elevatorState = ElevatorState.ElevatorDown;
+            }
+            else if (doorBehaviour.doorIsOpen)
+            {
+                elevatorState = ElevatorState.ElevatorUp;
+            }
+
+            if (elevatorState != previousElevatorState)
+            {
+                playerMovement.PlayerStopFalse();
             }
         }
     }

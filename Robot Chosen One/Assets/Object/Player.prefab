@@ -1015,6 +1015,9 @@ MonoBehaviour:
   maxHealthIncreaseJunkyard: 0
   maxHealthIncreaseMines: 0
   maxHealthIncreaseTower: 0
+  defeatedJunkyardBoss: 0
+  defeatedMinesBoss: 0
+  defeatedTowerBoss: 0
   groundSpeed: 7
   jumpForce: 17
   wallJumpForce: 12
@@ -1023,7 +1026,8 @@ MonoBehaviour:
   fallGravity: 9
   jumpGravity: 4
   wallSlidingGravity: 0.3
-  wallJumpingKnockback: 0
+  wallSlidingVelocityDamping: 0
+  wallJumpingKnockback: 25
   dashingPower: 24
   dashingTime: 0.2
   dashingCooldown: 1
@@ -1092,11 +1096,13 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 1024
+  healPressed: 0
   attackRadius: 1
   attackDamage: 1
   attackZoneOrigin: 0.4
   cooldownTime: 0.5
   cooldownTimer: 0
+  attackCount: 0
 --- !u!114 &3393868593534405322
 MonoBehaviour:
   m_ObjectHideFlags: 0

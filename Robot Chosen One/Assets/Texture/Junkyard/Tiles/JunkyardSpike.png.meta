@@ -101,6 +101,48 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6de34e5cf353bb64dae0eb1107723735
+      internalID: -689074640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JunkyardSpike_1
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f934f2f5cb6113640964becead4450e2
+      internalID: -230093939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JunkyardSpike_2
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
         width: 8
         height: 8
@@ -111,8 +153,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 85a9a3a664ed0374294eb5943f1e9c1d
-      internalID: -2076465449
+      spriteID: d83ba75f8e2cfef4b8e0163ea414b550
+      internalID: 249699524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JunkyardSpike_3
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 573caf12f358bb54885d021817f6459f
+      internalID: 698442775
       vertices: []
       indices: 
       edges: []
@@ -128,7 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      JunkyardSpike_0: -2076465449
+      JunkyardSpike_0: -689074640
+      JunkyardSpike_1: -230093939
+      JunkyardSpike_2: 249699524
+      JunkyardSpike_3: 698442775
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

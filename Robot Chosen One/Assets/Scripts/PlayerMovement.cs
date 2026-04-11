@@ -47,9 +47,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float normalGravity = 6f;
     [SerializeField] float fallGravity = 10f;
     [SerializeField] float jumpGravity = 4f;
-    [SerializeField] float wallSlidingGravity = 0.3f;
     [SerializeField] float wallSlidingVelocityDamping;
-    [SerializeField] float wallJumpingKnockback = 0f;
+    [SerializeField] float wallJumpingKnockback = 25f;
     [SerializeField] float dashingPower = 24f;
     [SerializeField] float dashingTime = 0.2f;
     [SerializeField] float dashingCooldown = 1f;
@@ -126,10 +125,7 @@ public class PlayerMovement : MonoBehaviour
     #region Update & FixedUpdate
     private void Update()
     {
-        //if (!isWallJumping) 
-        //{
-            HandleFlip();
-        //}
+        HandleFlip();
     }
 
 
@@ -142,10 +138,7 @@ public class PlayerMovement : MonoBehaviour
             HandleGravity();
             GroundedCheck();
             WalledCheck();
-            //currentWallSide = GetWallSide();
             HandleMovement();
-            //HandleWallslide();
-            //HandleWallJump();
             HandleJump();
             wallSlidingVelocityDamping = 0f;
             knockback = Vector2.zero;
@@ -184,13 +177,6 @@ public class PlayerMovement : MonoBehaviour
                     jumpPressed = true;
                     jumpReleased = false;
                 }
-                /*
-                else if (isWallSliding) // ← ADD THIS BRANCH
-                {
-                    jumpPressed = true;
-                    jumpReleased = false;
-                }
-                */
                 else if (!isGrounded && !isWalled && unlockedDoubleJump)
                 {
                     jumpPressed = true;
@@ -257,13 +243,11 @@ public class PlayerMovement : MonoBehaviour
         if (facingDirection == 1)
         {
             robotSprite.flipX = false;
-            //wallCheck.localPosition = new Vector2(0.5f, wallCheck.localPosition.y);
         }
 
         else if (facingDirection == -1)
         {
             robotSprite.flipX = true;
-            //wallCheck.localPosition = new Vector2(-0.5f, wallCheck.localPosition.y);
         }
     }
 
@@ -283,7 +267,7 @@ public class PlayerMovement : MonoBehaviour
                     else if (isWalled)
                     {
                         rb.gravityScale = fallGravity;
-                        wallSlidingVelocityDamping = rb.velocity.y / 1.5f;
+                        wallSlidingVelocityDamping = rb.velocity.y / 1.05f;
                     }
                 }
                 else if (!unlockedWallJump)
@@ -305,12 +289,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleMovement()
     {
-        if (!isDashing /*&& !isWallJumping*/)
+        if (!isDashing)
         {
-            //float targetSpeed = facingDirection * groundSpeed;
-            // Smoothly transition horizontal speed instead of snapping
-            //float newX = Mathf.Lerp(rb.velocity.x, targetSpeed, 0.1f);
-            rb.velocity = new Vector2((facingDirection * groundSpeed) + knockback.x, rb.velocity.y - wallSlidingVelocityDamping + knockback.y);
+            rb.velocity = new Vector2((facingDirection * groundSpeed) + knockback.x, rb.velocity.y + knockback.y - wallSlidingVelocityDamping);
         }
     }
 
@@ -353,78 +334,6 @@ public class PlayerMovement : MonoBehaviour
             jumpReleased = false;
         }
     }
-
-
-    /*
-    private void HandleWallslide()
-    {
-        // If we touch the opposite wall after wall jump, cancel override
-        if (wallJumpMoveOverride > 0f && currentWallSide != 0 && currentWallSide != lastWallJumpSide && !isGrounded)
-        {
-            wallJumpMoveOverride = 0f;
-        }
-
-        if (wallJumpMoveOverride > 0f)
-        {
-            isWallSliding = false;
-            return;
-        }
-
-        if (currentWallSide != 0 && !isGrounded && moveDirectionX != 0)
-        {
-            isWallSliding = true;
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
-        }
-        else
-        {
-            isWallSliding = false;
-        }
-    }
-
-
-    private void HandleWallJump()
-    {
-        if (isWallSliding)
-        {
-            wallJumpMoveOverride = 0f; // ← clear override when touching any wall
-            isWallJumping = false;
-            wallJumpingDirection = -facingDirection;
-            wallJumpingCounter = wallJumpingTime;
-            CancelInvoke(nameof(StopWallJumping));
-        }
-        else
-        {
-            wallJumpingCounter -= Time.deltaTime;
-        }
-
-        if (jumpPressed && wallJumpingCounter > 0f)
-        {
-            isWallJumping = true;
-            wallJumpMoveOverride = wallJumpMoveOverrideDuration;
-            lastWallJumpSide = currentWallSide;
-            rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
-            wallJumpingCounter = 0f;
-            jumpPressed = false;
-
-            facingDirection = (int)wallJumpingDirection;
-            previousFacingDirection = facingDirection;
-        }
-
-        if (wallJumpMoveOverride > 0f)
-        {
-            wallJumpMoveOverride -= Time.fixedDeltaTime;
-        }
-
-        if (isGrounded)
-        {
-            isWallJumping = false;
-        }
-        else if (isWallJumping && wallJumpMoveOverride <= 0f && isWallSliding)
-        {
-            isWallJumping = false;
-        }
-    }
-    */
 
 
     private IEnumerator HandleDash()
@@ -482,10 +391,6 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             canDoubleJump = true;
-            //isWallJumping = false;
-            //isWallSliding = false;
-            //wallJumpMoveOverride = 0f;
-            //wallJumpingCounter = 0f;
         }
     }
 
@@ -496,39 +401,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    /*
-    private int GetWallSide()
-    {
-        Vector2 rightCheck = new Vector2(transform.position.x + 0.5f, wallCheck.position.y);
-        Vector2 leftCheck = new Vector2(transform.position.x - 0.5f, wallCheck.position.y);
-
-        bool wallRight = Physics2D.OverlapCircle(rightCheck, 0.2f, wallLayer);
-        bool wallLeft = Physics2D.OverlapCircle(leftCheck, 0.2f, wallLayer);
-
-        if (wallLeft) return -1;
-        if (wallRight) return 1;
-
-        return 0;
-    }
-
-
-    private bool IsWalled()
-    {
-        return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
-    }
-
-
-    private void StopWallJumping()
-    {
-        isWallJumping = false;
-    }
-    */
-
-
     private void setFacingDirection()
     {
-        //if (isWallJumping) return;
-
         float value = moveDirectionX;
 
         if (value > 0)
