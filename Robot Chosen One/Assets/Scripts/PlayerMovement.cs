@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public bool maxHealthIncreaseJunkyard = false;
     public bool maxHealthIncreaseMines = false;
     public bool maxHealthIncreaseTower = false;
+
     public bool defeatedJunkyardBoss = false;
     public bool defeatedMinesBoss = false;
     public bool defeatedTowerBoss = false;
@@ -48,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float fallGravity = 10f;
     [SerializeField] float jumpGravity = 4f;
     [SerializeField] float wallSlidingVelocityDamping;
+    [SerializeField] float wallSlidingVelocityDampingModifier = 1.05f;
     [SerializeField] float wallJumpingKnockback = 25f;
     [SerializeField] float dashingPower = 24f;
     [SerializeField] float dashingTime = 0.2f;
@@ -62,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveDirectionX;
     public float moveDirectionY;
     public int facingDirection;
-    private int trueFacingDirection;
+    private int spriteFacingDirection;
     public int inputVerticalDirection;
     public int wallJumpKnockbackDirection;
 
@@ -96,21 +98,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float wallCheckSize = 1f;
     [SerializeField] float wallCheckHeight = 0.8f;
     [SerializeField] private LayerMask wallLayer;
-
-
-    /*
-    //Wall Jump Variables
-    [Header("WallJump")]
-    [SerializeField] float wallJumpMoveOverrideDuration = 0.12f;
-    [SerializeField] private float wallJumpingDirection;
-    [SerializeField] private float wallJumpingTime = 0.2f;
-    [SerializeField] private float wallJumpingCounter;
-    [SerializeField] private float wallJumpingDuration = 0.4f;
-    [SerializeField] private Vector2 wallJumpingPower = new Vector2(8f, 16f);
-    [SerializeField] private float wallJumpMoveOverride = 0f;
-    private int currentWallSide = 0;   // -1 = left wall, 1 = right wall, 0 = no wall
-    private int lastWallJumpSide = 0;  // wall side jumped from
-    */
 
 
     private void Awake()
@@ -172,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
                     jumpReleased = false;
                     canDoubleJump = true;
                 }
-                else if (isWalled && unlockedWallJump)
+                else if (isWalled && (facingDirection != 0) && unlockedWallJump)
                 {
                     jumpPressed = true;
                     jumpReleased = false;
@@ -267,7 +254,11 @@ public class PlayerMovement : MonoBehaviour
                     else if (isWalled)
                     {
                         rb.gravityScale = fallGravity;
-                        wallSlidingVelocityDamping = rb.velocity.y / 1.05f;
+
+                        if (facingDirection != 0)
+                        {
+                            wallSlidingVelocityDamping = rb.velocity.y / wallSlidingVelocityDampingModifier;
+                        }
                     }
                 }
                 else if (!unlockedWallJump)
@@ -322,7 +313,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            wallJumpKnockbackDirection = -trueFacingDirection;
+            wallJumpKnockbackDirection = -spriteFacingDirection;
         }
 
         if (jumpReleased && !isGrounded)
@@ -342,7 +333,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isDashing = true;
             canDash = false;
-            rb.velocity = new Vector2(trueFacingDirection * dashingPower, 0f);
+            rb.velocity = new Vector2(spriteFacingDirection * dashingPower, 0f);
             rb.gravityScale = 0f;
 
             //tr.emitting = true;
@@ -420,7 +411,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (facingDirection != 0)
         {
-            trueFacingDirection = facingDirection;
+            spriteFacingDirection = facingDirection;
         }
     }
 
