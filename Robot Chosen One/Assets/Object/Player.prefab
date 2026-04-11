@@ -1011,7 +1011,7 @@ MonoBehaviour:
   lastScene: Junkyard Map
   unlockedDoubleJump: 0
   unlockedDash: 0
-  unlockedWallJump: 1
+  unlockedWallJump: 0
   maxHealthIncreaseJunkyard: 0
   maxHealthIncreaseMines: 0
   maxHealthIncreaseTower: 0
@@ -1025,7 +1025,6 @@ MonoBehaviour:
   normalGravity: 6
   fallGravity: 9
   jumpGravity: 4
-  wallSlidingGravity: 0.3
   wallSlidingVelocityDamping: 0
   wallJumpingKnockback: 25
   dashingPower: 24
