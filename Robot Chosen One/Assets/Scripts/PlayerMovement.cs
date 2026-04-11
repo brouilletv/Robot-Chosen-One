@@ -351,7 +351,7 @@ public class PlayerMovement : MonoBehaviour
             isDashing = true;
             canDash = false;
             dashCooldownTimer = dashingCooldown;
-            rb.velocity = new Vector2(spriteFacingDirectio * dashingPower, 0f);
+            rb.velocity = new Vector2(spriteFacingDirection * dashingPower, 0f);
             rb.gravityScale = 0f;
 
             //tr.emitting = true;
