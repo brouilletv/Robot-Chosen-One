@@ -63,7 +63,6 @@ public class PlayerMovement : MonoBehaviour
             return 1f - (dashCooldownTimer / dashingCooldown);
         }
     }
-    //[SerializeField] float wallSlidingSpeed = 2f;
     public Vector2 knockback;
     public bool playerStop;
 
