@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-
+using UnityEngine.UI; 
 
 public class HealBar : MonoBehaviour
 {
@@ -16,18 +15,15 @@ public class HealBar : MonoBehaviour
         playerMelee = player.GetComponent<PlayerMelee>();
 
         slider = GetComponent<Slider>();
-
-    }
-
-
-    public void SetHealBar()
-    {
-        slider.value = playerMelee.attackCount / 10;
     }
 
     private void FixedUpdate()
     {
         SetHealBar();
     }
-}
 
+    public void SetHealBar()
+    {
+        slider.value = playerMelee.attackCount / 10f;
+    }
+}

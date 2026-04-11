@@ -54,6 +54,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dashingPower = 24f;
     [SerializeField] float dashingTime = 0.2f;
     [SerializeField] float dashingCooldown = 1f;
+    private float dashCooldownTimer = 0f;
+    public float DashCooldownNormalized
+    {
+        get
+        {
+            if (canDash) return 1f;
+            return 1f - (dashCooldownTimer / dashingCooldown);
+        }
+    }
     //[SerializeField] float wallSlidingSpeed = 2f;
     public Vector2 knockback;
     public bool playerStop;
@@ -113,6 +122,14 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         HandleFlip();
+        if (!canDash && dashCooldownTimer > 0f)
+        {
+            dashCooldownTimer -= Time.deltaTime;
+            if (dashCooldownTimer < 0f)
+            {
+                dashCooldownTimer = 0f;
+            }
+        }
     }
 
 
@@ -333,7 +350,8 @@ public class PlayerMovement : MonoBehaviour
         {
             isDashing = true;
             canDash = false;
-            rb.velocity = new Vector2(spriteFacingDirection * dashingPower, 0f);
+            dashCooldownTimer = dashingCooldown;
+            rb.velocity = new Vector2(spriteFacingDirectio * dashingPower, 0f);
             rb.gravityScale = 0f;
 
             //tr.emitting = true;
@@ -345,6 +363,7 @@ public class PlayerMovement : MonoBehaviour
 
             yield return new WaitForSeconds(dashingCooldown);
             canDash = true;
+            dashCooldownTimer = 0f;
         }
     }
 
