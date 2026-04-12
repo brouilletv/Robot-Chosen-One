@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AbilityInteract : MonoBehaviour
 {
@@ -9,11 +10,38 @@ public class AbilityInteract : MonoBehaviour
     [SerializeField] SpriteRenderer abilitySprite;
     private Transform player;
     private PlayerMovement playerMovement;
+    private bool canInteract = true;
 
     [Header("TypeOfUnlock")]
     public bool DashUnlock;
     public bool DoubleJumpUnlock;
     public bool WallJumpUnlock;
+
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        player = GameObject.FindWithTag("Player").transform;
+        playerMovement = player.GetComponent<PlayerMovement>();
+
+        if (DashUnlock && playerMovement.unlockedDash)
+        {
+            interactText.enabled = false;
+            abilitySprite.enabled = false;
+            canInteract = false;
+        }
+        else if (DoubleJumpUnlock && playerMovement.unlockedDoubleJump)
+        {
+            interactText.enabled = false;
+            abilitySprite.enabled = false;
+            canInteract = false;
+        }
+        else if (WallJumpUnlock && playerMovement.unlockedWallJump)
+        {
+            interactText.enabled = false;
+            abilitySprite.enabled = false;
+            canInteract = false;
+        }
+    }
 
 
     private void UnlockAbility(PlayerMovement playerMovement)
@@ -37,9 +65,6 @@ public class AbilityInteract : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            player = collision.transform;
-            playerMovement = collision.GetComponent<PlayerMovement>();
-
             if ((DashUnlock && !playerMovement.unlockedDash) || (DoubleJumpUnlock && !playerMovement.unlockedDoubleJump) || (WallJumpUnlock && !playerMovement.unlockedWallJump))
             {
                 interactText.enabled = true;
@@ -69,5 +94,17 @@ public class AbilityInteract : MonoBehaviour
         {
             interactText.enabled = false;
         }
+    }
+
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MaxHealthInteract : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class MaxHealthInteract : MonoBehaviour
     private Transform player;
     private PlayerMovement playerMovement;
     private HealthHeartBarV2 healthScript;
+    private bool canInteract = true;
 
     [Header("TypeOfMaxHealthIncrease")]
     public bool junkyardMaxHealth;
@@ -17,12 +19,38 @@ public class MaxHealthInteract : MonoBehaviour
     public bool towerMaxHealth;
 
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        player = GameObject.FindWithTag("Player").transform;
+        playerMovement = player.GetComponent<PlayerMovement>();
+        healthScript = player.GetChild(1).GetChild(0).GetComponent<HealthHeartBarV2>();
+
+        if (junkyardMaxHealth && playerMovement.maxHealthIncreaseJunkyard)
+        {
+            interactText.enabled = false;
+            maxHealthIncreaseSprite.enabled = false;
+            canInteract = false;
+        }
+        else if (minesMaxHealth && playerMovement.maxHealthIncreaseMines)
+        {
+            interactText.enabled = false;
+            maxHealthIncreaseSprite.enabled = false;
+            canInteract = false;
+        }
+        else if (towerMaxHealth && playerMovement.maxHealthIncreaseTower)
+        {
+            interactText.enabled = false;
+            maxHealthIncreaseSprite.enabled = false;
+            canInteract = false;
+        }
+    }
+
+
     private void  IncreaseMaxHealth(PlayerMovement playerMovement, HealthHeartBarV2 healthScript)
     {
         if (junkyardMaxHealth && !playerMovement.maxHealthIncreaseJunkyard)
         {
-            healthScript.maxHealth += 2;
-            healthScript.Heal(2);
+            canInteract = false;
             playerMovement.maxHealthIncreaseJunkyard = true;
         }
         else if (minesMaxHealth && !playerMovement.maxHealthIncreaseMines)
@@ -44,10 +72,6 @@ public class MaxHealthInteract : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            player = collision.transform;
-            playerMovement = collision.GetComponent<PlayerMovement>();
-            healthScript = collision.transform.GetChild(1).GetChild(0).GetComponent<HealthHeartBarV2>();
-
             if ((junkyardMaxHealth && !playerMovement.maxHealthIncreaseJunkyard) || (minesMaxHealth && !playerMovement.maxHealthIncreaseMines) || (towerMaxHealth && !playerMovement.maxHealthIncreaseTower))
             {
                 interactText.enabled = true;
@@ -77,5 +101,17 @@ public class MaxHealthInteract : MonoBehaviour
         {
             interactText.enabled = false;
         }
+    }
+
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

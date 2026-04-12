@@ -12,6 +12,7 @@ public class ElevatorInteract : MonoBehaviour
     private PlayerMovement playerMovement;
     private ElevatorState elevatorState;
     private ElevatorState previousElevatorState;
+    private float elevatorSpeed;
     
 
     private enum ElevatorState
@@ -28,6 +29,25 @@ public class ElevatorInteract : MonoBehaviour
 
         doorBehaviour.doorOpenUpward = true;
         doorBehaviour.doorOpenDownward = false;
+        elevatorSpeed = doorBehaviour.doorSpeed;
+    }
+
+
+    private void ResetElevator(bool none)
+    {
+        if (elevatorState == ElevatorState.ElevatorUp)
+        {
+            elevatorState = ElevatorState.ElevatorDown;
+        }
+        else if (elevatorState == ElevatorState.ElevatorDown)
+        {
+            elevatorState = ElevatorState.ElevatorUp;
+        }
+
+        doorBehaviour.doorSpeed = elevatorSpeed * 10f;
+
+        previousElevatorState = elevatorState;
+        doorBehaviour.isDoorOpen = !doorBehaviour.isDoorOpen;
     }
 
 
@@ -35,6 +55,8 @@ public class ElevatorInteract : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            doorBehaviour.doorSpeed = elevatorSpeed;
+
             if (!doorBehaviour.doorIsClosed && !doorBehaviour.doorIsOpen)
             {
                 interactText1.enabled = false;
@@ -96,5 +118,17 @@ public class ElevatorInteract : MonoBehaviour
             interactText1.enabled = false;
             interactText2.enabled = false;
         }
+    }
+
+
+    private void OnEnable()
+    {
+        Respawn.resetElevator += ResetElevator;
+    }
+
+
+    private void OnDisable()
+    {
+        Respawn.resetElevator -= ResetElevator;
     }
 }

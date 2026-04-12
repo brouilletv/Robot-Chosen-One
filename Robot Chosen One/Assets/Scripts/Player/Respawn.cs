@@ -17,6 +17,7 @@ public class Respawn : MonoBehaviour
     private HealthHeartBarV2 healthScript;
     private float playerHealth;
 
+    public static event Action<bool> resetElevator;
     public static event Action<bool> enemyRespawn;
 
 
@@ -48,6 +49,7 @@ public class Respawn : MonoBehaviour
             playerMovement.PlayerStopTrue();
             respawnStop = true;
             StartCoroutine(RespawnLogic(respawnTime, true));
+            resetElevator?.Invoke(true);
             enemyRespawn?.Invoke(true);
         }
         else if (playerHealth > 0 && !respawnStop)
@@ -83,6 +85,7 @@ public class Respawn : MonoBehaviour
     private void UpdateLocation(Transform newLocation)
     {
         healthScript.Heal(healthScript.maxHealth - healthScript.health);
+        resetElevator?.Invoke(true);
         enemyRespawn?.Invoke(true);
         currentSpawnpoint = newLocation.position;
     }
