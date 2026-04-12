@@ -10,7 +10,6 @@ public class AbilityInteract : MonoBehaviour
     [SerializeField] SpriteRenderer abilitySprite;
     private Transform player;
     private PlayerMovement playerMovement;
-    private bool canInteract = true;
 
     [Header("TypeOfUnlock")]
     public bool DashUnlock;
@@ -27,19 +26,16 @@ public class AbilityInteract : MonoBehaviour
         {
             interactText.enabled = false;
             abilitySprite.enabled = false;
-            canInteract = false;
         }
         else if (DoubleJumpUnlock && playerMovement.unlockedDoubleJump)
         {
             interactText.enabled = false;
             abilitySprite.enabled = false;
-            canInteract = false;
         }
         else if (WallJumpUnlock && playerMovement.unlockedWallJump)
         {
             interactText.enabled = false;
             abilitySprite.enabled = false;
-            canInteract = false;
         }
     }
 

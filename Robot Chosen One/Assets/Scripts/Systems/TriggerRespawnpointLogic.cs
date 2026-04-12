@@ -11,6 +11,7 @@ public class TriggerRespawnpointLogic : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             collision.GetComponent<Respawn>().currentSpawnpoint = spawnpoint.position;
+            collision.GetComponent<Respawn>().platformingSpawnpoint = spawnpoint.position;
         }
     }
 }

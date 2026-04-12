@@ -11,7 +11,6 @@ public class MaxHealthInteract : MonoBehaviour
     private Transform player;
     private PlayerMovement playerMovement;
     private HealthHeartBarV2 healthScript;
-    private bool canInteract = true;
 
     [Header("TypeOfMaxHealthIncrease")]
     public bool junkyardMaxHealth;
@@ -29,19 +28,16 @@ public class MaxHealthInteract : MonoBehaviour
         {
             interactText.enabled = false;
             maxHealthIncreaseSprite.enabled = false;
-            canInteract = false;
         }
         else if (minesMaxHealth && playerMovement.maxHealthIncreaseMines)
         {
             interactText.enabled = false;
             maxHealthIncreaseSprite.enabled = false;
-            canInteract = false;
         }
         else if (towerMaxHealth && playerMovement.maxHealthIncreaseTower)
         {
             interactText.enabled = false;
             maxHealthIncreaseSprite.enabled = false;
-            canInteract = false;
         }
     }
 
@@ -50,7 +46,8 @@ public class MaxHealthInteract : MonoBehaviour
     {
         if (junkyardMaxHealth && !playerMovement.maxHealthIncreaseJunkyard)
         {
-            canInteract = false;
+            healthScript.maxHealth += 2;
+            healthScript.Heal(2);
             playerMovement.maxHealthIncreaseJunkyard = true;
         }
         else if (minesMaxHealth && !playerMovement.maxHealthIncreaseMines)
