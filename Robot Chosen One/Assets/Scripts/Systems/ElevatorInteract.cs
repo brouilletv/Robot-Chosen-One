@@ -30,24 +30,21 @@ public class ElevatorInteract : MonoBehaviour
         doorBehaviour.doorOpenUpward = true;
         doorBehaviour.doorOpenDownward = false;
         elevatorSpeed = doorBehaviour.doorSpeed;
+
+        elevatorState = ElevatorState.ElevatorDown;
     }
 
 
     private void ResetElevator(bool none)
     {
-        if (elevatorState == ElevatorState.ElevatorUp)
-        {
-            elevatorState = ElevatorState.ElevatorDown;
-        }
-        else if (elevatorState == ElevatorState.ElevatorDown)
-        {
-            elevatorState = ElevatorState.ElevatorUp;
-        }
-
         doorBehaviour.doorSpeed = elevatorSpeed * 10f;
 
-        previousElevatorState = elevatorState;
-        doorBehaviour.isDoorOpen = !doorBehaviour.isDoorOpen;
+        if (elevatorState == ElevatorState.ElevatorUp)
+        {
+            doorBehaviour.isDoorOpen = !doorBehaviour.isDoorOpen;
+            elevatorState = ElevatorState.ElevatorDown;
+            previousElevatorState = elevatorState;
+        }
     }
 
 
