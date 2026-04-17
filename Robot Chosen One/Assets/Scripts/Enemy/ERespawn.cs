@@ -58,5 +58,8 @@ public class ERespawn : MonoBehaviour
 
         BasicAttackPatern BAP = Clone.GetComponent<BasicAttackPatern>();
         BAP.InitializeBAP(player);
+
+        TouchDmg TD = Clone.GetComponent<TouchDmg>();
+        TD.InitializeTD(player);
     }
 }

@@ -37,6 +37,9 @@ public class WaveSpawnerS : MonoBehaviour
 
             BasicAttackPatern BAP = Clone.GetComponent<BasicAttackPatern>();
             BAP.InitializeBAP(player);
+
+            TouchDmg TD = Clone.GetComponent<TouchDmg>();
+            TD.InitializeTD(player);
         }
     }
     private void OnEnable()

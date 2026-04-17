@@ -5,16 +5,25 @@ using System;
 public class TouchDmg : MonoBehaviour
 {
     private bool OnCooldown = false;
-    [SerializeField] GameObject Player;
+    private GameObject Player;
 
     public static event Action<float> Hit;
     [SerializeField] int touchDmg = 1;
 
     [SerializeField] private Transform Body;
-    [SerializeField] private Transform PlayerT;
+    private Transform PlayerT;
 
     public static event Action<int> HitBounce;
     private int TouchedOnRight;
+
+    public void InitializeTD(GameObject player)
+    {
+        this.Player = player;
+
+        PlayerT = player.GetComponent<Transform>();
+    }
+
+
     void OnCollisionStay2D(Collision2D col)
     {
         if (col.gameObject.name == Player.name && OnCooldown == false)
