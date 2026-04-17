@@ -4,7 +4,8 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-public static class Save
+
+public static class SaveSystem
 {
    public const string saveFile = "/saveData.json";
 
@@ -16,31 +17,19 @@ public static class Save
 
       DataContainer dataContainer = new DataContainer(playerMovementData);
 
-      string dataText = JsonUtility.ToJson(dataContainer);
+      string dataText = JsonUtility.ToJson(dataContainer, true);
       File.WriteAllText(filePath, dataText);
    }
 }
 
 
-[System.Serializable]
-public class DataContainer
+public static class LoadSystem
 {
-   [SerializeField] PlayerMovementData playerMovementData;
-
-   public DataContainer(PlayerMovementData playerMovementData)
-   {
-      this.playerMovementData = playerMovementData;
-   }
-}
-
-
-public static class Load
-{
-   public static DataContainer LoadData()
+   public static DataContainer LoadGame()
    {
       try
       {
-         string filePath = Application.persistentDataPath + Save.saveFile;
+         string filePath = Application.persistentDataPath + SaveSystem.saveFile;
          string fileContent = File.ReadAllText(filePath);
          DataContainer dataContainer = JsonUtility.FromJson<DataContainer>(fileContent);
          return dataContainer;
@@ -50,4 +39,24 @@ public static class Load
          return null;
       }
    }
+}
+
+
+[System.Serializable]
+public class DataContainer
+{
+    [SerializeField] public PlayerMovementData playerMovementData;
+    [SerializeField] public RespawnData RespawnData;
+
+
+    public DataContainer(PlayerMovementData playerMovementData)
+    {
+        this.playerMovementData = playerMovementData;
+    }
+
+
+    public DataContainer(RespawnData RespawnData)
+    {
+        this.RespawnData = RespawnData;
+    }
 }

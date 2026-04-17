@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     public bool defeatedTowerBoss = false;
 
 
+
+
     // Movement Variables
     [Header("Movement Variables")]
     [SerializeField] float groundSpeed = 6f;
@@ -109,12 +111,36 @@ public class PlayerMovement : MonoBehaviour
 
     public static PlayerMovement instance;
 
+
+
     private void Awake()
     {
         instance = this;
         playerStop = false;
         rb.gravityScale = normalGravity;
         playerInput = GetComponent<PlayerInput>();
+    }
+
+
+    private void Start()
+    {
+        DataContainer dataContainer = LoadSystem.LoadGame();
+        if (dataContainer != null)
+        {
+            lastScene = dataContainer.playerMovementData.lastScene;
+
+            unlockedDoubleJump = dataContainer.playerMovementData.unlockedDoubleJump;
+            unlockedDash = dataContainer.playerMovementData.unlockedDash;
+            unlockedWallJump = dataContainer.playerMovementData.unlockedWallJump;
+
+            maxHealthIncreaseJunkyard = dataContainer.playerMovementData.maxHealthIncreaseJunkyard;
+            maxHealthIncreaseMines = dataContainer.playerMovementData.maxHealthIncreaseMines;
+            maxHealthIncreaseTower = dataContainer.playerMovementData.maxHealthIncreaseTower;
+
+            defeatedJunkyardBoss = dataContainer.playerMovementData.defeatedJunkyardBoss;
+            defeatedMinesBoss = dataContainer.playerMovementData.defeatedMinesBoss;
+            defeatedTowerBoss = dataContainer.playerMovementData.defeatedTowerBoss;
+        }
     }
     #endregion
 
@@ -502,19 +528,19 @@ public class PlayerMovement : MonoBehaviour
 [System.Serializable]
 public class PlayerMovementData
 {
-    [SerializeField] string lastScene;
+    [SerializeField] public string lastScene;
 
-    [SerializeField] bool unlockedDoubleJump;
-    [SerializeField] bool unlockedDash;
-    [SerializeField] bool unlockedWallJump;
+    [SerializeField] public bool unlockedDoubleJump;
+    [SerializeField] public bool unlockedDash;
+    [SerializeField] public bool unlockedWallJump;
 
-    [SerializeField] bool maxHealthIncreaseJunkyard;
-    [SerializeField] bool maxHealthIncreaseMines;
-    [SerializeField] bool maxHealthIncreaseTower;
+    [SerializeField] public bool maxHealthIncreaseJunkyard;
+    [SerializeField] public bool maxHealthIncreaseMines;
+    [SerializeField] public bool maxHealthIncreaseTower;
 
-    [SerializeField] bool defeatedJunkyardBoss;
-    [SerializeField] bool defeatedMinesBoss;
-    [SerializeField] bool defeatedTowerBoss;
+    [SerializeField] public bool defeatedJunkyardBoss;
+    [SerializeField] public bool defeatedMinesBoss;
+    [SerializeField] public bool defeatedTowerBoss;
 
     public PlayerMovementData(PlayerMovement playerMovement)
     {

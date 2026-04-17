@@ -60,6 +60,7 @@ public class PauseManager : MonoBehaviour
         playerMovement.SwitchActionMapToPlayer();
     }
 
+
     public void QuitGame()
     {
         if (Application.isEditor)
@@ -70,5 +71,20 @@ public class PauseManager : MonoBehaviour
         {
             Application.Quit();
         }
+    }
+
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            SaveSystem.SaveGame();
+        }
+    }
+
+
+    private void OnApplicationQuit()
+    {
+        SaveSystem.SaveGame();
     }
 }

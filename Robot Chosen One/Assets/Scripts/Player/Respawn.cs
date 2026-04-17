@@ -27,6 +27,17 @@ public class Respawn : MonoBehaviour
     }
 
 
+    private void Start()
+    {
+        DataContainer dataContainer = LoadSystem.LoadGame();
+        if (dataContainer != null)
+        {
+            currentSpawnpoint = dataContainer.RespawnData.currentSpawnpoint;
+            platformingSpawnpoint = dataContainer.RespawnData.platformingSpawnpoint;
+        }
+    }
+
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         platformingSpawnpoint = currentSpawnpoint;
@@ -108,5 +119,19 @@ public class Respawn : MonoBehaviour
         DeathZone.Respawn -= HandleRespawn;
         SpawnLocation.NewLocation -= UpdateLocation;
         SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+}
+
+
+[System.Serializable]
+public class RespawnData
+{
+    [SerializeField] public Vector2 currentSpawnpoint = new Vector2(0, 0);
+    [SerializeField] public Vector2 platformingSpawnpoint;
+
+    public RespawnData(Respawn respawn)
+    {
+        currentSpawnpoint = respawn.currentSpawnpoint;
+        platformingSpawnpoint = respawn.platformingSpawnpoint;
     }
 }
