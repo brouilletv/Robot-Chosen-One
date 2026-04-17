@@ -24,6 +24,6 @@ public class HealBar : MonoBehaviour
 
     public void SetHealBar()
     {
-        slider.value = playerMelee.attackCount / 10f;
+        slider.value = playerMelee.attackCount / 5f;
     }
 }
