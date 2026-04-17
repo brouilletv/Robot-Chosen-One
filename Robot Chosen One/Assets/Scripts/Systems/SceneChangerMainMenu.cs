@@ -14,14 +14,16 @@ public class SceneChangerMainMenu : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        player = GameObject.FindWithTag("Player").transform;
+        playerMovement = player.GetComponent<PlayerMovement>();
+        playerMovement.PlayerStopTrue();
+
         fadeAnim.Play("FadeFromBlack");
     }
 
 
     public void PlayGame()
     {
-        player = GameObject.FindWithTag("Player").transform;
-        playerMovement = player.GetComponent<PlayerMovement>();
         respawn = player.GetComponent<Respawn>();
         playerMovement.PlayerStopTrue();
 

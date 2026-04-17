@@ -107,9 +107,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float wallCheckHeight = 0.8f;
     [SerializeField] private LayerMask wallLayer;
 
+    public static PlayerMovement instance;
 
     private void Awake()
     {
+        instance = this;
         playerStop = false;
         rb.gravityScale = normalGravity;
         playerInput = GetComponent<PlayerInput>();
@@ -494,4 +496,40 @@ public class PlayerMovement : MonoBehaviour
         projectileArch.HitBounce -= HandleBouceDirection;
     }
     #endregion
+}
+
+
+[System.Serializable]
+public class PlayerMovementData
+{
+    [SerializeField] string lastScene;
+
+    [SerializeField] bool unlockedDoubleJump;
+    [SerializeField] bool unlockedDash;
+    [SerializeField] bool unlockedWallJump;
+
+    [SerializeField] bool maxHealthIncreaseJunkyard;
+    [SerializeField] bool maxHealthIncreaseMines;
+    [SerializeField] bool maxHealthIncreaseTower;
+
+    [SerializeField] bool defeatedJunkyardBoss;
+    [SerializeField] bool defeatedMinesBoss;
+    [SerializeField] bool defeatedTowerBoss;
+
+    public PlayerMovementData(PlayerMovement playerMovement)
+    {
+        lastScene = playerMovement.lastScene;
+
+        unlockedDoubleJump = playerMovement.unlockedDoubleJump;
+        unlockedDash = playerMovement.unlockedDash;
+        unlockedWallJump = playerMovement.unlockedWallJump;
+
+        maxHealthIncreaseJunkyard = playerMovement.maxHealthIncreaseJunkyard;
+        maxHealthIncreaseMines = playerMovement.maxHealthIncreaseMines;
+        maxHealthIncreaseTower = playerMovement.maxHealthIncreaseTower;
+
+        defeatedJunkyardBoss = playerMovement.defeatedJunkyardBoss;
+        defeatedMinesBoss = playerMovement.defeatedMinesBoss;
+        defeatedTowerBoss = playerMovement.defeatedTowerBoss;
+    }
 }
