@@ -42,6 +42,8 @@ public class SceneChangerMainMenu : MonoBehaviour
 
     public void QuitGame()
     {
+        SaveSystem.SaveGame();
+
         if (Application.isEditor)
         {
             UnityEditor.EditorApplication.ExitPlaymode();

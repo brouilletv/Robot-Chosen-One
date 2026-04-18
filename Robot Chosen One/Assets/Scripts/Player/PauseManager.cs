@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 public class PauseManager : MonoBehaviour
 {   
-
     public static bool isPaused = false;
     [SerializeField] GameObject PauseMenu;
     private PlayerMovement playerMovement;
@@ -63,6 +62,8 @@ public class PauseManager : MonoBehaviour
 
     public void QuitGame()
     {
+        SaveSystem.SaveGame();
+
         if (Application.isEditor)
         {
             UnityEditor.EditorApplication.ExitPlaymode();

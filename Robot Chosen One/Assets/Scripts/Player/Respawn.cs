@@ -10,7 +10,7 @@ public class Respawn : MonoBehaviour
     private PlayerMovement playerMovement;
     public Animator fadeAnim;
 
-    public Vector2 currentSpawnpoint = new Vector2(0, 0);
+    public Vector2 currentSpawnpoint;
     public Vector2 platformingSpawnpoint;
     private bool respawnStop = false;
 
@@ -20,9 +20,12 @@ public class Respawn : MonoBehaviour
     public static event Action<bool> resetElevator;
     public static event Action<bool> enemyRespawn;
 
+    public static Respawn instance;
+
 
     private void Awake()
     {
+        instance = this;
         currentSpawnpoint = GameObject.FindWithTag("DefaultRespawn").transform.position;
     }
 
@@ -32,8 +35,8 @@ public class Respawn : MonoBehaviour
         DataContainer dataContainer = LoadSystem.LoadGame();
         if (dataContainer != null)
         {
-            currentSpawnpoint = dataContainer.RespawnData.currentSpawnpoint;
-            platformingSpawnpoint = dataContainer.RespawnData.platformingSpawnpoint;
+            currentSpawnpoint = dataContainer.respawnData.currentSpawnpoint;
+            platformingSpawnpoint = dataContainer.respawnData.platformingSpawnpoint;
         }
     }
 
@@ -126,12 +129,12 @@ public class Respawn : MonoBehaviour
 [System.Serializable]
 public class RespawnData
 {
-    [SerializeField] public Vector2 currentSpawnpoint = new Vector2(0, 0);
+    [SerializeField] public Vector2 currentSpawnpoint;
     [SerializeField] public Vector2 platformingSpawnpoint;
 
     public RespawnData(Respawn respawn)
     {
-        currentSpawnpoint = respawn.currentSpawnpoint;
-        platformingSpawnpoint = respawn.platformingSpawnpoint;
+        this.currentSpawnpoint = respawn.currentSpawnpoint;
+        this.platformingSpawnpoint = respawn.platformingSpawnpoint;
     }
 }

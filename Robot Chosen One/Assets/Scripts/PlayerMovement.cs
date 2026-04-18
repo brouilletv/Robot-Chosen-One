@@ -39,8 +39,6 @@ public class PlayerMovement : MonoBehaviour
     public bool defeatedTowerBoss = false;
 
 
-
-
     // Movement Variables
     [Header("Movement Variables")]
     [SerializeField] float groundSpeed = 6f;
@@ -93,8 +91,6 @@ public class PlayerMovement : MonoBehaviour
     private bool isDashing = false;
     private bool canDash = true;
     private bool canDoubleJump = true;
-    //private bool isWallSliding;
-    //private bool isWallJumping;
 
 
     // Ground Check
@@ -110,7 +106,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask wallLayer;
 
     public static PlayerMovement instance;
-
 
 
     private void Awake()
@@ -544,18 +539,18 @@ public class PlayerMovementData
 
     public PlayerMovementData(PlayerMovement playerMovement)
     {
-        lastScene = playerMovement.lastScene;
+        this.lastScene = playerMovement.lastScene;
 
-        unlockedDoubleJump = playerMovement.unlockedDoubleJump;
-        unlockedDash = playerMovement.unlockedDash;
-        unlockedWallJump = playerMovement.unlockedWallJump;
+        this.unlockedDoubleJump = playerMovement.unlockedDoubleJump;
+        this.unlockedDash = playerMovement.unlockedDash;
+        this.unlockedWallJump = playerMovement.unlockedWallJump;
 
-        maxHealthIncreaseJunkyard = playerMovement.maxHealthIncreaseJunkyard;
-        maxHealthIncreaseMines = playerMovement.maxHealthIncreaseMines;
-        maxHealthIncreaseTower = playerMovement.maxHealthIncreaseTower;
+        this.maxHealthIncreaseJunkyard = playerMovement.maxHealthIncreaseJunkyard;
+        this.maxHealthIncreaseMines = playerMovement.maxHealthIncreaseMines;
+        this.maxHealthIncreaseTower = playerMovement.maxHealthIncreaseTower;
 
-        defeatedJunkyardBoss = playerMovement.defeatedJunkyardBoss;
-        defeatedMinesBoss = playerMovement.defeatedMinesBoss;
-        defeatedTowerBoss = playerMovement.defeatedTowerBoss;
+        this.defeatedJunkyardBoss = playerMovement.defeatedJunkyardBoss;
+        this.defeatedMinesBoss = playerMovement.defeatedMinesBoss;
+        this.defeatedTowerBoss = playerMovement.defeatedTowerBoss;
     }
 }
