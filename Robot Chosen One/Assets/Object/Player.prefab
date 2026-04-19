@@ -1050,6 +1050,7 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 8
+  instance: {fileID: 0}
 --- !u!114 &1168437065262223502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1079,6 +1080,7 @@ MonoBehaviour:
   fadeAnim: {fileID: 3777749608655791574}
   currentSpawnpoint: {x: 0, y: 0}
   platformingSpawnpoint: {x: 0, y: 0}
+  instance: {fileID: 0}
 --- !u!114 &2642156841284502340
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -19,7 +19,6 @@ public static class SaveSystem
         DataContainer dataContainer = new DataContainer(playerMovementData, respawnData);
 
         string dataText = JsonUtility.ToJson(dataContainer, true);
-        Debug.Log(dataText);
         File.WriteAllText(filePath, dataText);
     }
 }
