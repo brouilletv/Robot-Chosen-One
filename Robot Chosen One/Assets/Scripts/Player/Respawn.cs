@@ -20,7 +20,7 @@ public class Respawn : MonoBehaviour
     public static event Action<bool> resetElevator;
     public static event Action<bool> enemyRespawn;
 
-    public static Respawn instance;
+    public Respawn instance;
 
 
     private void Awake()
@@ -134,7 +134,7 @@ public class RespawnData
 
     public RespawnData(Respawn respawn)
     {
-        this.currentSpawnpoint = respawn.currentSpawnpoint;
-        this.platformingSpawnpoint = respawn.platformingSpawnpoint;
+        currentSpawnpoint = respawn.currentSpawnpoint;
+        platformingSpawnpoint = respawn.platformingSpawnpoint;
     }
 }

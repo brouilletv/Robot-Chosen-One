@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Persitent Objects")]
     public GameObject[] persistentObjects;
+    private GameObject Player;
 
 
     private void Awake()
@@ -24,6 +25,8 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             MarkPersistentObjects();
         }
+
+        Player = GameObject.FindWithTag("Player");
     }
 
 
@@ -60,5 +63,28 @@ public class GameManager : MonoBehaviour
         {
             Application.Quit();
         }
+    }
+
+
+    public void Save()
+    {
+        PlayerMovement playerMovementInstance = Player.GetComponent<PlayerMovement>().instance;
+        Respawn respawnInstance = Player.GetComponent<Respawn>().instance;
+        SaveSystem.SaveGame(playerMovementInstance, respawnInstance);
+    }
+
+
+    private void OnApplicationPause(bool pause)
+    {
+        if (pause)
+        {
+            Save();
+        }
+    }
+
+
+    private void OnApplicationQuit()
+    {
+        Save();
     }
 }
