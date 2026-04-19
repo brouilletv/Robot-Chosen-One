@@ -105,11 +105,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float wallCheckHeight = 0.8f;
     [SerializeField] private LayerMask wallLayer;
 
-    public static PlayerMovement instance;
+    public PlayerMovement instance;
 
 
     private void Awake()
     {
+
         instance = this;
         playerStop = false;
         rb.gravityScale = normalGravity;
@@ -539,18 +540,18 @@ public class PlayerMovementData
 
     public PlayerMovementData(PlayerMovement playerMovement)
     {
-        this.lastScene = playerMovement.lastScene;
+        lastScene = playerMovement.lastScene;
 
-        this.unlockedDoubleJump = playerMovement.unlockedDoubleJump;
-        this.unlockedDash = playerMovement.unlockedDash;
-        this.unlockedWallJump = playerMovement.unlockedWallJump;
+        unlockedDoubleJump = playerMovement.unlockedDoubleJump;
+        unlockedDash = playerMovement.unlockedDash;
+        unlockedWallJump = playerMovement.unlockedWallJump;
 
-        this.maxHealthIncreaseJunkyard = playerMovement.maxHealthIncreaseJunkyard;
-        this.maxHealthIncreaseMines = playerMovement.maxHealthIncreaseMines;
-        this.maxHealthIncreaseTower = playerMovement.maxHealthIncreaseTower;
+        maxHealthIncreaseJunkyard = playerMovement.maxHealthIncreaseJunkyard;
+        maxHealthIncreaseMines = playerMovement.maxHealthIncreaseMines;
+        maxHealthIncreaseTower = playerMovement.maxHealthIncreaseTower;
 
-        this.defeatedJunkyardBoss = playerMovement.defeatedJunkyardBoss;
-        this.defeatedMinesBoss = playerMovement.defeatedMinesBoss;
-        this.defeatedTowerBoss = playerMovement.defeatedTowerBoss;
+        defeatedJunkyardBoss = playerMovement.defeatedJunkyardBoss;
+        defeatedMinesBoss = playerMovement.defeatedMinesBoss;
+        defeatedTowerBoss = playerMovement.defeatedTowerBoss;
     }
 }

@@ -10,15 +10,16 @@ public static class SaveSystem
     public const string saveFile = "/saveData.json";
 
 
-    public static void SaveGame()
+    public static void SaveGame(PlayerMovement playerMovementInstance, Respawn respawnInstance)
     {
         string filePath = Application.persistentDataPath + saveFile;
-        PlayerMovementData playerMovementData = new PlayerMovementData(PlayerMovement.instance);
-        RespawnData respawnData = new RespawnData(Respawn.instance);
+        PlayerMovementData playerMovementData = new PlayerMovementData(playerMovementInstance);
+        RespawnData respawnData = new RespawnData(respawnInstance);
 
         DataContainer dataContainer = new DataContainer(playerMovementData, respawnData);
 
         string dataText = JsonUtility.ToJson(dataContainer, true);
+        Debug.Log(dataText);
         File.WriteAllText(filePath, dataText);
     }
 }

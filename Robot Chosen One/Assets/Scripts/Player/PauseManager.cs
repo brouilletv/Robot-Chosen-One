@@ -8,6 +8,7 @@ public class PauseManager : MonoBehaviour
 {   
     public static bool isPaused = false;
     [SerializeField] GameObject PauseMenu;
+    private GameManager GameManager;
     private PlayerMovement playerMovement;
 
 
@@ -18,6 +19,12 @@ public class PauseManager : MonoBehaviour
     }
 
 
+    private void Start()
+    {
+        GameManager = GameObject.FindWithTag("GameManager").transform.GetComponent<GameManager>();
+    }
+
+
     public void OnPause(InputValue value)
     {
         if (!playerMovement.playerStop)
@@ -25,9 +32,9 @@ public class PauseManager : MonoBehaviour
             if (!isPaused)
             {
                 PauseGame();
+                GameManager.Save();
             }
         }
-        
     }
 
 
@@ -62,7 +69,7 @@ public class PauseManager : MonoBehaviour
 
     public void QuitGame()
     {
-        SaveSystem.SaveGame();
+        GameManager.Save();
 
         if (Application.isEditor)
         {
@@ -72,20 +79,5 @@ public class PauseManager : MonoBehaviour
         {
             Application.Quit();
         }
-    }
-
-
-    private void OnApplicationPause(bool pause)
-    {
-        if (pause)
-        {
-            SaveSystem.SaveGame();
-        }
-    }
-
-
-    private void OnApplicationQuit()
-    {
-        SaveSystem.SaveGame();
     }
 }

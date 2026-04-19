@@ -10,11 +10,13 @@ public class SceneChangerMainMenu : MonoBehaviour
     private Transform player;
     private PlayerMovement playerMovement;
     private Respawn respawn;
+    private GameManager GameManager;
 
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         player = GameObject.FindWithTag("Player").transform;
+        GameManager = GameObject.FindWithTag("GameManager").transform.GetComponent<GameManager>();
         playerMovement = player.GetComponent<PlayerMovement>();
         playerMovement.PlayerStopTrue();
 
@@ -42,7 +44,7 @@ public class SceneChangerMainMenu : MonoBehaviour
 
     public void QuitGame()
     {
-        SaveSystem.SaveGame();
+        GameManager.Save();
 
         if (Application.isEditor)
         {
