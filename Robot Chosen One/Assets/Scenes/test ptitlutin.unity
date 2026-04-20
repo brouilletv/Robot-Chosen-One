@@ -723,6 +723,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss Spawn
       objectReference: {fileID: 0}
+    - target: {fileID: 9219558479232741315, guid: 89b525fb3bf44964a90decb2f155ca0c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

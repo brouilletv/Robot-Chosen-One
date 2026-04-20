@@ -27,7 +27,7 @@ public class BossSpawner : MonoBehaviour
         playerMask = LayerMask.GetMask("PlayerMask");
         Player = System.Array.Find(FindObjectsOfType<GameObject>(), o => ((1 << o.layer) & playerMask) != 0);
         PM = Player.GetComponent<PlayerMovement>();
-        // TagCheck();
+        TagCheck();
     }
 
     void Update()
@@ -41,8 +41,6 @@ public class BossSpawner : MonoBehaviour
             }
         }
     }
-
-    /*
     void TagCheck()
     {
         if (boss.CompareTag("Boss1") && PM.defeatedJunkyardBoss is false)
@@ -65,7 +63,6 @@ public class BossSpawner : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    */
 
     IEnumerator Create(int n)
     {
