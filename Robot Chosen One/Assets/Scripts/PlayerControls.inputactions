@@ -280,10 +280,10 @@
                 {
                     "name": "",
                     "id": "e9e2dfc6-aab5-4d93-ae81-170c7c81de61",
-                    "path": "<Keyboard>/h",
+                    "path": "<Keyboard>/x",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Heal",
                     "isComposite": false,
                     "isPartOfComposite": false
