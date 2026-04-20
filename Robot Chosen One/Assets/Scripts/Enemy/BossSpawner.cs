@@ -10,8 +10,10 @@ public class BossSpawner : MonoBehaviour
 
     private GameObject Player;
     private LayerMask playerMask;
+    private PlayerMovement PM;
 
-    public string state = "inactive";
+    public string state = "none";
+    private int bossNum = 0;
 
     [SerializeField] int Ecount;
     [SerializeField] float Ecooldown;
@@ -24,6 +26,8 @@ public class BossSpawner : MonoBehaviour
 
         playerMask = LayerMask.GetMask("PlayerMask");
         Player = System.Array.Find(FindObjectsOfType<GameObject>(), o => ((1 << o.layer) & playerMask) != 0);
+        PM = Player.GetComponent<PlayerMovement>();
+        TagCheck();
     }
 
     void Update()
@@ -38,10 +42,44 @@ public class BossSpawner : MonoBehaviour
         }
     }
 
+    void TagCheck()
+    {
+        if (boss.CompareTag("Boss1") && PM.defeatedJunkyardBoss is false)
+        {
+            state = "inactive";
+            bossNum = 1;
+        }
+        else if (boss.CompareTag("Boss2") && PM.defeatedMinesBoss is false)
+        {
+            state = "inactive";
+            bossNum = 2;
+        }
+        else if (boss.CompareTag("Boss3") && PM.defeatedTowerBoss is false)
+        {
+            state = "inactive";
+            bossNum = 3;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     IEnumerator Create(int n)
     {
         yield return new WaitForSeconds(n * Ecooldown);
 
         GameObject Clone = Instantiate(boss, transform.position, transform.rotation, transform);
+
+        if (bossNum == 1)
+        {
+            JunkyardBossLogic JBL = Clone.GetComponent<JunkyardBossLogic>();
+            JBL.InitializeBossLogic();
+
+            BodyDmg BDT = Clone.transform.Find("Top").GetComponent<BodyDmg>();
+            BodyDmg BDB = Clone.transform.Find("Bottom").GetComponent<BodyDmg>();
+            BDT.InitializeBodyDmg(Player);
+            BDB.InitializeBodyDmg(Player);
+        }
     }
 }

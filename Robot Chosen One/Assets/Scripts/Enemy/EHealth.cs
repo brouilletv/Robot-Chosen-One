@@ -20,11 +20,6 @@ public class EHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    void Update()
-    {
-
-    }
-
     public void TakeDamage(float amount)
     {
         if (cooldown == false)

@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Death
   - DefaultRespawn
+  - GameManager
+  - Boss1
+  - Boss2
+  - Boss3
   layers:
   - Default
   - TransparentFX

@@ -391,13 +391,13 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    void HandleBouceDirection(int direction)
+    public void HandleBouceDirection(int direction)
     {
-        if (direction == 0)
+        if (direction == 0 && transform.Find("GUI").Find("HealthHeart").GetComponent<HealthHeartBarV2>().imunity is false)
         {
             knockback = new Vector2(-50, 10);
         }
-        else if (direction == 1)
+        else if (direction == 1 && transform.Find("GUI").Find("HealthHeart").GetComponent<HealthHeartBarV2>().imunity is false)
         {
             knockback = new Vector2(50, 10);
         }

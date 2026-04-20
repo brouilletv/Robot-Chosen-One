@@ -146,6 +146,20 @@ public class PlayerMelee : MonoBehaviour
 
 
                     }
+                    else if(enemy.GetComponentInParent<JunkyardBossLogic>() != null)
+                    {
+                        enemy.GetComponentInParent<JunkyardBossLogic>().TakeDamage(attackDamage);
+                        if (attackCount < 10)
+                        {
+                            attackCount = attackCount + 1;
+                            Debug.Log("Total attacks: " + attackCount);
+                        }
+
+                        else
+                        {
+                            Debug.Log("Total attacks: " + attackCount);
+                        }
+                    }
                 }
                 cooldownTimer = cooldownTime;
                 attackPressed = false;

@@ -15,6 +15,8 @@ public class HealthHeartBarV2 : MonoBehaviour
     public float health;
     private float respawnTime = 0.75f;
 
+    private float imunityTime = 1f;
+    public bool imunity = false;
 
     private List<HealthHeart> hearts = new List<HealthHeart>();
 
@@ -90,7 +92,22 @@ public class HealthHeartBarV2 : MonoBehaviour
 
     public void Heal(float amount)
     {
-        SetHealth(health + amount);
+        if (amount > 0)
+        {
+            SetHealth(health + amount);
+        }
+        else if (imunity is false)
+        {
+            StartCoroutine(ImunityCooldown());
+            SetHealth(health + amount);
+        }
+
+        IEnumerator ImunityCooldown()
+        {
+            imunity = true;
+            yield return new WaitForSeconds(imunityTime);
+            imunity = false;
+        }
     }
 
 
