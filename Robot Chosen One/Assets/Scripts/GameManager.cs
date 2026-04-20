@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()
     {
+        Save();
+
         if (Application.isEditor)
         {
             UnityEditor.EditorApplication.ExitPlaymode();
