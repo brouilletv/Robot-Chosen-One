@@ -27,14 +27,7 @@ public class EHealth : MonoBehaviour
             currentHealth -= amount;
             if (currentHealth <= 0)
             {
-                if (transform.parent.name == "E" && transform.parent.childCount == 1)
-                {
-                    Destroy(transform.parent.gameObject);
-                }
-                else
-                {
-                    Destroy(gameObject);
-                }
+                Destroy(gameObject);
             }
             StartCoroutine(Cooldown());
         }
