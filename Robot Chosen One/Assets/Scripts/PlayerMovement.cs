@@ -204,7 +204,7 @@ public class PlayerMovement : MonoBehaviour
                     jumpPressed = true;
                     jumpReleased = false;
                 }
-                else if (!isGrounded && !isWalled && unlockedDoubleJump)
+                else if (!isGrounded && !isWalled && canDoubleJump && unlockedDoubleJump)
                 {
                     jumpPressed = true;
                     jumpReleased = false;
