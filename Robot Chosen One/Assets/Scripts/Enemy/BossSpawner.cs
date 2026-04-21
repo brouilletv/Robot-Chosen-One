@@ -73,7 +73,7 @@ public class BossSpawner : MonoBehaviour
         if (bossNum == 1)
         {
             JunkyardBossLogic JBL = Clone.GetComponent<JunkyardBossLogic>();
-            JBL.InitializeBossLogic();
+            JBL.InitializeBossLogic(Player, MinPos, MaxPos);
 
             BodyDmg BDT = Clone.transform.Find("Top").GetComponent<BodyDmg>();
             BodyDmg BDB = Clone.transform.Find("Bottom").GetComponent<BodyDmg>();
