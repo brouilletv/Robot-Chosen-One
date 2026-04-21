@@ -374,10 +374,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8bf60bb0df01af4e8aaecf903c5035f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 3104547831339970628, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
-  touchDmg: 1
+  touchDmg: 0
   Body: {fileID: 8970110573255764703}
-  PlayerT: {fileID: 542451865603372785, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
 --- !u!114 &8979595975027334229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,7 +388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f844819653fb934abd60f0c423bb897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 99999
+  maxHealth: 1e+10
 --- !u!114 &2994080601806840836
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -102,6 +102,7 @@ public class Respawn : MonoBehaviour
         resetElevator?.Invoke(true);
         enemyRespawn?.Invoke(true);
         currentSpawnpoint = newLocation.position;
+        platformingSpawnpoint = currentSpawnpoint;
     }
 
 

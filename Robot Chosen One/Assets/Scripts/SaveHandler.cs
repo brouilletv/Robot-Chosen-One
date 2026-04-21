@@ -10,13 +10,14 @@ public static class SaveSystem
     public const string saveFile = "/saveData.json";
 
 
-    public static void SaveGame(PlayerMovement playerMovementInstance, Respawn respawnInstance)
+    public static void SaveGame(PlayerMovement playerMovementInstance, Respawn respawnInstance, HealthHeartBarV2 healthHeartBarV2Instance)
     {
         string filePath = Application.persistentDataPath + saveFile;
         PlayerMovementData playerMovementData = new PlayerMovementData(playerMovementInstance);
         RespawnData respawnData = new RespawnData(respawnInstance);
+        HealthHeartBarV2Data healthHeartBarV2Data = new HealthHeartBarV2Data(healthHeartBarV2Instance);
 
-        DataContainer dataContainer = new DataContainer(playerMovementData, respawnData);
+        DataContainer dataContainer = new DataContainer(playerMovementData, respawnData, healthHeartBarV2Data);
 
         string dataText = JsonUtility.ToJson(dataContainer, true);
         File.WriteAllText(filePath, dataText);
@@ -48,10 +49,12 @@ public class DataContainer
 {
     [SerializeField] public PlayerMovementData playerMovementData;
     [SerializeField] public RespawnData respawnData;
+    [SerializeField] public HealthHeartBarV2Data healthHeartBarV2Data;
 
-    public DataContainer(PlayerMovementData playerMovementData, RespawnData respawnData)
+    public DataContainer(PlayerMovementData playerMovementData, RespawnData respawnData, HealthHeartBarV2Data healthHeartBarV2Data)
     {
         this.playerMovementData = playerMovementData;
         this.respawnData = respawnData;
+        this.healthHeartBarV2Data = healthHeartBarV2Data;
     }
 }

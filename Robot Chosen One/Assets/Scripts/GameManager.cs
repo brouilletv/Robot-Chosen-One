@@ -72,7 +72,8 @@ public class GameManager : MonoBehaviour
     {
         PlayerMovement playerMovementInstance = Player.GetComponent<PlayerMovement>().instance;
         Respawn respawnInstance = Player.GetComponent<Respawn>().instance;
-        SaveSystem.SaveGame(playerMovementInstance, respawnInstance);
+        HealthHeartBarV2 healthHeartBarV2 = Player.GetComponentInChildren<HealthHeartBarV2>().instance;
+        SaveSystem.SaveGame(playerMovementInstance, respawnInstance, healthHeartBarV2);
     }
 
 

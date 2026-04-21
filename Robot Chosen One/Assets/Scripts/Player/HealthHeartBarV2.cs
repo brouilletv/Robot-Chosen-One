@@ -11,7 +11,6 @@ public class HealthHeartBarV2 : MonoBehaviour
     private GameObject player;
     private PlayerMelee playerMelee;
     public float maxHealth = 12;
-    public float startingHealth = 6;
     public float health;
     private float respawnTime = 0.75f;
 
@@ -22,13 +21,30 @@ public class HealthHeartBarV2 : MonoBehaviour
 
     public static event Action<float> Respawn;
 
+    public HealthHeartBarV2 instance;
+
+
     private void Awake()
+    {
+        instance = this;
+    }
+
+
+    private void Start()
     {
         player = GameObject.FindWithTag("Player");
         playerMelee = player.GetComponent<PlayerMelee>();
-        health = Mathf.Clamp(startingHealth, 0, maxHealth);
+
+        DataContainer dataContainer = LoadSystem.LoadGame();
+        if (dataContainer != null)
+        {
+            maxHealth = dataContainer.healthHeartBarV2Data.maxHealth;
+        }
+
+        health = Mathf.Clamp(maxHealth, 0, maxHealth);
         DrawHearts();
     }
+
 
     private void FixedUpdate()
     {
@@ -176,3 +192,13 @@ public class HealthHeartBarV2 : MonoBehaviour
 }
 
 
+[System.Serializable]
+public class HealthHeartBarV2Data
+{
+    [SerializeField] public float maxHealth;
+
+    public HealthHeartBarV2Data(HealthHeartBarV2 healthHeartBarV2)
+    {
+        maxHealth = healthHeartBarV2.maxHealth;
+    }
+}
