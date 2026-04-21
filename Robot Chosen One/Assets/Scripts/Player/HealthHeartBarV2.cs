@@ -83,12 +83,12 @@ public class HealthHeartBarV2 : MonoBehaviour
     {
         if (playerMelee.healPressed)
         {
-            if (playerMelee.attackCount == 10 && health < maxHealth)
+            if (playerMelee.attackCount >= 5 && health < maxHealth)
             {
                 playerMelee.healPressed = false;
                 Heal(1);
                 Debug.Log("Healed 1 health for reaching 10 attacks");
-                playerMelee.attackCount = 0;
+                playerMelee.attackCount = playerMelee.attackCount - 5;
                 Debug.Log("Attack count reset to: " + playerMelee.attackCount);
             }
 
