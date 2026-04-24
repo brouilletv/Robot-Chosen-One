@@ -51,7 +51,10 @@ public class JunkyardBossLogic : MonoBehaviour
     #region Update
     void Update()
     {
-        
+        if (GlobalCooldown is false)
+        {
+            Rush();
+        }
     }
     #endregion
 
@@ -104,9 +107,20 @@ public class JunkyardBossLogic : MonoBehaviour
         BDB.Active = false;
         RushActive = true;
 
+        RushAction(BDT, BDB);
+    }
+
+    void Shockwave()
+    {
+
+    }
+
+    IEnumerator RushAction(BodyDmg BDT, BodyDmg BDB)
+    {
         while (transform.position.x > MinPos.position.x + 1.5 || transform.position.x < MaxPos.position.x - 1.5)
         {
             RB.velocity = new Vector2(RushDir * RushSpeed * 10, RB.velocity.y);
+            yield return new WaitForSeconds(1f);
         }
 
         RB.velocity = new Vector2(0, RB.velocity.y);
@@ -114,12 +128,17 @@ public class JunkyardBossLogic : MonoBehaviour
         RushActive = false;
         BDT.Active = true;
         BDB.Active = true;
+
+        WaitCooldown(RushCooldown);
     }
 
-    void Shockwave()
+    IEnumerator WaitCooldown(float cooldown)
     {
-
+        GlobalCooldown = true;
+        yield return new WaitForSeconds(cooldown);
+        GlobalCooldown = false;
     }
+
     #endregion
 
     #region Colliders Things
@@ -129,6 +148,7 @@ public class JunkyardBossLogic : MonoBehaviour
         {
             if (RushActive is true)
             {
+                HHB.Heal(-RushDmg);
 
             }
         }
