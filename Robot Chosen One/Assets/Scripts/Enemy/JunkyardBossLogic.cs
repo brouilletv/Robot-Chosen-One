@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class JunkyardBossLogic : MonoBehaviour
 {
     #region Variables & Initialize
     [Header("Boss Heath & Phases")]
-    [SerializeField] float BossMaxHealth = 30f;
+    [SerializeField] float BossMaxHealth = 25f;
     private float BossHealth;
     private bool BossHeathLossCooldown;
     private float BossHeathLossCooldownTime = 1f;
@@ -22,15 +23,20 @@ public class JunkyardBossLogic : MonoBehaviour
     [SerializeField] float RushSpeed = 1;
     private bool RushActive = false;
     [SerializeField] int RushDmg = 2;
-    [SerializeField] int RushCooldown = 2;
+    [SerializeField] int RushCooldown = 10;
 
     [Header("Shockwave")]
+    [SerializeField] float ShockwaveSpeed = 1;
+    private bool ShockwaveActive = false;
+    [SerializeField] int ShockwaveDmg = 1;
+    [SerializeField] int ShockwaveCooldown = 10;
 
     [Header("General Settings")]
     private Transform MinPos;
     private Transform MaxPos;
     private Rigidbody2D RB;
     private bool GlobalCooldown = false;
+    private int Direction = 0;
 
     private PlayerMovement PM;
     private HealthHeartBarV2 HHB;
@@ -45,6 +51,8 @@ public class JunkyardBossLogic : MonoBehaviour
         RB = transform.GetComponent<Rigidbody2D>();
         PM = Player.GetComponent<PlayerMovement>();
         HHB = Player.transform.Find("GUI").Find("HealthHeart").GetComponent<HealthHeartBarV2>();
+
+        StartCoroutine(WaitCooldown(5));
     }
     #endregion
 
@@ -97,29 +105,52 @@ public class JunkyardBossLogic : MonoBehaviour
         if (transform.position.x > Player.transform.position.x)
         {
             RushDir = -1;
+            Direction = 0;
         }
         else
         {
             RushDir = 1;
+            Direction = 1;
         }
 
         BDT.Active = false;
         BDB.Active = false;
         RushActive = true;
 
-        RushAction(BDT, BDB);
+        StartCoroutine(RushAction(BDT, BDB));
+        StartCoroutine(WaitCooldown(RushCooldown));
     }
 
     void Shockwave()
     {
+        foreach (int i in Enumerable.Range(1, BossPhase))
+        {
+            StartCoroutine(ShockwaveAction());
+        }
+    }
 
+    IEnumerator ShockwaveAction()
+    {
+        if (BossPhase == 1)
+        {
+
+        }
+        else if (BossPhase == 2)
+        {
+
+        }
+        else
+        {
+
+        }
+        yield return new WaitForSeconds(1f);
     }
 
     IEnumerator RushAction(BodyDmg BDT, BodyDmg BDB)
     {
-        while (transform.position.x > MinPos.position.x + 1.5 || transform.position.x < MaxPos.position.x - 1.5)
+        while (transform.position.x > MinPos.position.x + 3 && RushDir == - 1 || transform.position.x < MaxPos.position.x - 3 && RushDir == 1)
         {
-            RB.velocity = new Vector2(RushDir * RushSpeed * 10, RB.velocity.y);
+            RB.velocity = new Vector2(RushDir * RushSpeed * 4, RB.velocity.y);
             yield return new WaitForSeconds(1f);
         }
 
@@ -128,8 +159,6 @@ public class JunkyardBossLogic : MonoBehaviour
         RushActive = false;
         BDT.Active = true;
         BDB.Active = true;
-
-        WaitCooldown(RushCooldown);
     }
 
     IEnumerator WaitCooldown(float cooldown)
@@ -148,8 +177,8 @@ public class JunkyardBossLogic : MonoBehaviour
         {
             if (RushActive is true)
             {
+                PM.JunkyardBossRush(Direction);
                 HHB.Heal(-RushDmg);
-
             }
         }
     }
