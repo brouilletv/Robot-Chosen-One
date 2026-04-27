@@ -436438,11 +436438,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 819893196842347142, guid: d1e0fd57c0faa5f4fbbbef4c904cb296, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20
+      value: 19.75
       objectReference: {fileID: 0}
     - target: {fileID: 819893196842347142, guid: d1e0fd57c0faa5f4fbbbef4c904cb296, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3079870791256303544, guid: d1e0fd57c0faa5f4fbbbef4c904cb296, type: 3}
       propertyPath: m_Name
@@ -436450,11 +436450,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4336574984452857569, guid: d1e0fd57c0faa5f4fbbbef4c904cb296, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -20.5
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 4336574984452857569, guid: d1e0fd57c0faa5f4fbbbef4c904cb296, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6
+      value: -4.75
       objectReference: {fileID: 0}
     - target: {fileID: 4994632657674863557, guid: d1e0fd57c0faa5f4fbbbef4c904cb296, type: 3}
       propertyPath: EWave1.Array.size
