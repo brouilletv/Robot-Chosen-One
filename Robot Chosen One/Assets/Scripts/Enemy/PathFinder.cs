@@ -54,7 +54,7 @@ public class PathFinder : MonoBehaviour
         }
         else if (Roming is true)
         {
-            if (GoRight is false && BodyX >= MinPos.transform.position.x)
+            if (GoRight is false && BodyX >= (MinPos.transform.position.x + 0.5f))
             {
                 RB.velocity = new Vector2(-1f * Speed, RB.velocity.y);
                 flip = false;
@@ -63,7 +63,7 @@ public class PathFinder : MonoBehaviour
             {
                 GoRight = true;
             }
-            else if (GoRight is true && BodyX <= MaxPos.transform.position.x)
+            else if (GoRight is true && BodyX <= (MaxPos.transform.position.x - 0.5f))
             {
                 RB.velocity = new Vector2(1f * Speed, RB.velocity.y);
                 flip = true;

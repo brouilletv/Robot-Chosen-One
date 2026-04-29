@@ -25,7 +25,14 @@ public class projectileStraight : MonoBehaviour
 
     void Update()
     {
-        nextPos.x = (target.x - startPos.x)/Mathf.Abs(target.x - startPos.x);
+        if (playerDirection == "Right")
+        {
+            nextPos.x = 1;
+        }
+        else if (playerDirection == "Left")
+        {
+            nextPos.x = -1;
+        }
         transform.position += nextPos * speed * Time.deltaTime;
     }
 

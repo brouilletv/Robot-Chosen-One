@@ -402,6 +402,18 @@ public class PlayerMovement : MonoBehaviour
             knockback = new Vector2(50, 10);
         }
     }
+
+    public void JunkyardBossRush(int direction)
+    {
+        if (direction == 0 && transform.Find("GUI").Find("HealthHeart").GetComponent<HealthHeartBarV2>().imunity is false)
+        {
+            transform.position = new Vector3(transform.position.x + 4, transform.position.y + 1, 0);
+        }
+        else if (direction == 1 && transform.Find("GUI").Find("HealthHeart").GetComponent<HealthHeartBarV2>().imunity is false)
+        {
+            transform.position = new Vector3(transform.position.x - 4, transform.position.y + 1, 0);
+        }
+    }
     #endregion
 
 

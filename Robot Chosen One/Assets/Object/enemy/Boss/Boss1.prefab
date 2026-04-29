@@ -74,10 +74,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e275a0ea756b89f4cab314f911167e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BossMaxHealth: 50
+  BossMaxHealth: 25
   BossPhaseTrigger:
   - 25
   - 0
+  RushSpeed: 1
+  RushDmg: 2
+  RushCooldown: 10
+  ShockwaveSpeed: 1
+  ShockwaveDmg: 1
+  ShockwaveCooldown: 10
+  projectilePrefab: {fileID: 3543112442540492448, guid: ee580cfec20edb443a34225920a9b672, type: 3}
 --- !u!1 &4249313474850649573
 GameObject:
   m_ObjectHideFlags: 0
