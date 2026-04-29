@@ -40,6 +40,17 @@ public class BossSpawner : MonoBehaviour
                 StartCoroutine(Create(i));
             }
         }
+        else if (Player.transform.position.x < MinPos.position.x || Player.transform.position.x > MaxPos.position.x || Player.transform.position.y < MinPos.position.y || Player.transform.position.y > MaxPos.position.y)
+        {
+            if (state == "active")
+            {
+                state = "inactive";
+                foreach (int k in Enumerable.Range(0, transform.childCount - 2))
+                {
+                    Destroy(transform.GetChild(k + 2).gameObject);
+                }
+            }
+        }
     }
     void TagCheck()
     {
