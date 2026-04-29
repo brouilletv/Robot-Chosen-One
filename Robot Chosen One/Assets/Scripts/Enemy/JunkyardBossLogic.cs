@@ -12,7 +12,7 @@ public class JunkyardBossLogic : MonoBehaviour
     private bool BossHeathLossCooldown;
     private float BossHeathLossCooldownTime = 1f;
 
-    [SerializeField] float[] BossPhaseTrigger = {15f, 0f};
+    [SerializeField] float[] BossPhaseTrigger = {15f, 1f};
     private int BossPhase = 1;
 
     [Header("Player")]
@@ -30,6 +30,7 @@ public class JunkyardBossLogic : MonoBehaviour
     private bool ShockwaveActive = false;
     [SerializeField] int ShockwaveDmg = 1;
     [SerializeField] int ShockwaveCooldown = 10;
+    [SerializeField] GameObject projectilePrefab;
 
     [Header("General Settings")]
     private Transform MinPos;
@@ -61,7 +62,11 @@ public class JunkyardBossLogic : MonoBehaviour
     {
         if (GlobalCooldown is false)
         {
-            Rush();
+            int attackR = Random.Range(1, 3);
+            if (attackR == 1 || BossPhase == 3)
+                Shockwave();
+            else if (attackR == 2)
+                Rush();
         }
     }
     #endregion
@@ -72,17 +77,13 @@ public class JunkyardBossLogic : MonoBehaviour
         if (BossHeathLossCooldown == false)
         {
             BossHealth -= amount;
-            Debug.Log(BossHealth);
             if(BossHealth <= BossPhaseTrigger[1])
             {
                 BossPhase = 3;
-                Debug.Log(BossPhase);
-                Destroy(transform.parent.gameObject);
             }
             else if (BossHealth <= BossPhaseTrigger[0])
             {
                 BossPhase = 2;
-                Debug.Log(BossPhase);
             }
             StartCoroutine(Cooldown());
         }
@@ -123,37 +124,52 @@ public class JunkyardBossLogic : MonoBehaviour
 
     void Shockwave()
     {
-        foreach (int i in Enumerable.Range(1, BossPhase))
-        {
-            StartCoroutine(ShockwaveAction());
-        }
+        StartCoroutine(ShockwaveAction());
+        StartCoroutine(WaitCooldown(ShockwaveCooldown));
     }
 
     IEnumerator ShockwaveAction()
     {
-        if (BossPhase == 1)
+        foreach (int i in Enumerable.Range(1, BossPhase))
         {
+            projectileStraight projectile1 = Instantiate(projectilePrefab, transform.position, transform.rotation).GetComponent<projectileStraight>();
+            projectile1.Initializeprojectile(Player.transform.position, transform.position, 2, "Right", ShockwaveDmg);
 
+            projectileStraight projectile2 = Instantiate(projectilePrefab, transform.position, transform.rotation).GetComponent<projectileStraight>();
+            projectile2.Initializeprojectile(Player.transform.position, transform.position, 2, "Left", ShockwaveDmg);
+
+            yield return new WaitForSeconds(2f);
         }
-        else if (BossPhase == 2)
+        if (BossPhase == 3)
         {
-
+            Destroy(transform.parent.gameObject);
         }
-        else
-        {
-
-        }
-        yield return new WaitForSeconds(1f);
     }
 
     IEnumerator RushAction(BodyDmg BDT, BodyDmg BDB)
     {
-        while (transform.position.x > MinPos.position.x + 3 && RushDir == - 1 || transform.position.x < MaxPos.position.x - 3 && RushDir == 1)
+        if (BossPhase == 1)
         {
-            RB.velocity = new Vector2(RushDir * RushSpeed * 4, RB.velocity.y);
-            yield return new WaitForSeconds(1f);
+            while (transform.position.x > MinPos.position.x + 3 && RushDir == -1 || transform.position.x < MaxPos.position.x - 3 && RushDir == 1)
+            {
+                RB.velocity = new Vector2(RushDir * RushSpeed * 4, RB.velocity.y);
+                yield return new WaitForSeconds(1f);
+            }
         }
-
+        else
+        {
+            while (transform.position.x > MinPos.position.x + 3 && RushDir == -1 || transform.position.x < MaxPos.position.x - 3 && RushDir == 1)
+            {
+                RB.velocity = new Vector2(RushDir * RushSpeed * 4, RB.velocity.y);
+                yield return new WaitForSeconds(1f);
+            }
+            RushDir = -RushDir;
+            while (transform.position.x > MinPos.position.x + 3 && RushDir == -1 || transform.position.x < MaxPos.position.x - 3 && RushDir == 1)
+            {
+                RB.velocity = new Vector2(RushDir * RushSpeed * 4, RB.velocity.y);
+                yield return new WaitForSeconds(1f);
+            }
+        }
         RB.velocity = new Vector2(0, RB.velocity.y);
 
         RushActive = false;

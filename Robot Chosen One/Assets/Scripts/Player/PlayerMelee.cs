@@ -9,6 +9,8 @@ public class PlayerMelee : MonoBehaviour
     private PlayerMovement playerMovement;
     [SerializeField] Transform playerOrigin;
     [SerializeField] Transform attackZone;
+    [SerializeField] Animator animator;
+    [SerializeField] Transform weaponTransform;
     public LayerMask enemyLayer;
 
     private bool attackPressed;
@@ -21,12 +23,17 @@ public class PlayerMelee : MonoBehaviour
     [SerializeField] float cooldownTimer = 0f;
     public float attackCount = 0;
 
+    [SerializeField, Tooltip("0: up, 1: down, 2:left, 3: right")] List<string> commands;
+    [SerializeField] string currentCommand;
+
     private AttackDirection currentAttackDirection;
     private AttackDirection previousAttackDirection;
 
     private void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
+        weaponTransform = GameObject.FindGameObjectWithTag("weapon").transform;
+        animator = GameObject.FindGameObjectWithTag("weapon").GetComponent<Animator>();
     }
 
 
@@ -72,20 +79,24 @@ public class PlayerMelee : MonoBehaviour
         if (playerMovement.moveDirectionY > 0)
         {
             currentAttackDirection = AttackDirection.attackUp;
+            currentCommand = commands[0];
         }
         else if (playerMovement.moveDirectionY < 0)
         {
             currentAttackDirection = AttackDirection.attackDown;
+            currentCommand = commands[1];
         }
         else
         {
             if (playerMovement.moveDirectionX < 0)
             {
                 currentAttackDirection = AttackDirection.attackLeft;
+                currentCommand = commands[2];
             }
             else if (playerMovement.moveDirectionX > 0)
             {
                 currentAttackDirection = AttackDirection.attackRight;
+                currentCommand = commands[3];   
             }
         }
 
@@ -117,6 +128,7 @@ public class PlayerMelee : MonoBehaviour
             Vector3 modifier = new Vector3(attackZoneOrigin, 0f, playerOrigin.position.z);
             attackZone.position = playerOrigin.position + modifier;
         }
+        weaponTransform.position = attackZone.position;
     }
 
     public void HandleAttack()
@@ -126,6 +138,7 @@ public class PlayerMelee : MonoBehaviour
             attackZone.position = playerOrigin.position;
             if (attackPressed)
             {
+                animator.SetTrigger(currentCommand);
                 SetAttackZone();
                 Collider2D[] enemiesinRange = Physics2D.OverlapCircleAll(attackZone.position, attackRadius, enemyLayer);
                 foreach (var enemy in enemiesinRange)

@@ -10,6 +10,7 @@ TagManager:
   - Boss1
   - Boss2
   - Boss3
+  - weapon
   layers:
   - Default
   - TransparentFX
