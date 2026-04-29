@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PathFinder : MonoBehaviour
@@ -17,6 +18,7 @@ public class PathFinder : MonoBehaviour
     private bool Fallow = false;
     private bool GoRight = false;
     private bool flip = false;
+    private bool stop = false;
 
 
     public void InitializePathFinder(Transform Player, Transform MaxPos, Transform MinPos)
@@ -33,7 +35,7 @@ public class PathFinder : MonoBehaviour
         float BodyX = Body.position.x;
         float BodyY = Body.position.y;
 
-        if (PlayerX >= MinPos.position.x && PlayerX <= MaxPos.position.x && PlayerY >= MinPos.position.y && PlayerY <= MaxPos.position.y && Vector2.Distance(transform.position, Player.position) > distance && FullRoming is false)
+        if (PlayerX >= MinPos.position.x && PlayerX <= MaxPos.position.x && PlayerY >= MinPos.position.y && PlayerY <= MaxPos.position.y && Vector2.Distance(transform.position, Player.position) > distance && FullRoming is false && stop is false)
         {
             Fallow = true;  
         }
@@ -52,7 +54,7 @@ public class PathFinder : MonoBehaviour
             RB.velocity = new Vector2(1f * Speed, RB.velocity.y);
             flip = true;
         }
-        else if (Roming is true)
+        else if (Roming is true && stop is false)
         {
             if (GoRight is false && BodyX >= (MinPos.transform.position.x + 0.5f))
             {
@@ -73,7 +75,7 @@ public class PathFinder : MonoBehaviour
                 GoRight = false;
             }
         }
-        else
+        else if (stop == false)
         {
             RB.velocity = new Vector2(0f, RB.velocity.y);
         }
@@ -86,7 +88,7 @@ public class PathFinder : MonoBehaviour
         {
             RB.velocity = new Vector2(RB.velocity.x, 0.5f * Speed);
         }
-        else if (Flying is true)
+        else if (Flying is true && stop == false)
         {
             RB.velocity = new Vector2(RB.velocity.x, 0f);
         }
@@ -99,5 +101,21 @@ public class PathFinder : MonoBehaviour
         {
             transform.GetComponent<SpriteRenderer>().flipX = false;
         }
+    }
+
+    public IEnumerator Knockback()
+    {
+        stop = true;
+        if (transform.position.x >= Player.position.x)
+        {
+            RB.velocity = new Vector2(2, 3);
+        }
+        else if (transform.position.x <= Player.position.x)
+        {
+            RB.velocity = new Vector2(-2, 3);
+        }
+        yield return new WaitForSeconds(0.5f);
+        RB.velocity = new Vector2(0, 0);
+        stop = false;
     }
 }

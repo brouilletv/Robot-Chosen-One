@@ -76,27 +76,27 @@ public class PlayerMelee : MonoBehaviour
 
     private void setAttackDirection()
     {
-        if (playerMovement.moveDirectionY > 0)
+        if (playerMovement.moveDirectionX < 0)
         {
-            currentAttackDirection = AttackDirection.attackUp;
-            currentCommand = commands[0];
+            currentAttackDirection = AttackDirection.attackLeft;
+            currentCommand = commands[2];
         }
-        else if (playerMovement.moveDirectionY < 0)
+        else if (playerMovement.moveDirectionX > 0)
         {
-            currentAttackDirection = AttackDirection.attackDown;
-            currentCommand = commands[1];
+            currentAttackDirection = AttackDirection.attackRight;
+            currentCommand = commands[3];
         }
         else
         {
-            if (playerMovement.moveDirectionX < 0)
+            if (playerMovement.moveDirectionY > 0)
             {
-                currentAttackDirection = AttackDirection.attackLeft;
-                currentCommand = commands[2];
+                currentAttackDirection = AttackDirection.attackUp;
+                currentCommand = commands[0];
             }
-            else if (playerMovement.moveDirectionX > 0)
+            else if (playerMovement.moveDirectionY < 0)
             {
-                currentAttackDirection = AttackDirection.attackRight;
-                currentCommand = commands[3];   
+                currentAttackDirection = AttackDirection.attackDown;
+                currentCommand = commands[1];
             }
         }
 
@@ -149,12 +149,6 @@ public class PlayerMelee : MonoBehaviour
                         if (attackCount < 10)
                         {
                             attackCount = attackCount + 1;
-                            Debug.Log("Total attacks: " + attackCount);
-                        }
-
-                        else
-                        {
-                            Debug.Log("Total attacks: " + attackCount);
                         }
 
 
@@ -165,12 +159,6 @@ public class PlayerMelee : MonoBehaviour
                         if (attackCount < 10)
                         {
                             attackCount = attackCount + 1;
-                            Debug.Log("Total attacks: " + attackCount);
-                        }
-
-                        else
-                        {
-                            Debug.Log("Total attacks: " + attackCount);
                         }
                     }
                 }
