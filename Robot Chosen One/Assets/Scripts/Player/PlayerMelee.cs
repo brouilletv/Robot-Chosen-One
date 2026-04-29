@@ -149,12 +149,6 @@ public class PlayerMelee : MonoBehaviour
                         if (attackCount < 10)
                         {
                             attackCount = attackCount + 1;
-                            Debug.Log("Total attacks: " + attackCount);
-                        }
-
-                        else
-                        {
-                            Debug.Log("Total attacks: " + attackCount);
                         }
 
 
@@ -165,12 +159,6 @@ public class PlayerMelee : MonoBehaviour
                         if (attackCount < 10)
                         {
                             attackCount = attackCount + 1;
-                            Debug.Log("Total attacks: " + attackCount);
-                        }
-
-                        else
-                        {
-                            Debug.Log("Total attacks: " + attackCount);
                         }
                     }
                 }

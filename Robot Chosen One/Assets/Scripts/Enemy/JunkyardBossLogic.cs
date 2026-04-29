@@ -153,7 +153,6 @@ public class JunkyardBossLogic : MonoBehaviour
             while (transform.position.x > MinPos.position.x + 3 && RushDir == -1 || transform.position.x < MaxPos.position.x - 3 && RushDir == 1)
             {
                 RB.velocity = new Vector2(RushDir * RushSpeed * 6, RB.velocity.y);
-                yield return new WaitForSeconds(1f);
             }
         }
         else
@@ -161,13 +160,12 @@ public class JunkyardBossLogic : MonoBehaviour
             while (transform.position.x > MinPos.position.x + 3 && RushDir == -1 || transform.position.x < MaxPos.position.x - 3 && RushDir == 1)
             {
                 RB.velocity = new Vector2(RushDir * RushSpeed * 6, RB.velocity.y);
-                yield return new WaitForSeconds(1f);
             }
             RushDir = -RushDir;
+            yield return new WaitForSeconds(1f);
             while (transform.position.x > MinPos.position.x + 3 && RushDir == -1 || transform.position.x < MaxPos.position.x - 3 && RushDir == 1)
             {
                 RB.velocity = new Vector2(RushDir * RushSpeed * 6, RB.velocity.y);
-                yield return new WaitForSeconds(1f);
             }
         }
         RB.velocity = new Vector2(0, RB.velocity.y);
