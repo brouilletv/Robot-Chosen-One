@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class EHealth : MonoBehaviour
 {
-    [SerializeField] float maxHealth;
+    public float maxHealth;
     private float currentHealth;
     private bool cooldown = false;
     private PathFinder PF;

@@ -339,7 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fba57c65a083e246aae213a2b3c89e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Roming: 0
+  Roming: 1
   FullRoming: 0
   Flying: 1
   Speed: 1
