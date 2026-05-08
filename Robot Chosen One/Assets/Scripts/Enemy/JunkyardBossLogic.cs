@@ -27,7 +27,6 @@ public class JunkyardBossLogic : MonoBehaviour
 
     [Header("Shockwave")]
     [SerializeField] float ShockwaveSpeed = 1;
-    private bool ShockwaveActive = false;
     [SerializeField] int ShockwaveDmg = 1;
     [SerializeField] int ShockwaveCooldown = 10;
     [SerializeField] GameObject projectilePrefab;
@@ -133,7 +132,7 @@ public class JunkyardBossLogic : MonoBehaviour
         foreach (int i in Enumerable.Range(1, BossPhase))
         {
             projectileStraight projectile1 = Instantiate(projectilePrefab, transform.position, transform.rotation).GetComponent<projectileStraight>();
-            projectile1.Initializeprojectile(Player.transform.position, transform.position, 2, "Right", ShockwaveDmg);
+            projectile1.Initializeprojectile(Player.transform.position, transform.position, 2 * ShockwaveSpeed, "Right", ShockwaveDmg);
 
             projectileStraight projectile2 = Instantiate(projectilePrefab, transform.position, transform.rotation).GetComponent<projectileStraight>();
             projectile2.Initializeprojectile(Player.transform.position, transform.position, 2, "Left", ShockwaveDmg);

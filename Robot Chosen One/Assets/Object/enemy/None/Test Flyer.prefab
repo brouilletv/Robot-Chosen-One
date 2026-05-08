@@ -308,14 +308,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8242171102065679928}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 100
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -358,10 +358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8bf60bb0df01af4e8aaecf903c5035f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 3104547831339970628, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
   touchDmg: 1
   Body: {fileID: 5681004471667428649}
-  PlayerT: {fileID: 542451865603372785, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
 --- !u!114 &578004560076612850
 MonoBehaviour:
   m_ObjectHideFlags: 0
