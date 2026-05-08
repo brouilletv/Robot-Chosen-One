@@ -7,7 +7,6 @@ public class EHealth : MonoBehaviour
 {
     public float maxHealth;
     private float currentHealth;
-    private float cooldownTime = 1f;
     private bool cooldown = false;
     private PathFinder PF;
 
@@ -32,17 +31,8 @@ public class EHealth : MonoBehaviour
             {
                 Destroy(gameObject);
             }
-            StartCoroutine(Cooldown());
         }
     }
-
-    IEnumerator Cooldown()
-    {
-        cooldown = true;
-        yield return new WaitForSeconds(cooldownTime);
-        cooldown = false;
-    }
-
 
     void OnEnable()
     {

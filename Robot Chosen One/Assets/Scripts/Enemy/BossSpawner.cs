@@ -91,5 +91,13 @@ public class BossSpawner : MonoBehaviour
             BDT.InitializeBodyDmg(Player);
             BDB.InitializeBodyDmg(Player);
         }
+        else if (bossNum == 2)
+        {
+            MineBossLogic MBL = Clone.GetComponent<MineBossLogic>();
+
+            PowerBoxLogic PBL1 = Clone.transform.Find("Power Box 1").GetComponent<PowerBoxLogic>();
+            PBL1.InitializePowerBox(Player);
+            
+        }
     }
 }

@@ -11,6 +11,7 @@ TagManager:
   - Boss2
   - Boss3
   - weapon
+  - OneWayPlatform
   layers:
   - Default
   - TransparentFX
