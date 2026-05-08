@@ -19,9 +19,16 @@ public class SpikeLogic : MonoBehaviour
             {
                 healthScript = collision.transform.GetChild(1).GetChild(0).GetComponent<HealthHeartBarV2>();
             }
-
             healthScript.TakeDamage(spikeDamage);
             Respawn?.Invoke(0);
+        }
+        if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyMask"))
+        {
+            EHealth enemyHealth = collision.GetComponent<EHealth>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(enemyHealth.maxHealth);
+            }
         }
     }
 }
