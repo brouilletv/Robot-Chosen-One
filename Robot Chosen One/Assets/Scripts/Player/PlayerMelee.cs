@@ -19,7 +19,7 @@ public class PlayerMelee : MonoBehaviour
     [SerializeField] float attackRadius = 1f;
     [SerializeField] int attackDamage = 1;
     [SerializeField] float attackZoneOrigin = 0.4f;
-    [SerializeField] float cooldownTime = 0.5f;
+    [SerializeField] float cooldownTime = 1.5f;
     [SerializeField] float cooldownTimer = 0f;
     public float attackCount = 0;
 
@@ -34,6 +34,7 @@ public class PlayerMelee : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         weaponTransform = GameObject.FindGameObjectWithTag("weapon").transform;
         animator = GameObject.FindGameObjectWithTag("weapon").GetComponent<Animator>();
+        currentCommand = commands[0];
     }
 
 
