@@ -151,8 +151,6 @@ public class PlayerMelee : MonoBehaviour
                         {
                             attackCount = attackCount + 1;
                         }
-
-
                     }
                     else if(enemy.GetComponentInParent<JunkyardBossLogic>() != null)
                     {
