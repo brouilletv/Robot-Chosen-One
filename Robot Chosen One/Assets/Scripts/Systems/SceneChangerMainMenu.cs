@@ -34,6 +34,13 @@ public class SceneChangerMainMenu : MonoBehaviour
     }
 
 
+    public void NewGame()
+    {
+        GameManager.NewGame();
+        PlayGame();
+    }
+
+
     IEnumerator DelayFade(Transform player, PlayerMovement playerMovement, Respawn respawn)
     {
         yield return new WaitForSeconds(fadeTime);

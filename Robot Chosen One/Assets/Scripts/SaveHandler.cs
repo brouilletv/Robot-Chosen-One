@@ -20,6 +20,7 @@ public static class SaveSystem
         DataContainer dataContainer = new DataContainer(playerMovementData, respawnData, healthHeartBarV2Data);
 
         string dataText = JsonUtility.ToJson(dataContainer, true);
+        Debug.Log("SavedGame with the following values:\n" + dataText);
         File.WriteAllText(filePath, dataText);
     }
 }

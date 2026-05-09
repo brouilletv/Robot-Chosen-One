@@ -77,6 +77,46 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void NewGame()
+    {
+        PlayerMovement playerMovementInstance = Player.GetComponent<PlayerMovement>().instance;
+        Respawn respawnInstance = Player.GetComponent<Respawn>().instance;
+        HealthHeartBarV2 healthHeartBarV2Instance = Player.GetComponentInChildren<HealthHeartBarV2>().instance;
+
+        ResetSave(ref playerMovementInstance, ref respawnInstance, ref healthHeartBarV2Instance);
+
+        SaveSystem.SaveGame(playerMovementInstance, respawnInstance, healthHeartBarV2Instance);
+    }
+
+
+    private void ResetSave(ref PlayerMovement playerMovementInstance, ref Respawn respawnInstance, ref HealthHeartBarV2 healthHeartBarV2Instance)
+    {
+        // PlayerMovement Reset
+        playerMovementInstance.lastScene = "Junkyard Map";
+
+        playerMovementInstance.unlockedDoubleJump = false;
+        playerMovementInstance.unlockedDash = false;
+        playerMovementInstance.unlockedWallJump = false;
+
+        playerMovementInstance.maxHealthIncreaseJunkyard = false;
+        playerMovementInstance.maxHealthIncreaseMines = false;
+        playerMovementInstance.maxHealthIncreaseTower = false;
+
+        playerMovementInstance.defeatedJunkyardBoss = false;
+        playerMovementInstance.defeatedMinesBoss = false;
+        playerMovementInstance.defeatedTowerBoss = false;
+
+
+        // Respawn Reset
+        respawnInstance.currentSpawnpoint = Vector2.zero;
+        respawnInstance.platformingSpawnpoint = Vector2.zero;
+
+
+        // HealthHeartBarV2 Reset
+        healthHeartBarV2Instance.maxHealth = 12f;
+    }
+
+
     private void OnApplicationPause(bool pause)
     {
         if (pause)
