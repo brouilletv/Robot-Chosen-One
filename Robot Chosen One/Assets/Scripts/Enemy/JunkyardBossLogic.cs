@@ -8,7 +8,7 @@ public class JunkyardBossLogic : MonoBehaviour
     #region Variables & Initialize
     [Header("Boss Heath & Phases")]
     [SerializeField] float BossMaxHealth = 25f;
-    private float BossHealth;
+    [SerializeField] float BossHealth;
 
     [SerializeField] float[] BossPhaseTrigger = {15f, 1f};
     private int BossPhase = 1;
