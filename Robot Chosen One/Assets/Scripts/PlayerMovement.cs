@@ -110,7 +110,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-
         instance = this;
         playerStop = false;
         rb.gravityScale = normalGravity;

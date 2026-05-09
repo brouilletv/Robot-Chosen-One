@@ -37,6 +37,7 @@ public class SceneChangerMainMenu : MonoBehaviour
     public void NewGame()
     {
         GameManager.NewGame();
+        
         PlayGame();
     }
 
