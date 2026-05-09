@@ -114,6 +114,7 @@ public class GameManager : MonoBehaviour
 
         // HealthHeartBarV2 Reset
         healthHeartBarV2Instance.maxHealth = 12f;
+        healthHeartBarV2Instance.health = 12f;
     }
 
 
