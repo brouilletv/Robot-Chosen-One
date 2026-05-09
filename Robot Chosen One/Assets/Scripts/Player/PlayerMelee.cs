@@ -160,6 +160,14 @@ public class PlayerMelee : MonoBehaviour
                             attackCount = attackCount + 1;
                         }
                     }
+                    else if(enemy.GetComponentInParent<PowerBoxLogic>() != null && enemy.GetComponentInParent<PowerBoxLogic>().Active is true)
+                    {
+                        enemy.GetComponentInParent<PowerBoxLogic>().TakeDamage(attackDamage);
+                        if (attackCount < 10)
+                        {
+                            attackCount = attackCount + 1;
+                        }
+                    }
                 }
                 cooldownTimer = cooldownTime;
                 attackPressed = false;

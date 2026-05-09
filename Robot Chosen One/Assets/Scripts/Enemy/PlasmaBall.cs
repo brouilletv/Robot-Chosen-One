@@ -6,21 +6,26 @@ using UnityEngine;
 public class PlasmaBall : MonoBehaviour
 {
     private GameObject Player;
-    private List<Vector2> PointList;
+    private List<Vector3> PointList;
     private PlayerMovement PM;
     private HealthHeartBarV2 HHB;
     private float ProjectileSpeed;
+    private int ProjectileDmg;
 
     private int CurrentPoint = 1;
+    private bool OnCooldown = false;
+    private float CooldownTime = 1f;
+    private int TouchedOnRight = 2;
    
 
-    public void InitializePlasmaBall(GameObject Player, List<Vector2> PointList, PlayerMovement PM, HealthHeartBarV2 HHB, float ProjectileSpeed)
+    public void InitializePlasmaBall(GameObject Player, List<Vector3> PointList, PlayerMovement PM, HealthHeartBarV2 HHB, float ProjectileSpeed, int ProjectileDmg)
     {
         this.Player = Player;
         this.PointList = PointList;
         this.PM = PM;
         this.HHB = HHB;
         this.ProjectileSpeed = ProjectileSpeed;
+        this.ProjectileDmg = ProjectileDmg;
     }
 
     void Update()
@@ -44,13 +49,46 @@ public class PlasmaBall : MonoBehaviour
         }
     }
 
-    void Damaging()
+    void OnTriggerStay2D(Collider2D col)
     {
+        if (col.gameObject.CompareTag("Player") && OnCooldown is false)
+        {
+            StartCoroutine(Cooldown());
+            SideTouched();
+            TakeDmg(ProjectileDmg);
+        }
 
+        IEnumerator Cooldown()
+        {
+            OnCooldown = true;
+            yield return new WaitForSeconds(CooldownTime);
+            OnCooldown = false;
+        }
     }
 
-    IEnumerable Cooldown()
+    public void TakeDmg(int dmg)
     {
-        yield return new WaitForSeconds(1);
+        Player.transform.Find("GUI").Find("HealthHeart").GetComponent<HealthHeartBarV2>().Heal(-dmg);
+    }
+
+    void SideTouched()
+    {
+        float PlayerX = Player.transform.position.x;
+        float BodyX = transform.position.x;
+
+        if (BodyX > PlayerX)
+        {
+            TouchedOnRight = 0;
+        }
+        else if (BodyX < PlayerX)
+        {
+            TouchedOnRight = 1;
+        }
+
+        Bounce(TouchedOnRight);
+    }
+    public void Bounce(int side)
+    {
+        Player.GetComponent<PlayerMovement>().HandleBouceDirection(side);
     }
 }

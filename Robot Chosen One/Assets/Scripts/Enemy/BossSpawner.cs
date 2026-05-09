@@ -97,7 +97,13 @@ public class BossSpawner : MonoBehaviour
 
             PowerBoxLogic PBL1 = Clone.transform.Find("Power Box 1").GetComponent<PowerBoxLogic>();
             PBL1.InitializePowerBox(Player);
-            
+            PowerBoxLogic PBL2 = Clone.transform.Find("Power Box 2").GetComponent<PowerBoxLogic>();
+            PBL2.InitializePowerBox(Player);
+            PowerBoxLogic PBL3 = Clone.transform.Find("Power Box 3").GetComponent<PowerBoxLogic>();
+            PBL3.InitializePowerBox(Player);
+            PowerBoxLogic PBL4 = Clone.transform.Find("Power Box 4").GetComponent<PowerBoxLogic>();
+            PBL4.InitializePowerBox(Player);
+
         }
     }
 }
