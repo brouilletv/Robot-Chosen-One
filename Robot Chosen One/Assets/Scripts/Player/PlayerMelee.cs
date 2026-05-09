@@ -168,6 +168,14 @@ public class PlayerMelee : MonoBehaviour
                             attackCount = attackCount + 1;
                         }
                     }
+                    else if (enemy.GetComponentInParent<MineBossLogic>() != null && enemy.GetComponentInParent<MineBossLogic>().CanDmg is true)
+                    {
+                        enemy.GetComponentInParent<MineBossLogic>().TakeDamage(attackDamage);
+                        if (attackCount < 10)
+                        {
+                            attackCount = attackCount + 1;
+                        }
+                    }
                 }
                 cooldownTimer = cooldownTime;
                 attackPressed = false;

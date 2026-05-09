@@ -24,7 +24,7 @@ public class PowerBoxLogic : MonoBehaviour
     private List<Vector3> PointList;
     public bool Active = true;
 
-    public void InitializePowerBox(GameObject Player)
+    public void InitializePowerBox(GameObject Player, bool Active)
     {
         this.Player = Player;
 
@@ -39,6 +39,11 @@ public class PowerBoxLogic : MonoBehaviour
         new Vector3(transform.Find("Point 4").position.x, transform.Find("Point 4").position.y, 0),
         new Vector3(transform.Find("Point 5").position.x, transform.Find("Point 5").position.y, 0)
         };
+
+        if (Active is false)
+        {
+            TakeDamage(MaxHealth);
+        }
     }
 
     #endregion
@@ -65,13 +70,11 @@ public class PowerBoxLogic : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        if (cooldown == false)
+        Health -= amount;
+        if (Health <= 0)
         {
-            Health -= amount;
-            if (Health <= 0)
-            {
-                Active = false;
-            }
+            Active = false;
+            transform.GetComponent<SpriteRenderer>().color = Color.red;
         }
     }
 }

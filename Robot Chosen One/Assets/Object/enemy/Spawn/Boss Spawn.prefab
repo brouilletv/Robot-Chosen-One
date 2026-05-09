@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1616302836846652044}
   m_Layer: 0
-  m_Name: Max
+  m_Name: Min
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4370071892041561897}
   m_Layer: 0
-  m_Name: Min
+  m_Name: Max
   m_TagString: Untagged
   m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
