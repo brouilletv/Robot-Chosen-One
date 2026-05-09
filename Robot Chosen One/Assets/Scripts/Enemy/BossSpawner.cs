@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class BossSpawner : MonoBehaviour
 {
@@ -12,28 +13,39 @@ public class BossSpawner : MonoBehaviour
     private LayerMask playerMask;
     private PlayerMovement PM;
 
-    public string state = "none";
+    public string state = "inactive";
     private int bossNum = 0;
 
     [SerializeField] int Ecount;
     [SerializeField] float Ecooldown;
     [SerializeField] GameObject boss;
 
-    void Start()
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        MaxPos = transform.Find("MaxPos");
-        MinPos = transform.Find("MinPos");
+        MaxPos = transform.Find("Max");
+        MinPos = transform.Find("Min");
 
         playerMask = LayerMask.GetMask("PlayerMask");
-        Player = System.Array.Find(FindObjectsOfType<GameObject>(), o => ((1 << o.layer) & playerMask) != 0);
+        Player = GameObject.FindWithTag("Player");
         PM = Player.GetComponent<PlayerMovement>();
         TagCheck();
+    }
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     void Update()
     {
         if (Player.transform.position.x >= MinPos.position.x && Player.transform.position.x <= MaxPos.position.x && Player.transform.position.y >= MinPos.position.y && Player.transform.position.y <= MaxPos.position.y && state == "inactive")
-        {
+        { 
             state = "active";
             foreach (int i in Enumerable.Range(0, Ecount - (transform.childCount - 2)))
             {
@@ -54,12 +66,13 @@ public class BossSpawner : MonoBehaviour
     }
     void TagCheck()
     {
+        Debug.Log(PM.defeatedJunkyardBoss);
         if (boss.CompareTag("Boss1") && PM.defeatedJunkyardBoss is false)
         {
             state = "inactive";
             bossNum = 1;
         }
-        else if (boss.CompareTag("Boss2") && PM.defeatedMinesBoss is false)
+        else if (boss.CompareTag("Boss2"))
         {
             state = "inactive";
             bossNum = 2;
@@ -93,17 +106,30 @@ public class BossSpawner : MonoBehaviour
         }
         else if (bossNum == 2)
         {
-            MineBossLogic MBL = Clone.GetComponent<MineBossLogic>();
-
             PowerBoxLogic PBL1 = Clone.transform.Find("Power Box 1").GetComponent<PowerBoxLogic>();
-            PBL1.InitializePowerBox(Player);
             PowerBoxLogic PBL2 = Clone.transform.Find("Power Box 2").GetComponent<PowerBoxLogic>();
-            PBL2.InitializePowerBox(Player);
             PowerBoxLogic PBL3 = Clone.transform.Find("Power Box 3").GetComponent<PowerBoxLogic>();
-            PBL3.InitializePowerBox(Player);
             PowerBoxLogic PBL4 = Clone.transform.Find("Power Box 4").GetComponent<PowerBoxLogic>();
-            PBL4.InitializePowerBox(Player);
+            MineBossLogic MBL = Clone.transform.Find("Main Boss").GetComponent<MineBossLogic>();
 
+            if (PM.defeatedMinesBoss is false)
+            {
+                PBL1.InitializePowerBox(Player, true);
+                PBL2.InitializePowerBox(Player, true);
+                PBL3.InitializePowerBox(Player, true);
+                PBL4.InitializePowerBox(Player, true);
+
+                MBL.InitializeMineBoss(Player, PBL1, PBL2, PBL3, PBL4, true);
+            }
+            else
+            {
+                PBL1.InitializePowerBox(Player, false);
+                PBL2.InitializePowerBox(Player, false);
+                PBL3.InitializePowerBox(Player, false);
+                PBL4.InitializePowerBox(Player, false);
+
+                MBL.InitializeMineBoss(Player, PBL1, PBL2, PBL3, PBL4, false);
+            }
         }
     }
 }

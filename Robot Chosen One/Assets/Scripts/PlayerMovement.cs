@@ -114,11 +114,7 @@ public class PlayerMovement : MonoBehaviour
         playerStop = false;
         rb.gravityScale = normalGravity;
         playerInput = GetComponent<PlayerInput>();
-    }
 
-
-    private void Start()
-    {
         DataContainer dataContainer = LoadSystem.LoadGame();
         if (dataContainer != null)
         {

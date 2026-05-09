@@ -7,7 +7,6 @@ public class EHealth : MonoBehaviour
 {
     public float maxHealth;
     private float currentHealth;
-    private bool cooldown = false;
     private PathFinder PF;
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -23,14 +22,11 @@ public class EHealth : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        if (cooldown == false)
+        currentHealth -= amount;
+        StartCoroutine(PF.Knockback());
+        if (currentHealth <= 0)
         {
-            currentHealth -= amount;
-            StartCoroutine(PF.Knockback());
-            if (currentHealth <= 0)
-            {
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
     }
 

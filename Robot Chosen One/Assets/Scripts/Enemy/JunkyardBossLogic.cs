@@ -9,8 +9,6 @@ public class JunkyardBossLogic : MonoBehaviour
     [Header("Boss Heath & Phases")]
     [SerializeField] float BossMaxHealth = 25f;
     private float BossHealth;
-    private bool BossHeathLossCooldown;
-    private float BossHeathLossCooldownTime = 1f;
 
     [SerializeField] float[] BossPhaseTrigger = {15f, 1f};
     private int BossPhase = 1;
@@ -73,27 +71,17 @@ public class JunkyardBossLogic : MonoBehaviour
     #region Health & Phases
     public void TakeDamage(float amount)
     {
-        if (BossHeathLossCooldown == false)
+        BossHealth -= amount;
+        if(BossHealth <= BossPhaseTrigger[1])
         {
-            BossHealth -= amount;
-            if(BossHealth <= BossPhaseTrigger[1])
-            {
-                BossPhase = 3;
-            }
-            else if (BossHealth <= BossPhaseTrigger[0])
-            {
-                BossPhase = 2;
-            }
-            StartCoroutine(Cooldown());
+            BossPhase = 3;
+        }
+        else if (BossHealth <= BossPhaseTrigger[0])
+        {
+            BossPhase = 2;
         }
     }
 
-    IEnumerator Cooldown()
-    {
-        BossHeathLossCooldown = true;
-        yield return new WaitForSeconds(BossHeathLossCooldownTime);
-        BossHeathLossCooldown = false;
-    }
     #endregion
 
     #region Attacks
@@ -142,6 +130,7 @@ public class JunkyardBossLogic : MonoBehaviour
         if (BossPhase == 3)
         {
             Destroy(transform.parent.gameObject);
+            PM.defeatedJunkyardBoss = true;
         }
     }
 
