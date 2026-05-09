@@ -1049,7 +1049,7 @@ PrefabInstance:
     - target: {fileID: 2015685400339510842, guid: 89b525fb3bf44964a90decb2f155ca0c, type: 3}
       propertyPath: boss
       value: 
-      objectReference: {fileID: 4189328811041148429, guid: b79c0ea4e5cc6954f849b822fd1e13c4, type: 3}
+      objectReference: {fileID: 4847957057794395022, guid: 3181ae928a0972c4895c626837aacd2d, type: 3}
     - target: {fileID: 2015685400339510842, guid: 89b525fb3bf44964a90decb2f155ca0c, type: 3}
       propertyPath: Ecount
       value: 1
