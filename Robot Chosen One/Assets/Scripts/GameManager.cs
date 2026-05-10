@@ -57,14 +57,14 @@ public class GameManager : MonoBehaviour
     {
         Save();
 
-        if (Application.isEditor)
-        {
-            UnityEditor.EditorApplication.ExitPlaymode();
-        }
-        else
-        {
+        //if (Application.isEditor)
+        //{
+        //    UnityEditor.EditorApplication.ExitPlaymode();
+        //}
+        //else
+        //{
             Application.Quit();
-        }
+        //}
     }
 
 
