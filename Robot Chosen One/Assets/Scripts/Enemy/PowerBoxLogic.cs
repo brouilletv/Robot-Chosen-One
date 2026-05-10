@@ -23,6 +23,7 @@ public class PowerBoxLogic : MonoBehaviour
     [SerializeField] int ProjectileDmg = 1;
     private List<Vector3> PointList;
     public bool Active = true;
+    private LineRenderer lineRenderer;
 
     public void InitializePowerBox(GameObject Player, bool Active)
     {
@@ -39,6 +40,27 @@ public class PowerBoxLogic : MonoBehaviour
         new Vector3(transform.Find("Point 4").position.x, transform.Find("Point 4").position.y, 0),
         new Vector3(transform.Find("Point 5").position.x, transform.Find("Point 5").position.y, 0)
         };
+
+        lineRenderer = GetComponent<LineRenderer>();
+
+        lineRenderer.positionCount = 6;
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
+
+        if (lineRenderer.material == null)
+        {
+            lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        }
+
+        lineRenderer.startColor = Color.black;
+        lineRenderer.endColor = Color.black;
+
+        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.SetPosition(1, PointList[0]);
+        lineRenderer.SetPosition(2, PointList[1]);
+        lineRenderer.SetPosition(3, PointList[2]);
+        lineRenderer.SetPosition(4, PointList[3]);
+        lineRenderer.SetPosition(5, PointList[4]);
 
         if (Active is false)
         {
