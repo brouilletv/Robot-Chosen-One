@@ -68,6 +68,7 @@ public class HealthHeartBarV2 : MonoBehaviour
         DrawHearts();
     }
 
+
     public void TakeDamage(float amount)
     {
         SetHealth(health - amount);
@@ -100,11 +101,13 @@ public class HealthHeartBarV2 : MonoBehaviour
         }
     }
 
-        IEnumerator DeathHealCooldown()
+
+    IEnumerator DeathHealCooldown()
     {
         yield return new WaitForSeconds(respawnTime);
         Heal(maxHealth);
     }
+
 
     public void Heal(float amount)
     {
@@ -146,6 +149,7 @@ public class HealthHeartBarV2 : MonoBehaviour
         }
     }
 
+
     private void CreateEmptyHeart()
     {
         GameObject newHeart = Instantiate(heartPrefab, transform, false);
@@ -153,6 +157,7 @@ public class HealthHeartBarV2 : MonoBehaviour
         heart.SetHeartImage(HeartStatus.Empty);
         hearts.Add(heart);
     }
+
 
     private void ClearHearts()
     {
@@ -163,6 +168,7 @@ public class HealthHeartBarV2 : MonoBehaviour
         hearts.Clear();
     }
 
+
     void OnEnable()
     {
         TouchDmg.Hit += HandleHealthChanged;
@@ -170,6 +176,7 @@ public class HealthHeartBarV2 : MonoBehaviour
         projectileStraight.Hit += HandleHealthChanged;
         projectileArch.Hit += HandleHealthChanged;
     }
+
 
     void OnDisable()
     {
@@ -179,16 +186,17 @@ public class HealthHeartBarV2 : MonoBehaviour
         projectileArch.Hit -= HandleHealthChanged;
     }
 
+
     void HandleHealthChanged(float newHealth)
     {
         TakeDamage(newHealth);
     }
 
+
     public void Dead(float respawnTime)
     {
         Respawn?.Invoke(respawnTime);
     }
-
 }
 
 

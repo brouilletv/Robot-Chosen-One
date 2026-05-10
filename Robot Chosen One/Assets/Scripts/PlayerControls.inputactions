@@ -224,6 +224,17 @@
                 },
                 {
                     "name": "",
+                    "id": "e06c425d-07c9-4c56-9e93-108892e99312",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "3a4bb1a0-cec7-4cff-849e-b56670465a3c",
                     "path": "<Keyboard>/z",
                     "interactions": "",

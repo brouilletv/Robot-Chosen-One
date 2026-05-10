@@ -1,5 +1,4 @@
 using System;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -70,14 +69,6 @@ public class PauseManager : MonoBehaviour
     public void QuitGame()
     {
         GameManager.Save();
-
-        if (Application.isEditor)
-        {
-            UnityEditor.EditorApplication.ExitPlaymode();
-        }
-        else
-        {
-            Application.Quit();
-        }
+        Application.Quit();
     }
 }
