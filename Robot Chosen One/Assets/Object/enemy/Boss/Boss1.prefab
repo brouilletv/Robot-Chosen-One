@@ -80,10 +80,10 @@ MonoBehaviour:
   - 0
   RushSpeed: 1.5
   RushDmg: 3
-  RushCooldown: 4
+  RushCooldown: 8
   ShockwaveSpeed: 2
   ShockwaveDmg: 2
-  ShockwaveCooldown: 4
+  ShockwaveCooldown: 6
   projectilePrefab: {fileID: 3543112442540492448, guid: ee580cfec20edb443a34225920a9b672, type: 3}
 --- !u!1 &4249313474850649573
 GameObject:
