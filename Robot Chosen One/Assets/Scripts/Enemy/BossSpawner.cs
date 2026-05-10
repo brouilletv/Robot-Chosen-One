@@ -66,7 +66,6 @@ public class BossSpawner : MonoBehaviour
     }
     void TagCheck()
     {
-        Debug.Log(PM.defeatedJunkyardBoss);
         if (boss.CompareTag("Boss1") && PM.defeatedJunkyardBoss is false)
         {
             state = "inactive";

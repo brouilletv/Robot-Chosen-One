@@ -138,7 +138,7 @@ public class JunkyardBossLogic : MonoBehaviour
     {
         if (BossPhase == 1)
         {
-            while (transform.position.x > MinPos.position.x + 3 && RushDir == -1 || transform.position.x < MaxPos.position.x - 3 && RushDir == 1)
+            while (transform.position.x > MinPos.position.x + 2 && RushDir == -1 || transform.position.x < MaxPos.position.x - 2 && RushDir == 1)
             {
                 RB.velocity = new Vector2(RushDir * RushSpeed * 6, RB.velocity.y);
                 yield return new WaitForSeconds(0.1f);
@@ -146,14 +146,22 @@ public class JunkyardBossLogic : MonoBehaviour
         }
         else
         {
-            while (transform.position.x > MinPos.position.x + 3 && RushDir == -1 || transform.position.x < MaxPos.position.x - 3 && RushDir == 1)
+            while (transform.position.x > MinPos.position.x + 2 && RushDir == -1 || transform.position.x < MaxPos.position.x - 2 && RushDir == 1)
             {
                 RB.velocity = new Vector2(RushDir * RushSpeed * 6, RB.velocity.y);
                 yield return new WaitForSeconds(0.1f);
             }
             RushDir = -RushDir;
+            if (Direction == 1)
+            {
+                Direction = 0;
+            }
+            else if (Direction == 0)
+            {
+                Direction = 1;
+            }
             yield return new WaitForSeconds(1f);
-            while (transform.position.x > MinPos.position.x + 3 && RushDir == -1 || transform.position.x < MaxPos.position.x - 3 && RushDir == 1)
+            while (transform.position.x > MinPos.position.x + 2 && RushDir == -1 || transform.position.x < MaxPos.position.x - 2 && RushDir == 1)
             {
                 RB.velocity = new Vector2(RushDir * RushSpeed * 6, RB.velocity.y);
                 yield return new WaitForSeconds(0.1f);

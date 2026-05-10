@@ -402,11 +402,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (direction == 0 && transform.Find("GUI").Find("HealthHeart").GetComponent<HealthHeartBarV2>().imunity is false)
         {
-            transform.position = new Vector3(transform.position.x + 4, transform.position.y + 1, 0);
+            transform.position = new Vector3(transform.position.x + 3, transform.position.y + 1, 0);
         }
         else if (direction == 1 && transform.Find("GUI").Find("HealthHeart").GetComponent<HealthHeartBarV2>().imunity is false)
         {
-            transform.position = new Vector3(transform.position.x - 4, transform.position.y + 1, 0);
+            transform.position = new Vector3(transform.position.x - 3, transform.position.y + 1, 0);
         }
     }
     #endregion
