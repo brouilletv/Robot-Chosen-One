@@ -19,6 +19,7 @@ public class Respawn : MonoBehaviour
 
     public static event Action<bool> resetElevator;
     public static event Action<bool> enemyRespawn;
+    public static event Action<bool> resetDoors;
 
     public Respawn instance;
 
@@ -65,6 +66,8 @@ public class Respawn : MonoBehaviour
             StartCoroutine(RespawnLogic(respawnTime, true));
             resetElevator?.Invoke(true);
             enemyRespawn?.Invoke(true);
+            resetDoors?.Invoke(true);
+
         }
         else if (playerHealth > 0 && !respawnStop)
         {

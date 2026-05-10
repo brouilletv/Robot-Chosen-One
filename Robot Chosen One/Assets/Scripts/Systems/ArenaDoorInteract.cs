@@ -63,14 +63,27 @@ public class ArenaDoorInteract : MonoBehaviour
     }
 
 
+    private void ResetDoors(bool none)
+    {
+        if (!(waveSpawnerScript.state == "done") && (doorBehaviour1.doorIsClosed && doorBehaviour2.doorIsClosed))
+        {
+            canCloseDoor = true;
+            doorBehaviour1.isDoorOpen = !doorBehaviour1.isDoorOpen;
+            doorBehaviour2.isDoorOpen = !doorBehaviour2.isDoorOpen;
+        }
+    }
+
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        Respawn.resetDoors += ResetDoors;
     }
 
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        Respawn.resetDoors -= ResetDoors;
     }
 }
