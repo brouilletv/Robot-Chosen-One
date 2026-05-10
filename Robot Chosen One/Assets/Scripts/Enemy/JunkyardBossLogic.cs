@@ -21,12 +21,12 @@ public class JunkyardBossLogic : MonoBehaviour
     [SerializeField] float RushSpeed = 1.5f;
     private bool RushActive = false;
     [SerializeField] int RushDmg = 3;
-    [SerializeField] int RushCooldown = 4;
+    [SerializeField] int RushCooldown = 8;
 
     [Header("Shockwave")]
     [SerializeField] float ShockwaveSpeed = 2;
     [SerializeField] int ShockwaveDmg = 2;
-    [SerializeField] int ShockwaveCooldown = 4;
+    [SerializeField] int ShockwaveCooldown = 6;
     [SerializeField] GameObject projectilePrefab;
 
     [Header("General Settings")]
@@ -121,7 +121,7 @@ public class JunkyardBossLogic : MonoBehaviour
             projectile1.Initializeprojectile(Player.transform.position, transform.position, 2 * ShockwaveSpeed, "Right", ShockwaveDmg);
 
             projectileStraight projectile2 = Instantiate(projectilePrefab, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), transform.rotation).GetComponent<projectileStraight>();
-            projectile2.Initializeprojectile(Player.transform.position, transform.position, 2, "Left", ShockwaveDmg);
+            projectile2.Initializeprojectile(Player.transform.position, transform.position, 2 * ShockwaveSpeed, "Left", ShockwaveDmg);
 
             yield return new WaitForSeconds(2f);
         }
