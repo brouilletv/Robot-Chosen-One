@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
 
         // HealthHeartBarV2 Reset
         healthHeartBarV2Instance.maxHealth = 12f;
-        healthHeartBarV2Instance.health = 12f;
+        healthHeartBarV2Instance.health = Mathf.Clamp(12f, 0, 12f);
     }
 
 
