@@ -99,9 +99,7 @@ public class BossSpawner : MonoBehaviour
             JBL.InitializeBossLogic(Player, MinPos, MaxPos);
 
             BodyDmg BDT = Clone.transform.Find("Top").GetComponent<BodyDmg>();
-            BodyDmg BDB = Clone.transform.Find("Bottom").GetComponent<BodyDmg>();
             BDT.InitializeBodyDmg(Player);
-            BDB.InitializeBodyDmg(Player);
         }
         else if (bossNum == 2)
         {

@@ -71,11 +71,22 @@ public class HealthHeartBarV2 : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        SetHealth(health - amount);
+        if (imunity is false)
+        {
+            StartCoroutine(ImunityCooldown());
+            SetHealth(health - amount);
+        }
         if (health <= 0)
         {
             Dead(respawnTime);
             StartCoroutine(DeathHealCooldown());
+        }
+
+        IEnumerator ImunityCooldown()
+        {
+            imunity = true;
+            yield return new WaitForSeconds(imunityTime);
+            imunity = false;
         }
     }
 
@@ -114,18 +125,6 @@ public class HealthHeartBarV2 : MonoBehaviour
         if (amount > 0)
         {
             SetHealth(health + amount);
-        }
-        else if (imunity is false)
-        {
-            StartCoroutine(ImunityCooldown());
-            SetHealth(health + amount);
-        }
-
-        IEnumerator ImunityCooldown()
-        {
-            imunity = true;
-            yield return new WaitForSeconds(imunityTime);
-            imunity = false;
         }
     }
 

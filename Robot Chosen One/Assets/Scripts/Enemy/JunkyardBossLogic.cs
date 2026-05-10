@@ -7,10 +7,10 @@ public class JunkyardBossLogic : MonoBehaviour
 {
     #region Variables & Initialize
     [Header("Boss Heath & Phases")]
-    [SerializeField] float BossMaxHealth = 25f;
+    [SerializeField] float BossMaxHealth = 50f;
     [SerializeField] float BossHealth;
 
-    [SerializeField] float[] BossPhaseTrigger = {15f, 1f};
+    [SerializeField] float[] BossPhaseTrigger = {25f, 0f};
     private int BossPhase = 1;
 
     [Header("Player")]
@@ -18,15 +18,15 @@ public class JunkyardBossLogic : MonoBehaviour
 
     [Header("Rush")]
     private int RushDir;
-    [SerializeField] float RushSpeed = 1;
+    [SerializeField] float RushSpeed = 1.5f;
     private bool RushActive = false;
-    [SerializeField] int RushDmg = 2;
-    [SerializeField] int RushCooldown = 10;
+    [SerializeField] int RushDmg = 3;
+    [SerializeField] int RushCooldown = 4;
 
     [Header("Shockwave")]
-    [SerializeField] float ShockwaveSpeed = 1;
-    [SerializeField] int ShockwaveDmg = 1;
-    [SerializeField] int ShockwaveCooldown = 10;
+    [SerializeField] float ShockwaveSpeed = 2;
+    [SerializeField] int ShockwaveDmg = 2;
+    [SerializeField] int ShockwaveCooldown = 4;
     [SerializeField] GameObject projectilePrefab;
 
     [Header("General Settings")]
@@ -88,7 +88,6 @@ public class JunkyardBossLogic : MonoBehaviour
     void Rush()
     {
         BodyDmg BDT = transform.Find("Top").GetComponent<BodyDmg>();
-        BodyDmg BDB = transform.Find("Bottom").GetComponent<BodyDmg>();
 
         if (transform.position.x > Player.transform.position.x)
         {
@@ -102,10 +101,9 @@ public class JunkyardBossLogic : MonoBehaviour
         }
 
         BDT.Active = false;
-        BDB.Active = false;
         RushActive = true;
 
-        StartCoroutine(RushAction(BDT, BDB));
+        StartCoroutine(RushAction(BDT));
         StartCoroutine(WaitCooldown(RushCooldown));
     }
 
@@ -119,10 +117,10 @@ public class JunkyardBossLogic : MonoBehaviour
     {
         foreach (int i in Enumerable.Range(1, BossPhase))
         {
-            projectileStraight projectile1 = Instantiate(projectilePrefab, transform.position, transform.rotation).GetComponent<projectileStraight>();
+            projectileStraight projectile1 = Instantiate(projectilePrefab, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), transform.rotation).GetComponent<projectileStraight>();
             projectile1.Initializeprojectile(Player.transform.position, transform.position, 2 * ShockwaveSpeed, "Right", ShockwaveDmg);
 
-            projectileStraight projectile2 = Instantiate(projectilePrefab, transform.position, transform.rotation).GetComponent<projectileStraight>();
+            projectileStraight projectile2 = Instantiate(projectilePrefab, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), transform.rotation).GetComponent<projectileStraight>();
             projectile2.Initializeprojectile(Player.transform.position, transform.position, 2, "Left", ShockwaveDmg);
 
             yield return new WaitForSeconds(2f);
@@ -134,7 +132,7 @@ public class JunkyardBossLogic : MonoBehaviour
         }
     }
 
-    IEnumerator RushAction(BodyDmg BDT, BodyDmg BDB)
+    IEnumerator RushAction(BodyDmg BDT)
     {
         if (BossPhase == 1)
         {
@@ -171,7 +169,6 @@ public class JunkyardBossLogic : MonoBehaviour
 
         RushActive = false;
         BDT.Active = true;
-        BDB.Active = true;
     }
 
     IEnumerator WaitCooldown(float cooldown)
