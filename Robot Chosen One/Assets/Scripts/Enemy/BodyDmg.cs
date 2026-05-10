@@ -36,7 +36,7 @@ public class BodyDmg : MonoBehaviour
 
     public void TakeDmg(int dmg)
     {
-        Player.transform.Find("GUI").Find("HealthHeart").GetComponent<HealthHeartBarV2>().Heal(-dmg);
+        Player.transform.Find("GUI").Find("HealthHeart").GetComponent<HealthHeartBarV2>().TakeDamage(dmg);
     }
 
     void SideTouched()

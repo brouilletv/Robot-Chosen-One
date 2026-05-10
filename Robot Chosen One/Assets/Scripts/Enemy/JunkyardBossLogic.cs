@@ -191,7 +191,7 @@ public class JunkyardBossLogic : MonoBehaviour
             if (RushActive is true)
             {
                 PM.JunkyardBossRush(Direction);
-                HHB.Heal(-RushDmg);
+                HHB.TakeDamage(RushDmg);
             }
         }
     }
