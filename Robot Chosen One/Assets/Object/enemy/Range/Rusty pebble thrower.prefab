@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 99531021607259864}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 5, z: 0}
+  m_LocalPosition: {x: 2.5, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -107,7 +107,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.25, y: 0.3}
   m_EdgeRadius: 0
 --- !u!114 &7042523959758291544
 MonoBehaviour:
@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 2372077672097690712}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10, y: -1, z: 0}
+  m_LocalPosition: {x: -2.5, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 7970094905383483147}
   - component: {fileID: 7543770047907417972}
   - component: {fileID: 7013847611763860019}
+  - component: {fileID: 7194937181111968257}
   m_Layer: 10
   m_Name: Rusty pebble thrower
   m_TagString: Untagged
@@ -187,7 +188,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 218233669243900340}
@@ -239,8 +240,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0.7725491, g: 0.54509807, b: 0, a: 1}
+  m_Sprite: {fileID: 1806905270, guid: c9908adeb5666a5498164a0b102abfc7, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -283,7 +284,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 0.25, y: 0.65}
   m_Direction: 0
 --- !u!50 &2963657316108019059
 Rigidbody2D:
@@ -343,10 +344,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8bf60bb0df01af4e8aaecf903c5035f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 3104547831339970628, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
   touchDmg: 1
   Body: {fileID: 5327697737762848177}
-  PlayerT: {fileID: 542451865603372785, guid: 5c82f5fcdcb7388488d4d2947c6f6543, type: 3}
 --- !u!114 &7543770047907417972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,6 +381,27 @@ MonoBehaviour:
   projectileSpeed: 3
   rangeCooldownTime: 3
   rangeDmg: 1
+--- !u!95 &7194937181111968257
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3810820675815665877}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 43d82ff955e067b4d80f12e06b41ec2d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6902144660064149034
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,5 +539,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.25, y: 0.25}
   m_EdgeRadius: 0
