@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
     // Movement Variables
     [Header("Movement Variables")]
     [SerializeField] float groundSpeed = 6f;
-    [SerializeField] float jumpForce = 17f;
+    public float jumpForce = 17f;
     [SerializeField] float wallJumpForce = 12f;
     [SerializeField] float jumpCutMultiplier = 0.5f;
     [SerializeField] float normalGravity = 6f;

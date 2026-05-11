@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Maps/Tower Map.unity
     guid: 71f2fd79ac20504468d764caced9a21e
+  - enabled: 1
+    path: Assets/Scenes/Maps/Backrooms.unity
+    guid: 5d703409e0e5d6d4193115fce6166acc
   m_configObjects: {}

@@ -6181,6 +6181,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneChanger (Tower)
       objectReference: {fileID: 0}
+    - target: {fileID: 5183921467609969126, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -79045,6 +79049,83 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3006282673481563284, guid: 757890203a5babf449d5725fed20b91d, type: 3}
   m_PrefabInstance: {fileID: 814829885}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &838746628
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 722614382517511102, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: sceneToLoad
+      value: Backrooms
+      objectReference: {fileID: 0}
+    - target: {fileID: 722614382517511102, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: newPlayerPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 722614382517511102, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: newPlayerPosition.y
+      value: 3.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068046913426225293, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 102
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068046913426225293, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 74.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068046913426225293, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068046913426225293, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068046913426225293, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068046913426225293, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068046913426225293, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068046913426225293, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068046913426225293, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068046913426225293, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3838433577857055375, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: m_Size.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3838433577857055375, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: m_Offset.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183921467609969126, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
+      propertyPath: m_Name
+      value: SceneChanger (Backrooms)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b98a77edf01ce5243ac8a09463995559, type: 3}
 --- !u!1 &846198915
 GameObject:
   m_ObjectHideFlags: 0
@@ -494933,6 +495014,7 @@ SceneRoots:
   - {fileID: 2108321188}
   - {fileID: 5816118192552538158}
   - {fileID: 264498387}
+  - {fileID: 838746628}
   - {fileID: 702164804}
   - {fileID: 89391374}
   - {fileID: 513948704}
