@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneChanger : MonoBehaviour
+public class SceneChangerBackrooms : MonoBehaviour
 {
-    public string sceneToLoad;
+    public string sceneToLoad = "Backrooms";
     public Animator fadeAnim;
     public float fadeTime = 1f;
-    public Vector2 newPlayerPosition;
+    public Vector2 newPlayerPosition = new Vector2(0, 3.6f);
     private Transform player;
     private PlayerMovement playerMovement;
-    private Respawn respawn;
 
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -22,7 +21,6 @@ public class SceneChanger : MonoBehaviour
         fadeAnim.Play("FadeFromBlack");
 
         playerMovement.PlayerStopFalse();
-        playerMovement.jumpForce = 17f;
     }
 
 
@@ -32,21 +30,18 @@ public class SceneChanger : MonoBehaviour
         {
             player = collision.transform;
             playerMovement = player.GetComponent<PlayerMovement>();
-            respawn = player.GetComponent<Respawn>();
             playerMovement.PlayerStopTrue();
 
             fadeAnim.Play("FadeToBlack");
-            StartCoroutine(DelayFade(player, playerMovement, respawn));
+            StartCoroutine(DelayFade(player));
         }
     }
 
 
-    IEnumerator DelayFade(Transform player, PlayerMovement playerMovement, Respawn respawn)
+    IEnumerator DelayFade(Transform player)
     {
         yield return new WaitForSeconds(fadeTime);
         player.transform.position = newPlayerPosition;
-        respawn.currentSpawnpoint = newPlayerPosition;
-        playerMovement.lastScene = sceneToLoad;
         SceneManager.LoadScene(sceneToLoad);
     }
 

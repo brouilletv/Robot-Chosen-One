@@ -9,6 +9,7 @@ public class OneWayPlatform : MonoBehaviour
     private Transform player;
     private PlayerMovement playerMovement;
     private CapsuleCollider2D playerCollider;
+    public Animator fadeAnim;
 
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -17,6 +18,9 @@ public class OneWayPlatform : MonoBehaviour
         playerMovement = player.GetComponent<PlayerMovement>();
         playerCollider = player.GetComponent<CapsuleCollider2D>();
 
+        fadeAnim.Play("FadeFromBlack");
+
+        playerMovement.PlayerStopFalse();
         playerMovement.jumpForce = 0f;
     }
 
