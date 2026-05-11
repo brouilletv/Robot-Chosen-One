@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MineBossLogic : MonoBehaviour
@@ -14,24 +15,38 @@ public class MineBossLogic : MonoBehaviour
     private PowerBoxLogic PBL2;
     private PowerBoxLogic PBL3;
     private PowerBoxLogic PBL4;
+    private Transform MinPos;
+    private Transform MaxPos;
 
     public bool CanDmg = false;
     private bool Active = true;
-    private int Phase = 1;
+    private int Phase = 0;
+    private bool quickfix = false;
 
-    public void InitializeMineBoss(GameObject Player, PowerBoxLogic PBL1, PowerBoxLogic PBL2, PowerBoxLogic PBL3, PowerBoxLogic PBL4, bool Active)
+    private int AttackCount = 0;
+    private float BombDelay = 0.5f;
+    private bool BombOnCooldown = false;
+    [SerializeField] int BombDmg = 2;
+    [SerializeField] float BombFuse = 2;
+    [SerializeField] float BombRadius = 2;
+    [SerializeField] GameObject Projectile;
+
+
+    public void InitializeMineBoss(GameObject Player, PowerBoxLogic PBL1, PowerBoxLogic PBL2, PowerBoxLogic PBL3, PowerBoxLogic PBL4, Transform MinPos, Transform MaxPos, bool Active)
     {
         this.Player = Player;
         this.PBL1 = PBL1;
         this.PBL2 = PBL2;
         this.PBL3 = PBL3;
         this.PBL4 = PBL4;
+        this.MinPos = MinPos;
+        this.MaxPos = MaxPos;
 
         Health = MaxHealth;
         PM = Player.GetComponent<PlayerMovement>();
         HHB = Player.transform.Find("GUI").Find("HealthHeart").GetComponent<HealthHeartBarV2>();
 
-        transform.GetComponent<SpriteRenderer>().color = Color.blue;
+        transform.Find("Main Boss").GetComponent<SpriteRenderer>().color = Color.blue;
 
         if (Active is false)
         {
@@ -42,19 +57,70 @@ public class MineBossLogic : MonoBehaviour
     public void TakeDamage(float amount)
     {
         Health -= amount;
-        if (Health <= 0)
+        CanDmg = false;
+        BombOnCooldown = false;
+        if (Health == 2)
+        {
+            Phase = 1;
+            transform.Find("Main Boss").GetComponent<SpriteRenderer>().color = Color.blue;
+        }
+        else if (Health == 1)
+        {
+            Phase = 2;
+            transform.Find("Main Boss").GetComponent<SpriteRenderer>().color = Color.blue;
+            BombDelay = BombDelay / 2;
+        }
+        else if (Health <= 0)
         {
             Active = false;
-            transform.GetComponent<SpriteRenderer>().color = Color.red;
+            PM.defeatedMinesBoss = true;
+            transform.Find("Main Boss").GetComponent<SpriteRenderer>().color = Color.red;
         }
     }
 
     private void Update()
     {
-        if (PBL1.Active is false && PBL2.Active is false && PBL3.Active is false && PBL4.Active is false)
+        if (PBL1.Active is false && PBL2.Active is false && PBL3.Active is false && PBL4.Active is false && Active is true && quickfix is false)
         {
-            Phase = 1;
+            quickfix = true;
+            CanDmg = true;
+            BombOnCooldown = true;
+            transform.Find("Main Boss").GetComponent<SpriteRenderer>().color = Color.white;
         }
+        if (Phase >= 1 && BombOnCooldown is false && Active is true)
+        {
+            if (AttackCount >= 3)
+            {
+                AttackCount = 0;
+                CanDmg = true;
+                BombOnCooldown = true;
+                transform.Find("Main Boss").GetComponent<SpriteRenderer>().color = Color.white;
+            }
+            else
+            {
+                StartCoroutine(Bomb());
+            }
+        }
+    }
+
+    IEnumerator Bomb()
+    {
+        BombOnCooldown = true;
+        foreach (int i in Enumerable.Range(0, Phase*10))
+        {
+            yield return new WaitForSeconds(BombDelay);
+
+            Vector3 RPos = new Vector3(Random.Range(MinPos.position.x, MaxPos.position.x), Random.Range(MinPos.position.y, MaxPos.position.y), 0);
+
+            GameObject Clone = Instantiate(Projectile, RPos, transform.rotation, transform);
+            BombProjectile BombScript = Clone.transform.GetComponent<BombProjectile>();
+            BombScript.InitializeBomb(Player, PM, HHB, BombDmg, BombFuse, BombRadius);
+        }
+
+        yield return new WaitForSeconds(BombFuse);
+        AttackCount += 1;
+
+        BombOnCooldown = false;
     }
 
 

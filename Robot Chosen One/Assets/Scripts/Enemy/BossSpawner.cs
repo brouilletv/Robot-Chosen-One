@@ -61,6 +61,10 @@ public class BossSpawner : MonoBehaviour
                 {
                     Destroy(transform.GetChild(k + 2).gameObject);
                 }
+                if (bossNum == 2)
+                {
+                    StartCoroutine(Create(0));
+                }
             }
         }
     }
@@ -75,6 +79,10 @@ public class BossSpawner : MonoBehaviour
         {
             state = "inactive";
             bossNum = 2;
+            foreach (int i in Enumerable.Range(0, Ecount - (transform.childCount - 2)))
+            {
+                StartCoroutine(Create(i));
+            }
         }
         else if (boss.CompareTag("Boss3") && PM.defeatedTowerBoss is false)
         {
@@ -107,7 +115,7 @@ public class BossSpawner : MonoBehaviour
             PowerBoxLogic PBL2 = Clone.transform.Find("Power Box 2").GetComponent<PowerBoxLogic>();
             PowerBoxLogic PBL3 = Clone.transform.Find("Power Box 3").GetComponent<PowerBoxLogic>();
             PowerBoxLogic PBL4 = Clone.transform.Find("Power Box 4").GetComponent<PowerBoxLogic>();
-            MineBossLogic MBL = Clone.transform.Find("Main Boss").GetComponent<MineBossLogic>();
+            MineBossLogic MBL = Clone.GetComponent<MineBossLogic>();
 
             if (PM.defeatedMinesBoss is false)
             {
@@ -116,7 +124,7 @@ public class BossSpawner : MonoBehaviour
                 PBL3.InitializePowerBox(Player, true);
                 PBL4.InitializePowerBox(Player, true);
 
-                MBL.InitializeMineBoss(Player, PBL1, PBL2, PBL3, PBL4, true);
+                MBL.InitializeMineBoss(Player, PBL1, PBL2, PBL3, PBL4, MinPos, MaxPos, true);
             }
             else
             {
@@ -125,7 +133,7 @@ public class BossSpawner : MonoBehaviour
                 PBL3.InitializePowerBox(Player, false);
                 PBL4.InitializePowerBox(Player, false);
 
-                MBL.InitializeMineBoss(Player, PBL1, PBL2, PBL3, PBL4, false);
+                MBL.InitializeMineBoss(Player, PBL1, PBL2, PBL3, PBL4, MinPos, MaxPos, false);
             }
         }
     }

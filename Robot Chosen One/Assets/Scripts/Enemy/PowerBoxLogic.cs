@@ -12,7 +12,6 @@ public class PowerBoxLogic : MonoBehaviour
     [Header("Health")]
     [SerializeField] float MaxHealth = 5;
     private float Health;
-    private bool cooldown = false;
     [Header("Genral")]
     private Rigidbody2D RB;
     [Header("Electicity")]

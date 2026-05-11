@@ -68,7 +68,7 @@ public class PlasmaBall : MonoBehaviour
 
     public void TakeDmg(int dmg)
     {
-        Player.transform.Find("GUI").Find("HealthHeart").GetComponent<HealthHeartBarV2>().TakeDamage(dmg);
+        HHB.TakeDamage(dmg);
     }
 
     void SideTouched()
@@ -89,6 +89,6 @@ public class PlasmaBall : MonoBehaviour
     }
     public void Bounce(int side)
     {
-        Player.GetComponent<PlayerMovement>().HandleBouceDirection(side);
+        PM.HandleBouceDirection(side);
     }
 }
