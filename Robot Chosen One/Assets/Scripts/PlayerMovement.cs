@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float wallJumpingKnockback = 25f;
     [SerializeField] float dashingPower = 24f;
     [SerializeField] float dashingTime = 0.2f;
-    [SerializeField] float dashingCooldown = 0.75f;
+    [SerializeField] float dashingCooldown = 0.6f;
     private float dashCooldownTimer = 0f;
     public float DashCooldownNormalized
     {

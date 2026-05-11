@@ -1137,7 +1137,7 @@ MonoBehaviour:
   wallJumpingKnockback: 25
   dashingPower: 24
   dashingTime: 0.2
-  dashingCooldown: 1
+  dashingCooldown: 0.6
   knockback: {x: 0, y: 0}
   playerStop: 0
   moveDirectionX: 0
