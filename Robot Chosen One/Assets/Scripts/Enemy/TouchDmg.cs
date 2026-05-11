@@ -30,9 +30,8 @@ public class TouchDmg : MonoBehaviour
         {
             StartCoroutine(Cooldown());
 
-            TakeDmg(touchDmg);
-
             SideTouched();
+            TakeDmg(touchDmg);
         }
 
         IEnumerator Cooldown()

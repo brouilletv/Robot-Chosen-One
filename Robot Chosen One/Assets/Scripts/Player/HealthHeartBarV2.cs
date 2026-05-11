@@ -14,7 +14,7 @@ public class HealthHeartBarV2 : MonoBehaviour
     public float health;
     private float respawnTime = 0.75f;
 
-    private float imunityTime = 1f;
+    private float imunityTime = 0.1f;
     public bool imunity = false;
 
     private List<HealthHeart> hearts = new List<HealthHeart>();

@@ -65,8 +65,8 @@ public class projectileStraight : MonoBehaviour
                 playerDirectionInt = 0;
             }
 
-            ApplyDmg(rangeDmg);
             Bouce(playerDirectionInt);
+            ApplyDmg(rangeDmg);
         }
         else if ((groundMask.value & (1 << other.gameObject.layer)) > 0)
         {

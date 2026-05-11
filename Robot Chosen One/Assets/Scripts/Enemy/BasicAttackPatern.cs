@@ -130,12 +130,12 @@ public class BasicAttackPatern : MonoBehaviour
     {
         if (playerDirection == "Right")
         {
-            meleeHitboxT.localPosition = new Vector2(1f, 0f);
+            meleeHitboxT.localPosition = new Vector2(0.25f, 0f);
             playerDirectionInt = 1;
         }
         else if (playerDirection == "Left")
         {
-            meleeHitboxT.localPosition = new Vector2(-1f, 0f);
+            meleeHitboxT.localPosition = new Vector2(-0.25f, 0f);
             playerDirectionInt = 0;
         }
         else
@@ -146,8 +146,8 @@ public class BasicAttackPatern : MonoBehaviour
         if (meleeHitboxC.IsTouching(playerC) && meleeOnCooldown == false)
         {
             StartCoroutine(MeleeCooldown());
-            ApplyDmg(meleeDmg);
             Bouce(playerDirectionInt);
+            ApplyDmg(meleeDmg);
         }
     }
 
