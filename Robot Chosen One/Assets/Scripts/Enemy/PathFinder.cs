@@ -15,6 +15,8 @@ public class PathFinder : MonoBehaviour
     private Transform MaxPos;
     private Transform MinPos;
 
+    private Animator animator = null;
+
     private bool Fallow = false;
     private bool GoRight = false;
     private bool flip = false;
@@ -26,6 +28,11 @@ public class PathFinder : MonoBehaviour
         this.Player = Player;
         this.MaxPos = MaxPos;
         this.MinPos = MinPos;
+
+        if (TryGetComponent<Animator>(out animator))
+        {
+            animator = GetComponent<Animator>();
+        }
     }
     void FixedUpdate()
     {
@@ -37,7 +44,7 @@ public class PathFinder : MonoBehaviour
 
         if (PlayerX >= MinPos.position.x && PlayerX <= MaxPos.position.x && PlayerY >= MinPos.position.y && PlayerY <= MaxPos.position.y && Vector2.Distance(transform.position, Player.position) > distance && FullRoming is false && stop is false)
         {
-            Fallow = true;  
+            Fallow = true;
         }
         else
         {
@@ -101,6 +108,16 @@ public class PathFinder : MonoBehaviour
         {
             transform.GetComponent<SpriteRenderer>().flipX = false;
         }
+
+        if (Fallow is true && animator != null|| Roming is true && animator != null)
+        {
+            animator.SetBool("walk", true);
+        }
+        else if (animator != null)
+        {
+            animator.SetBool("walk", false);
+        }
+
     }
 
     public IEnumerator Knockback()
