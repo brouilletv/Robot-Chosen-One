@@ -73,10 +73,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e275a0ea756b89f4cab314f911167e9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BossMaxHealth: 50
+  BossMaxHealth: 30
   BossHealth: 0
   BossPhaseTrigger:
-  - 25
+  - 10
   - 0
   RushSpeed: 1.5
   RushDmg: 3
