@@ -9616,7 +9616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 541091563924352651, guid: 6ed2428665a72c841bdc2f0269c7ece1, type: 3}
       propertyPath: m_Size.x
-      value: 18
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 541091563924352651, guid: 6ed2428665a72c841bdc2f0269c7ece1, type: 3}
       propertyPath: m_Size.y

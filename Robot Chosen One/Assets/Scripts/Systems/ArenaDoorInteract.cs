@@ -14,6 +14,13 @@ public class ArenaDoorInteract : MonoBehaviour
     private WaveSpawnerM waveSpawnerScript;
     private DoorBehaviour doorBehaviour1;
     private DoorBehaviour doorBehaviour2;
+
+    private GameObject player;
+    private PlayerMovement playerMovement;
+    [SerializeField] float avoidDoorClipDistance = 30f;
+    [SerializeField] bool movePlayer;
+    [SerializeField] Vector3 newPlayerPosition;
+
     private bool canCloseDoor = true;
     public bool doorOpenDownward;
     public bool doorOpenUpward;
@@ -33,6 +40,9 @@ public class ArenaDoorInteract : MonoBehaviour
 
         doorBehaviour1.isDoorOpen = !doorBehaviour1.isDoorOpen;
         doorBehaviour2.isDoorOpen = !doorBehaviour2.isDoorOpen;
+
+        player = GameObject.FindWithTag("Player");
+        playerMovement = player.transform.GetComponent<PlayerMovement>();
     }
 
 
@@ -44,6 +54,11 @@ public class ArenaDoorInteract : MonoBehaviour
             {
                 if (doorBehaviour1.doorIsOpen && doorBehaviour2.doorIsOpen)
                 {
+                    playerMovement.PlayerStopTrue();
+                    newPlayerPosition = new Vector3(player.transform.position.x + (avoidDoorClipDistance * playerMovement.spriteFacingDirection), player.transform.position.y, player.transform.position.y);
+                    movePlayer = true;
+                    StartCoroutine(AvoidDoorClipping());
+
                     doorBehaviour1.isDoorOpen = !doorBehaviour1.isDoorOpen;
                     doorBehaviour2.isDoorOpen = !doorBehaviour2.isDoorOpen;
                     canCloseDoor = false;
@@ -60,6 +75,19 @@ public class ArenaDoorInteract : MonoBehaviour
             doorBehaviour1.isDoorOpen = !doorBehaviour1.isDoorOpen;
             doorBehaviour2.isDoorOpen = !doorBehaviour2.isDoorOpen;
         }
+
+        if (movePlayer)
+        {
+            player.transform.position = Vector3.MoveTowards(player.transform.position, newPlayerPosition, playerMovement.groundSpeed * Time.deltaTime);
+        }
+    }
+
+
+    private IEnumerator AvoidDoorClipping()
+    {
+        yield return new WaitUntil(() => (doorBehaviour1.doorIsClosed && doorBehaviour2.doorIsClosed));
+        movePlayer = false;
+        playerMovement.PlayerStopFalse();
     }
 
 

@@ -175,6 +175,9 @@ MonoBehaviour:
   obstacleDoorObject2: {fileID: 0}
   doorOpenDownward: 0
   doorOpenUpward: 0
+  avoidDoorClipDistance: 30
+  movePlayer: 0
+  newPlayerPosition: {x: 0, y: 0, z: 0}
   JunkyardBoss: 0
   MinesBoss: 0
   TowerBoss: 0

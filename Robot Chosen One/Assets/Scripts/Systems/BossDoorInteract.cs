@@ -18,6 +18,9 @@ public class BossDoorInteract : MonoBehaviour
 
     private GameObject player;
     private PlayerMovement playerMovement;
+    [SerializeField] float avoidDoorClipDistance = 30f;
+    [SerializeField] bool movePlayer;
+    [SerializeField] Vector3 newPlayerPosition;
 
     [Header("TypeOfBoss")]
     public bool JunkyardBoss = false;
@@ -51,6 +54,11 @@ public class BossDoorInteract : MonoBehaviour
             {
                 if (doorBehaviour1.doorIsOpen && doorBehaviour2.doorIsOpen)
                 {
+                    playerMovement.PlayerStopTrue();
+                    newPlayerPosition = new Vector3(player.transform.position.x + (avoidDoorClipDistance * playerMovement.spriteFacingDirection), player.transform.position.y, player.transform.position.y);
+                    movePlayer = true;
+                    StartCoroutine(AvoidDoorClipping());
+
                     doorBehaviour1.isDoorOpen = !doorBehaviour1.isDoorOpen;
                     doorBehaviour2.isDoorOpen = !doorBehaviour2.isDoorOpen;
                     canCloseDoor = false;
@@ -71,6 +79,19 @@ public class BossDoorInteract : MonoBehaviour
                 canCloseDoor = false;
             }
         }
+
+        if (movePlayer)
+        {
+            player.transform.position = Vector3.MoveTowards(player.transform.position, newPlayerPosition, playerMovement.groundSpeed * Time.deltaTime);
+        }
+    }
+
+
+    private IEnumerator AvoidDoorClipping()
+    {
+        yield return new WaitUntil(() => (doorBehaviour1.doorIsClosed && doorBehaviour2.doorIsClosed));
+        movePlayer = false;
+        playerMovement.PlayerStopFalse();
     }
 
 
