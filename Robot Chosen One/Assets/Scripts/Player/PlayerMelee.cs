@@ -176,6 +176,14 @@ public class PlayerMelee : MonoBehaviour
                             attackCount = attackCount + 1;
                         }
                     }
+                    else if (enemy.GetComponentInParent<TowerBossLogic>() != null)
+                    {
+                        enemy.GetComponentInParent<TowerBossLogic>().TakeDamage(attackDamage);
+                        if (attackCount < 10)
+                        {
+                            attackCount = attackCount + 1;
+                        }
+                    }
                 }
                 cooldownTimer = cooldownTime;
                 attackPressed = false;
