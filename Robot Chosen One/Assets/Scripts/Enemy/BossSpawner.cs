@@ -136,5 +136,10 @@ public class BossSpawner : MonoBehaviour
                 MBL.InitializeMineBoss(Player, PBL1, PBL2, PBL3, PBL4, MinPos, MaxPos, false);
             }
         }
+        else if(bossNum == 3)
+        {
+            TowerBossLogic TBL = Clone.GetComponent<TowerBossLogic>();
+            TBL.InitializeBossLogic(Player);
+        }
     }
 }
