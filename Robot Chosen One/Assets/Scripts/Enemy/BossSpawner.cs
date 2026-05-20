@@ -138,8 +138,11 @@ public class BossSpawner : MonoBehaviour
         }
         else if(bossNum == 3)
         {
+            RedScript Slash = Clone.transform.Find("Slash").GetComponent<RedScript>();
+            Slash.InitializeRed(Player);
+
             TowerBossLogic TBL = Clone.GetComponent<TowerBossLogic>();
-            TBL.InitializeBossLogic(Player);
+            TBL.InitializeBossLogic(Player, Slash);
         }
     }
 }
