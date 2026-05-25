@@ -12,11 +12,15 @@ public class TowerBossLogic : MonoBehaviour
     private GameObject Player;
     private PlayerMovement PM;
     private HealthHeartBarV2 HHB;
+    private GameObject SlashObject;
     private RedScript Slash;
 
     public void InitializeBossLogic(GameObject Player, RedScript Slash)
     {
         this.Player = Player;
+        this.Slash = Slash;
+
+        SlashObject = Slash.gameObject;
 
         Health = MaxHealth;
         PM = Player.GetComponent<PlayerMovement>();
@@ -24,10 +28,9 @@ public class TowerBossLogic : MonoBehaviour
     }
 
     /*
-     * screen corrupter
+     * screen corrupter <-- curently doing that (find a way to activate the blind group)
      * inverse mouvement - inervse camera color
      * maybe clone
-     * tp slash
      */
 
     private void Update()
@@ -52,7 +55,7 @@ public class TowerBossLogic : MonoBehaviour
         if (Health <= 0)
         {
             Destroy(transform.parent.gameObject);
-            PM.defeatedJunkyardBoss = true;
+            PM.defeatedTowerBoss = true;
         }
     }
 
@@ -60,6 +63,18 @@ public class TowerBossLogic : MonoBehaviour
     {
         Vector3 offset = new Vector3(Random.Range(-5, 5), Random.Range(-3, 3), 0);
         transform.position = Player.transform.position + offset;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
+        Vector3 slashOffset = (-1 * offset) * 0.75f;
+        SlashObject.transform.localPosition = slashOffset;
+        Slash.Active = true;    
+        yield return new WaitForSeconds(1f);
+        SlashObject.transform.localPosition = new Vector3(0, 0, 0);
+        Slash.Active = false;
+    }
+
+    IEnumerator ActionScreenCorrupter()
+    {
+        
+        yield return new WaitForSeconds(4f);
     }
 }
