@@ -30,20 +30,18 @@ public class TowerBossLogic : MonoBehaviour
         StartCoroutine(Cooldown(4f));
     }
 
-    /*
-     * screen corrupter <-- curently doing that (find a way to activate the blind group)
-     * inverse mouvement - inervse camera color
-     * maybe clone
-     */
-
     private void Update()
     {
         if (OnCooldown is false)
         {
-            int attackR = Random.Range(1, 3);
+            int attackR = Random.Range(1, 4);
             if (attackR == 1 && BossPhase == 2)
             {
                 StartCoroutine(ActionScreenCorrupter());
+            }
+            else if (attackR == 2 && BossPhase == 2)
+            {
+                StartCoroutine(ActionFlipMove());
             }
             else
             {
@@ -109,5 +107,16 @@ public class TowerBossLogic : MonoBehaviour
         {
             camGameObject.transform.Find("BlindLeft").gameObject.SetActive(false);
         }
+    }
+
+    IEnumerator ActionFlipMove()
+    {
+        GameObject camGameObject = Camera.main.gameObject;
+
+        camGameObject.transform.Find("Invert").gameObject.SetActive(true);
+        PM.mouvementInverted = true;
+        yield return new WaitForSeconds(16f);
+        camGameObject.transform.Find("Invert").gameObject.SetActive(false);
+        PM.mouvementInverted = false;
     }
 }
