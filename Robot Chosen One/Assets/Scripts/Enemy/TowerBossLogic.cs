@@ -15,6 +15,8 @@ public class TowerBossLogic : MonoBehaviour
     private GameObject SlashObject;
     private RedScript Slash;
 
+    private int BossPhase = 1;
+
     public void InitializeBossLogic(GameObject Player, RedScript Slash)
     {
         this.Player = Player;
@@ -25,20 +27,27 @@ public class TowerBossLogic : MonoBehaviour
         Health = MaxHealth;
         PM = Player.GetComponent<PlayerMovement>();
         HHB = Player.transform.Find("GUI").Find("HealthHeart").GetComponent<HealthHeartBarV2>();
+        StartCoroutine(Cooldown(4f));
     }
-
-    /*
-     * screen corrupter <-- curently doing that (find a way to activate the blind group)
-     * inverse mouvement - inervse camera color
-     * maybe clone
-     */
 
     private void Update()
     {
         if (OnCooldown is false)
         {
-            StartCoroutine(ActionSlash());
-            StartCoroutine(Cooldown(4f));
+            int attackR = Random.Range(1, 4);
+            if (attackR == 1 && BossPhase == 2)
+            {
+                StartCoroutine(ActionScreenCorrupter());
+            }
+            else if (attackR == 2 && BossPhase == 2)
+            {
+                StartCoroutine(ActionFlipMove());
+            }
+            else
+            {
+                StartCoroutine(ActionSlash());
+                StartCoroutine(Cooldown(4f));
+            }
         }
     }
 
@@ -57,6 +66,10 @@ public class TowerBossLogic : MonoBehaviour
             Destroy(transform.parent.gameObject);
             PM.defeatedTowerBoss = true;
         }
+        else if (Health <= 25)
+        {
+            BossPhase = 2;
+        }
     }
 
     IEnumerator ActionSlash()
@@ -74,7 +87,36 @@ public class TowerBossLogic : MonoBehaviour
 
     IEnumerator ActionScreenCorrupter()
     {
-        
-        yield return new WaitForSeconds(4f);
+        GameObject camGameObject = Camera.main.gameObject;
+        int blindSide = Random.Range(1, 3);
+
+        if (blindSide == 1)
+        {
+            camGameObject.transform.Find("BlindRight").gameObject.SetActive(true);
+        }
+        else
+        {
+            camGameObject.transform.Find("BlindLeft").gameObject.SetActive(true);
+        }
+        yield return new WaitForSeconds(16f);
+        if (blindSide == 1)
+        {
+            camGameObject.transform.Find("BlindRight").gameObject.SetActive(false);
+        }
+        else
+        {
+            camGameObject.transform.Find("BlindLeft").gameObject.SetActive(false);
+        }
+    }
+
+    IEnumerator ActionFlipMove()
+    {
+        GameObject camGameObject = Camera.main.gameObject;
+
+        camGameObject.transform.Find("Invert").gameObject.SetActive(true);
+        PM.mouvementInverted = true;
+        yield return new WaitForSeconds(16f);
+        camGameObject.transform.Find("Invert").gameObject.SetActive(false);
+        PM.mouvementInverted = false;
     }
 }

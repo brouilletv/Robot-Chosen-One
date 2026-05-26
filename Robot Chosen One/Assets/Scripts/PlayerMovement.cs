@@ -90,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isDashing = false;
     private bool canDash = true;
     private bool canDoubleJump = true;
+    public bool mouvementInverted = false;
 
 
     // Ground Check
@@ -176,8 +177,16 @@ public class PlayerMovement : MonoBehaviour
     #region Input Methods
     public void OnMove(InputValue value)
     {
-        moveDirectionX = value.Get<Vector2>().x;
-        moveDirectionY = value.Get<Vector2>().y;
+        if (!mouvementInverted)
+        {
+            moveDirectionX = value.Get<Vector2>().x;
+            moveDirectionY = value.Get<Vector2>().y;
+        }
+        else if (mouvementInverted)
+        {
+            moveDirectionX = value.Get<Vector2>().x * -1;
+            moveDirectionY = value.Get<Vector2>().y;
+        }
     }
 
 
