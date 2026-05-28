@@ -33,6 +33,7 @@ public class JunkyardBossLogic : MonoBehaviour
     private Transform MinPos;
     private Transform MaxPos;
     private Rigidbody2D RB;
+    private bool flip;
     private bool GlobalCooldown = false;
     private int Direction = 0;
 
@@ -64,6 +65,14 @@ public class JunkyardBossLogic : MonoBehaviour
                 Shockwave();
             else if (attackR == 2)
                 Rush();
+        }
+        if (flip is true)
+        {
+            transform.Find("Top").GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else if (flip is false)
+        {
+            transform.Find("Top").GetComponent<SpriteRenderer>().flipX = false;
         }
     }
     #endregion
@@ -136,6 +145,14 @@ public class JunkyardBossLogic : MonoBehaviour
     {
         if (BossPhase == 1)
         {
+            if (RushDir == 1)
+            {
+                flip = true;
+            }
+            else if (RushDir == -1)
+            {
+                flip = false;
+            }
             while (transform.position.x > MinPos.position.x + 2 && RushDir == -1 || transform.position.x < MaxPos.position.x - 2 && RushDir == 1)
             {
                 RB.velocity = new Vector2(RushDir * RushSpeed * 6, RB.velocity.y);
@@ -144,12 +161,28 @@ public class JunkyardBossLogic : MonoBehaviour
         }
         else
         {
+            if (RushDir == 1)
+            {
+                flip = true;
+            }
+            else if (RushDir == -1)
+            {
+                flip = false;
+            }
             while (transform.position.x > MinPos.position.x + 2 && RushDir == -1 || transform.position.x < MaxPos.position.x - 2 && RushDir == 1)
             {
                 RB.velocity = new Vector2(RushDir * RushSpeed * 6, RB.velocity.y);
                 yield return new WaitForSeconds(0.1f);
             }
             RushDir = -RushDir;
+            if (RushDir == 1)
+            {
+                flip = true;
+            }
+            else if (RushDir == -1)
+            {
+                flip = false;
+            }
             if (Direction == 1)
             {
                 Direction = 0;

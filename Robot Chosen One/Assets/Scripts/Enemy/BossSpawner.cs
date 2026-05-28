@@ -60,6 +60,13 @@ public class BossSpawner : MonoBehaviour
                 foreach (int k in Enumerable.Range(0, transform.childCount - 2))
                 {
                     Destroy(transform.GetChild(k + 2).gameObject);
+
+                    GameObject camGameObject = Camera.main.gameObject;
+
+                    camGameObject.transform.Find("BlindRight").gameObject.SetActive(false);
+                    camGameObject.transform.Find("BlindLeft").gameObject.SetActive(false);
+                    camGameObject.transform.Find("Invert").gameObject.SetActive(false);
+                    PM.mouvementInverted = false;
                 }
                 if (bossNum == 2)
                 {
