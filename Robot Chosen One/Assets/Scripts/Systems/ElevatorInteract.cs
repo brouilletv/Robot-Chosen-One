@@ -61,8 +61,16 @@ public class ElevatorInteract : MonoBehaviour
             }
             else if (doorBehaviour.doorIsClosed || doorBehaviour.doorIsOpen)
             {
-                interactText1.enabled = true;
-                interactText2.enabled = true;
+                if (doorBehaviour.doorIsClosed)
+                {
+                    interactText1.enabled = false;
+                    interactText2.enabled = true;
+                }
+                else if (doorBehaviour.doorIsOpen)
+                {
+                    interactText1.enabled = true;
+                    interactText2.enabled = false;
+                }
             }
         }
     }
@@ -79,8 +87,6 @@ public class ElevatorInteract : MonoBehaviour
             }
             else if (doorBehaviour.doorIsClosed || doorBehaviour.doorIsOpen)
             {
-                interactText1.enabled = true;
-                interactText2.enabled = true;
 
                 if (playerMovement.interactPressed)
                 {
