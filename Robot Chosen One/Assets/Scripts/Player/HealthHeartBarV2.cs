@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class HealthHeartBarV2 : MonoBehaviour
 {
@@ -41,7 +42,12 @@ public class HealthHeartBarV2 : MonoBehaviour
             maxHealth = dataContainer.healthHeartBarV2Data.maxHealth;
         }
 
-        health = Mathf.Clamp(maxHealth, 0, maxHealth);
+        SetHealth(maxHealth);
+    }
+
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
         DrawHearts();
     }
 
@@ -170,6 +176,7 @@ public class HealthHeartBarV2 : MonoBehaviour
 
     void OnEnable()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
         TouchDmg.Hit += HandleHealthChanged;
         BasicAttackPatern.Hit += HandleHealthChanged;
         projectileStraight.Hit += HandleHealthChanged;
@@ -180,6 +187,7 @@ public class HealthHeartBarV2 : MonoBehaviour
     void OnDisable()
     {
         TouchDmg.Hit -= HandleHealthChanged;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
         BasicAttackPatern.Hit -= HandleHealthChanged;
         projectileStraight.Hit -= HandleHealthChanged;
         projectileArch.Hit -= HandleHealthChanged;
