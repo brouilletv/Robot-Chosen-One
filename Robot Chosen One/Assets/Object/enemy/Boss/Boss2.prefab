@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 4300962472931142989}
   - component: {fileID: 8611868072811920423}
   - component: {fileID: 8952673195263589197}
+  - component: {fileID: 8076975138099744550}
   m_Layer: 10
   m_Name: Power Box 4
   m_TagString: Untagged
@@ -380,6 +381,27 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!95 &8076975138099744550
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603206616267548481}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fe6fab4e261b281409c4e0b6c93754e9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &727780771840696789
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,6 +416,7 @@ GameObject:
   - component: {fileID: 8032209524304727788}
   - component: {fileID: 5817722473012007808}
   - component: {fileID: 8440025074925068991}
+  - component: {fileID: 6497027610398943747}
   m_Layer: 10
   m_Name: Power Box 3
   m_TagString: Untagged
@@ -667,6 +690,27 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!95 &6497027610398943747
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727780771840696789}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fe6fab4e261b281409c4e0b6c93754e9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &758843031898346385
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,6 +1066,7 @@ GameObject:
   - component: {fileID: 7009717718490862353}
   - component: {fileID: 6455016089174248927}
   - component: {fileID: 8262561277761472644}
+  - component: {fileID: 7294475684751801917}
   m_Layer: 10
   m_Name: Power Box 1
   m_TagString: Untagged
@@ -1295,6 +1340,27 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!95 &7294475684751801917
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3627330133771236101}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fe6fab4e261b281409c4e0b6c93754e9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4290879437023234012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,6 +1461,7 @@ GameObject:
   - component: {fileID: 5920812972178736660}
   - component: {fileID: 2945636959827253235}
   - component: {fileID: 7032503391979356497}
+  - component: {fileID: 8554432731651425504}
   m_Layer: 10
   m_Name: Power Box 2
   m_TagString: Untagged
@@ -1668,6 +1735,27 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!95 &8554432731651425504
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5077871962510484128}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fe6fab4e261b281409c4e0b6c93754e9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5721378358525617499
 GameObject:
   m_ObjectHideFlags: 0

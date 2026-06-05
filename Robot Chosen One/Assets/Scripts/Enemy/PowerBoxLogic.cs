@@ -24,6 +24,8 @@ public class PowerBoxLogic : MonoBehaviour
     public bool Active = true;
     private LineRenderer lineRenderer;
 
+    private Animator animator = null;
+
     public void InitializePowerBox(GameObject Player, bool Active)
     {
         this.Player = Player;
@@ -31,6 +33,13 @@ public class PowerBoxLogic : MonoBehaviour
         Health = MaxHealth;
         PM = Player.GetComponent<PlayerMovement>();
         HHB = Player.transform.Find("GUI").Find("HealthHeart").GetComponent<HealthHeartBarV2>();
+
+        if (TryGetComponent<Animator>(out animator))
+        {
+            animator = GetComponent<Animator>();
+        }
+
+        animator.SetInteger("A_Phase", 2);
 
         PointList  = new List<Vector3> {
         new Vector3(transform.Find("Point 1").position.x, transform.Find("Point 1").position.y, 0),
@@ -95,7 +104,7 @@ public class PowerBoxLogic : MonoBehaviour
         if (Health <= 0)
         {
             Active = false;
-            transform.GetComponent<SpriteRenderer>().color = Color.red;
+            animator.SetInteger("A_Phase", 3);
         }
     }
 }

@@ -31,6 +31,8 @@ public class MineBossLogic : MonoBehaviour
     [SerializeField] float BombRadius = 2;
     [SerializeField] GameObject Projectile;
 
+    private Animator animator = null;
+
 
     public void InitializeMineBoss(GameObject Player, PowerBoxLogic PBL1, PowerBoxLogic PBL2, PowerBoxLogic PBL3, PowerBoxLogic PBL4, Transform MinPos, Transform MaxPos, bool Active)
     {
@@ -42,15 +44,27 @@ public class MineBossLogic : MonoBehaviour
         this.MinPos = MinPos;
         this.MaxPos = MaxPos;
 
+        if (transform.Find("Main Boss").gameObject.TryGetComponent<Animator>(out animator))
+        {
+            animator = transform.Find("Main Boss").gameObject.GetComponent<Animator>();
+        }
+
         Health = MaxHealth;
         PM = Player.GetComponent<PlayerMovement>();
         HHB = Player.transform.Find("GUI").Find("HealthHeart").GetComponent<HealthHeartBarV2>();
 
-        transform.Find("Main Boss").GetComponent<SpriteRenderer>().color = Color.blue;
+        if (animator != null)
+        {
+            animator.SetInteger("A_Phase", 1);
+        }
 
         if (Active is false)
         {
             TakeDamage(MaxHealth);
+            if (animator != null)
+            {
+                animator.SetInteger("A_Phase", 3);
+            }
         }
     }
 
@@ -62,19 +76,28 @@ public class MineBossLogic : MonoBehaviour
         if (Health == 2)
         {
             Phase = 1;
-            transform.Find("Main Boss").GetComponent<SpriteRenderer>().color = Color.blue;
+            if (animator != null)
+            {
+                animator.SetInteger("A_Phase", 1);
+            }
         }
         else if (Health == 1)
         {
             Phase = 2;
-            transform.Find("Main Boss").GetComponent<SpriteRenderer>().color = Color.blue;
+            if (animator != null)
+            {
+                animator.SetInteger("A_Phase", 1);
+            }
             BombDelay = BombDelay / 2;
         }
         else if (Health <= 0)
         {
             Active = false;
             PM.defeatedMinesBoss = true;
-            transform.Find("Main Boss").GetComponent<SpriteRenderer>().color = Color.red;
+            if (animator != null)
+            {
+                animator.SetInteger("A_Phase", 3);
+            }
         }
     }
 
@@ -85,7 +108,10 @@ public class MineBossLogic : MonoBehaviour
             quickfix = true;
             CanDmg = true;
             BombOnCooldown = true;
-            transform.Find("Main Boss").GetComponent<SpriteRenderer>().color = Color.white;
+            if (animator != null)
+            {
+                animator.SetInteger("A_Phase", 2);
+            }
         }
         if (Phase >= 1 && BombOnCooldown is false && Active is true)
         {
@@ -94,7 +120,10 @@ public class MineBossLogic : MonoBehaviour
                 AttackCount = 0;
                 CanDmg = true;
                 BombOnCooldown = true;
-                transform.Find("Main Boss").GetComponent<SpriteRenderer>().color = Color.white;
+                if (animator != null)
+                {
+                    animator.SetInteger("A_Phase", 2);
+                }
             }
             else
             {

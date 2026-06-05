@@ -7,7 +7,7 @@ public class PathFinder : MonoBehaviour
     [SerializeField] bool FullRoming;
     [SerializeField] bool Flying;
     [SerializeField] float Speed;
-    [SerializeField] float distance = 0;
+    [SerializeField] float distance = 100;
 
     [SerializeField] private Rigidbody2D RB;
     [SerializeField] private Transform Body;
@@ -109,7 +109,7 @@ public class PathFinder : MonoBehaviour
             transform.GetComponent<SpriteRenderer>().flipX = false;
         }
 
-        if (Fallow is true && animator != null|| Roming is true && animator != null)
+        if (Fallow is true && animator != null || Roming is true && animator != null || FullRoming is true && animator != null || Flying is true && animator != null)
         {
             animator.SetBool("walk", true);
         }
