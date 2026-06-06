@@ -65,6 +65,12 @@ public class TowerBossLogic : MonoBehaviour
         {
             Destroy(transform.parent.gameObject);
             PM.defeatedTowerBoss = true;
+
+            GameObject camGameObject = Camera.main.gameObject;
+
+            camGameObject.transform.Find("Invert").gameObject.SetActive(false);
+            camGameObject.transform.Find("BlindRight").gameObject.SetActive(false);
+            camGameObject.transform.Find("BlindLeft").gameObject.SetActive(false);
         }
         else if (Health <= 25)
         {
