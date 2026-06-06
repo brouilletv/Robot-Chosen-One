@@ -17275,6 +17275,10 @@ PrefabInstance:
       value: -4.5
       objectReference: {fileID: 0}
     - target: {fileID: 4994632657674863557, guid: d1e0fd57c0faa5f4fbbbef4c904cb296, type: 3}
+      propertyPath: WaveAmount
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4994632657674863557, guid: d1e0fd57c0faa5f4fbbbef4c904cb296, type: 3}
       propertyPath: EWave1.Array.size
       value: 4
       objectReference: {fileID: 0}
